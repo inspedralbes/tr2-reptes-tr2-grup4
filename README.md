@@ -1,16 +1,25 @@
-# transversals
-Esquema mínim de carpetes pels projectes transversals
+# TR2-Grup4
 
-És obligatori seguir aquesta estructura tot i que la podeu ampliar.
+## 👥 Integrants
+- David Quispe
+- Kirill Pashnin
+- Roman Novytskyi
 
-## Atenció
-Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre projecte (utilitzant markdown)
+## 📌 Descripció del projecte
+Creació d’una aplicació web que permet crear i gestionar Plans Individualitzats (PI).
+L’objectiu és facilitar el seguiment de l’alumne en els canvis de centre educatiu, ja sigui d’una escola a un institut o entre diferents instituts.
 
-# Aquest fitxer ha de contenir com a mínim:
- * Nom dels integrants
- * Nom del projecte
- * Petita descripció
- * Adreça del gestor de tasques (taiga, jira, trello...)
- * Adreça del prototip gràfic del projecte (Penpot, figma, moqups...)
- * URL de producció (quan la tingueu)
- * Estat: (explicació d'en quin punt està)
+## 🛠️ Gestor de tasques
+- Taiga:  
+  [Taiga](https://tree.taiga.io/project/dxdavid21-tr2-grup4/backlog)
+
+## 🎨 Prototip gràfic
+- Figma :  
+  [Figma](https://www.figma.com/proto/7iSGKXIMKCuwQQ02hKiT0H/TR2-grup4?node-id=0-1&t=r6mEtzoluocDokei-1)
+
+## 🌐 URL de producció
+- No disponible
+
+## 📊 Estat del projecte 
+- Pantalla innicial
+- Login and Register
