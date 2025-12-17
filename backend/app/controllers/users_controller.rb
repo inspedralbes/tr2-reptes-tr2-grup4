@@ -3,18 +3,16 @@ class UsersController < ApplicationController
 
   # POST /login
   def login
-    user = User.find_by(email: params[:email])
+    user = User.find_by(username: params[:username])
 
     if user&.authenticate(params[:password])
-      session[:user_id] = user.id
-      render json: user, status: :ok
+      render json: { authenticated: true} , status: :ok
     else
-      render json: { error: 'Invalid email or password' }, status: :unauthorized
+      render json: { error: 'Invalid email or password', authenticated: false }, status: :unauthorized
     end
   end
 
   # POST /register
-  # POST /users.json
   def register
     @user = User.new(user_params)
 
@@ -27,7 +25,7 @@ class UsersController < ApplicationController
 
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
-  #def update
+  # def update
   #  if @user.update(user_params)
   #    render :show, status: :ok, location: @user
   #  else
@@ -37,7 +35,7 @@ class UsersController < ApplicationController
 
   # DELETE /users/1
   # DELETE /users/1.json
-  #def destroy
+  # def destroy
   #  @user.destroy!
   #end
 
