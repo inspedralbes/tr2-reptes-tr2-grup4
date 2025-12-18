@@ -8,6 +8,18 @@
         necessària per garantir una atenció adequada, continuada i respectuosa amb les necessitats de cada alumne.
         El servei posa especial atenció a la protecció de dades personals i al respecte de la privacitat, d’acord amb la normativa vigent.
       </p>
-    </div>   
+
+      <section class="mt-8">
+        <h2 class="text-xl font-semibold text-[#333] mb-2">
+          Què ofereix el servei
+        </h2>
+        <ul class="list-disc list-inside text-[#666] space-y-1">
+          <li>Centralització de la informació educativa rellevant.</li>
+          <li>Continuïtat en l’atenció educativa.</li>
+          <li>Garantia de confidencialitat i protecció de dades.</li>
+          <li>Suport als centres educatius en el procés d’acollida.</li>
+        </ul>
+      </section>
+    </div>
   </article>
 </template>
