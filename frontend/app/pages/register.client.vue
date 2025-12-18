@@ -29,7 +29,7 @@ const password = ref("");
 const passwordConfirmation = ref("");
 
 async function handleSubmit() {
-  const res = await fetch("http://localhost:3000/register", {
+  await fetch("http://localhost:3000/register", {
     method: "POST",
     credentials: "include", // REQUIRED for sessions
     headers: {
@@ -42,8 +42,5 @@ async function handleSubmit() {
       password_confirmation: passwordConfirmation.value,
     }),
   });
-
-  const data = await res.json();
-  console.log(data);
 }
 </script>
