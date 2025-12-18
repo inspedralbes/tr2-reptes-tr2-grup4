@@ -13,7 +13,7 @@
 <template>
   <article> 
     <div class="min-h-screen bg-white px-6">
-      <h1 class="text-4xl font-bold text-center p-4">SPECIALZ</h1>
+      <h1 class="text-4xl font-bold text-center p-4">SPECIALZ algo</h1>
       <p class="text-indigo-600 font-bold ">This is a service to help students with special needs(intellectually disabled) to help them move from one studying facility to another and provide the new institut/school/uni with all the existing information in regards to this student and how to work with it(so he annoys everyone around less and maybe even learn something). Our service treat students privacy with utmost concern and respect and was created out of pure kindness and compassion to help less usefull parts of society integrated in new environment easier and be treated almost as normal functional humans.</p>
       <button 
       @click="goToRegister"
