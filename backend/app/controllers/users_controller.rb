@@ -6,9 +6,10 @@ class UsersController < ApplicationController
     user = User.find_by(username: params[:username])
 
     if user&.authenticate(params[:password])
-      render json: { authenticated: true} , status: :ok
+      session[:user_id] = user.id
+      render json: { authenticated: true }, status: :ok
     else
-      render json: { error: 'Invalid email or password', authenticated: false }, status: :unauthorized
+      render json: { error: "Invalid email or password", authenticated: false }, status: :unauthorized
     end
   end
 
@@ -31,13 +32,13 @@ class UsersController < ApplicationController
   #  else
   #    render json: @user.errors, status: :unprocessable_entity
   #  end
-  #end
+  # end
 
   # DELETE /users/1
   # DELETE /users/1.json
   # def destroy
   #  @user.destroy!
-  #end
+  # end
 
   private
     # Use callbacks to share common setup or constraints between actions.
