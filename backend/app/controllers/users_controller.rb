@@ -18,6 +18,8 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
 
     if @user.save
+      # Log the user in automatically
+      session[:user_id] = @user.id
       render json: @user, status: :created
     else
       render json: @user.errors, status: :unprocessable_entity
