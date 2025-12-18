@@ -1,15 +1,13 @@
 <template>
-  <div class="min-h-screen bg-[#333]">
-    <header class="text-white sticky top-0 z-50">
-      <nav class="max-w-5xl max-auto flex items-center justify-between px-4 py-3">
-        <NuxtLink to="/" class="text-xl font-bold tracking-wide ">
-          Gencat
+  <div class="min-h-screen font-[Open Sans Regular]">
+    <header class="text-white sticky top-0 z-50  bg-[#333]">
+      <nav class="max-w-5xl mx-auto flex items-center justify-between px-4 py-3">
+        <NuxtLink to="/" class="text-xl">
+          <img src="../assets/img/gencat.svg" alt="Logotip Gencat">
         </NuxtLink>
         <div class="flex items-center gap-5 text-sm font-medium">
-          <NuxtLink to="/" class="hover:text-blue-500 transition">Home</NuxtLink>
-          <NuxtLink to="/sign" class="hover:text-blue-500 transition"><i class="fas fa-user"></i>Àrea privada</NuxtLink>
-          <NuxtLink to="/register" class="hover:text-blue-500 tranisition">Register</NuxtLink>
-          
+          <NuxtLink to="/" class="hover:underline transition">Home</NuxtLink>
+          <NuxtLink to="/sign" class="hover:underline transition"><i class="fas fa-user"></i> Àrea privada</NuxtLink>
         </div>
       </nav>
     </header>
