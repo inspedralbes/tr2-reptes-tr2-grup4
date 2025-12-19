@@ -14,3 +14,6 @@ Un cop comenceu heu de canviar aquesta explicació amb la corresponent al vostre
  * Adreça del prototip gràfic del projecte (Penpot, figma, moqups...)
  * URL de producció (quan la tingueu)
  * Estat: (explicació d'en quin punt està)
+
+
+cmd to up db: docker exec -it backend2 bash
