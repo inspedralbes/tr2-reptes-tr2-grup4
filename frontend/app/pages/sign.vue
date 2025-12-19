@@ -3,7 +3,7 @@
     <div>
       <div>
         <div class="mb-6">
-          <h1>Welcome back</h1>
+          <h1>Welcome back {form.user}</h1>
           <p>Sign in to continue.</p>
         </div>
 
