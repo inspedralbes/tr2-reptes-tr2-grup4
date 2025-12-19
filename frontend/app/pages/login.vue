@@ -24,6 +24,10 @@
       Entrar
     </button>
 
+    <NuxtLink to="/register" class="bg-pink-400 text-black p-2 inline-block">
+      No accaunt? We have a proposition for you, create an account for a special price, just 14.99€, before IVA!
+    </NuxtLink>
+
     <p v-if="message" class="mt-4 text-sm">
       {{ message }}
     </p>

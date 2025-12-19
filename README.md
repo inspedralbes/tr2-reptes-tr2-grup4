@@ -1,5 +1,4 @@
 # commands
-cmd to up db: docker exec -it backend2 bash
 docker exec -it backend2 bash
 rails db:migrate:reset
 
