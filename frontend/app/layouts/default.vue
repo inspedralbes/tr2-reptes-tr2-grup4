@@ -7,7 +7,7 @@
         </NuxtLink>
         <div class="flex items-center gap-5 text-sm font-medium">
           <NuxtLink to="/" class="hover:underline transition">Home</NuxtLink>
-          <NuxtLink to="/login" class="hover:underline transition"><i class="fas fa-user"></i>   Accés a l'àrea privada</NuxtLink>
+          <NuxtLink to="/areaPrivada" class="hover:underline transition"><i class="fas fa-user"></i>   Accés a l'àrea privada</NuxtLink>
         </div>
       </nav>
     </header>
