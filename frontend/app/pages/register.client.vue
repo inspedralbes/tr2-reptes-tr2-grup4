@@ -1,20 +1,23 @@
 <template>
-  <h1 class="text-white text-3xl">Register page</h1>
+  <h1 class="text-black text-4xl font-bold">Registre</h1>
 
-  <form class="bg-white min-h-screen" @submit.prevent="handleSubmit">
-    <label for="username">Nom d'usuari</label>
-    <input class="border border-black" type="text" id="username" v-model="username" />
+  <form class="bg-white min-h-screen flex flex-col mt-10 text-xl" @submit.prevent="handleSubmit">
+    <label for="username" class="mt-4">Nom d'usuari</label>
+    <input class="border border-black p-2 " type="text" id="username" v-model="username" placeholder="Ex: alvaro" />
 
-    <label for="email">Email</label>
-    <input class="border border-black" type="email" id="email" v-model="email" />
+    <label for="email" class="mt-4">Email</label>
+    <input class="border border-black p-2 " type="email" id="email" v-model="email"
+      placeholder="Ex: alvaro@gmail.com" />
 
-    <label for="password">Contrasenya</label>
-    <input class="border border-black" type="password" id="password" v-model="password" />
+    <label for="password" class="mt-4">Contrasenya</label>
+    <input class="border border-black p-2 " type="password" id="password" v-model="password"
+      placeholder="Contrasenya" />
 
-    <label for="password_confirmation">Confirmar contrasenya</label>
-    <input class="border border-black" type="password" id="password_confirmation" v-model="passwordConfirmation" />
+    <label for="password_confirmation" class="mt-4">Confirmar contrasenya</label>
+    <input class="border border-black p-2 " type="password" id="password_confirmation" v-model="passwordConfirmation"
+      placeholder="Confirma la contrasenya" />
 
-    <button class="bg-gray-400 text-black p-2" type="submit">
+    <button class="bg-[#CC0000] text-white p-2 mt-4 w-auto" type="submit">
       Registrar-me!
     </button>
   </form>
