@@ -26,7 +26,7 @@ class UsersController < ApplicationController
     end
   end
 
-# POST /me
+# GET /me
 def me
   if session[:user_id]
     user = User.find_by(id: session[:user_id])

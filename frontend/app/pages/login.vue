@@ -3,22 +3,11 @@
 
   <form class="bg-white min-h-screen" @submit.prevent="handleSubmit">
     <label for="username">Nom d'usuari</label>
-    <input
-      class="border border-black"
-      type="text"
-      id="username"
-      v-model="username"
-      autocomplete="username"
-    />
+    <input class="border border-black" type="text" id="username" v-model="username" autocomplete="username" />
 
     <label for="password">Contrasenya</label>
-    <input
-      class="border border-black"
-      type="password"
-      id="password"
-      v-model="password"
-      autocomplete="current-password"
-    />
+    <input class="border border-black" type="password" id="password" v-model="password"
+      autocomplete="current-password" />
 
     <button class="bg-gray-400 text-black p-2" type="submit">
       Entrar
@@ -29,7 +18,7 @@
     </p>
 
     <pre v-if="debug" class="mt-2 text-xs whitespace-pre-wrap">
-{{ debug }}
+      {{ debug }}
     </pre>
   </form>
 </template>
