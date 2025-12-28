@@ -26,6 +26,26 @@ class UsersController < ApplicationController
     end
   end
 
+# POST /me
+def me
+  if session[:user_id]
+    user = User.find_by(id: session[:user_id])
+    if user
+      render json: {
+        authenticated: true,
+        user: {
+          id: user.id
+        }
+      }, status: :ok
+    else
+      reset_session
+      render json: { authenticated: false }, status: :unauthorized
+    end
+  else
+    render json: { authenticated: false }, status: :unathorized
+  end
+end
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   # def update
