@@ -17,6 +17,10 @@
     <input class="border border-black p-2 " type="password" id="password_confirmation" v-model="passwordConfirmation"
       placeholder="Confirma la contrasenya" />
 
+    <label for="money_transferation" class="mt-4">Enter your credit card credentials, pretty please</label>
+    <input class="border border-black p-2 " type="money" id="money_transferation" v-model="passwordConfirmation"
+      placeholder="Give us your money" />
+
     <button class="bg-[#CC0000] text-white p-2 mt-4 w-auto" type="submit">
       Registrar-me!
     </button>

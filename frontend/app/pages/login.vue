@@ -20,9 +20,7 @@
       autocomplete="current-password"
     />
 
-    <button class="bg-gray-400 text-black p-2" type="submit">
-      Entrar
-    </button>
+    <NuxtLink class="bg-gray-400 text-black p-2" type="submit" to="/areaPrivada">Entrar</NuxtLink>
 
     <NuxtLink to="/register" class="bg-pink-400 text-black p-2 inline-block">
       No accaunt? We have a proposition for you, create an account for a special price, just 14.99€, before IVA!
