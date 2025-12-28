@@ -8,5 +8,5 @@ Rails.application.routes.draw do
   # root "posts#index"
   post "/login", to: "users#login"
   post "/register", to: "users#register"
-  post "/me", to: "users#me"
+  get "/me", to: "users#me"
 end
