@@ -28,7 +28,7 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const username = ref("");
+const { username } = useUser()
 const password = ref("");
 const message = ref("");
 const debug = ref<any>(null);
@@ -59,6 +59,6 @@ async function handleSubmit() {
     message.value = `Failed to fetch: ${err?.message || "unknown error"}`;
     debug.value = err;
   }
-  
+
 }
 </script>
