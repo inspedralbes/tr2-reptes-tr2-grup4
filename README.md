@@ -1,7 +1,7 @@
 # commands
-cmd to up db: docker exec -it backend2 bash
 docker exec -it backend2 bash
 rails db:migrate:reset
+rails db:seed
 
 # transversals
 Esquema mínim de carpetes pels projectes transversals

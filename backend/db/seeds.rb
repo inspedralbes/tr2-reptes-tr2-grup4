@@ -15,7 +15,8 @@ User.destroy_all
 users = [
   { username: "Admin User", email: "admin@school.com", password: "password123", password_confirmation: "password123" },
   { username: "Teacher One", email: "teacher@school.com", password: "password123", password_confirmation: "password123" },
-  { username: "Student One", email: "student@school.com", password: "password123", password_confirmation: "password123" }
+  { username: "Student One", email: "student@school.com", password: "password123", password_confirmation: "password123" },
+  { username: "gigapigga", email: "gigapigga@gmail.com", password: "password123", password_confirmation: "password123" }
 ]
 
 users.each { |u| User.create!(u) }

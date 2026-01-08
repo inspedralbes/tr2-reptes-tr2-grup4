@@ -9,9 +9,11 @@
     <input class="border border-black" type="password" id="password" v-model="password"
       autocomplete="current-password" />
 
-    <button class="bg-gray-400 text-black p-2" type="submit">
-      Entrar
-    </button>
+    <button class="bg-gray-400 text-black p-2" type="submit">Entrar</button>
+
+    <NuxtLink to="/register" class="bg-pink-400 text-black p-2 inline-block">
+      No accaunt? We have a proposition for you, create an account for a special price, just 14.99€, before IVA!
+    </NuxtLink>
 
     <p v-if="message" class="mt-4 text-sm">
       {{ message }}
@@ -26,10 +28,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 
-const username = ref("");
+const { username } = useUser()
 const password = ref("");
 const message = ref("");
 const debug = ref<any>(null);
+const router = useRouter()
 
 async function handleSubmit() {
   message.value = "Signing in...";
@@ -49,11 +52,13 @@ async function handleSubmit() {
     });
 
     const data = await res.json().catch(() => ({}));
+    router.push("/private");
     debug.value = { status: res.status, data };
 
   } catch (err: any) {
     message.value = `Failed to fetch: ${err?.message || "unknown error"}`;
     debug.value = err;
   }
+
 }
 </script>
