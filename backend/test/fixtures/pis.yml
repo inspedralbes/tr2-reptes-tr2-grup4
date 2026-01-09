@@ -1,0 +1,15 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  description: MyText
+  observations: MyText
+  medrec: MyText
+  activities: MyText
+  interacttutorial: MyText
+
+two:
+  description: MyText
+  observations: MyText
+  medrec: MyText
+  activities: MyText
+  interacttutorial: MyText
