@@ -1,6 +1,6 @@
 <template>
   <article> 
-    <div class="min-h-screen bg-white px-6">
+    <div class="min-h-screen bg-white px-6 max-w-5xl mx-auto py-10">
       <h1 class="text-4xl text-[#333] font-bold text-center p-4">SPECIALZ</h1>
       <p class="text-[#666] text-base text-justify">
         SPECIALZ és un servei orientat a facilitar la mobilitat educativa de l’alumnat amb necessitats educatives especials.

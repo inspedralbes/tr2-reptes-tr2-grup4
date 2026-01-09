@@ -11,7 +11,7 @@
         </div>
       </nav>
     </header>
-    <main class="max-w-5xl mx-auto px-4 py-6">
+    <main class="mx-auto">
       <slot />
     </main>
   </div>
