@@ -1,13 +1,3 @@
-# This file should ensure the existence of records required to run the application in every environment (production,
-# development, test). The code here should be idempotent so that it can be executed at any point in every environment.
-# The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
-#
-# Example:
-#
-#   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
-#     MovieGenre.find_or_create_by!(name: genre_name)
-#   end
-
 puts "Seeding users..."
 
 User.destroy_all
@@ -22,3 +12,37 @@ users = [
 users.each { |u| User.create!(u) }
 
 puts "✅ Seeded #{User.count} users"
+
+# --------------------------------------------------
+
+puts "Seeding PIs..."
+
+Pi.destroy_all
+
+pis = [
+  {
+    description: "Individual support plan for student with reading difficulties.",
+    observations: "Student struggles with reading comprehension and focus during lessons.",
+    medrec: "No medical diagnosis. Vision test completed.",
+    activities: "Daily guided reading, phonics exercises, and one-on-one tutoring.",
+    interacttutorial: "Weekly check-ins with tutor and monthly parent meetings."
+  },
+  {
+    description: "Behavior improvement intervention plan.",
+    observations: "Frequent classroom disruptions and difficulty following instructions.",
+    medrec: "Diagnosed with ADHD. Medication managed externally.",
+    activities: "Positive reinforcement system, structured routines, movement breaks.",
+    interacttutorial: "Bi-weekly meetings with school counselor."
+  },
+  {
+    description: "Advanced learning plan for gifted student.",
+    observations: "Completes assignments early and seeks additional challenges.",
+    medrec: "N/A",
+    activities: "Project-based learning, enrichment activities, peer mentoring.",
+    interacttutorial: "Monthly mentor sessions with subject teacher."
+  }
+]
+
+pis.each { |pi| Pi.create!(pi) }
+
+puts "✅ Seeded #{Pi.count} PIs"

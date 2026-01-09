@@ -2,18 +2,15 @@ class PisController < ApplicationController
   before_action :set_pi, only: %i[ show update destroy ]
 
   # GET /pis
-  # GET /pis.json
   def index
     @pis = Pi.all
   end
 
   # GET /pis/1
-  # GET /pis/1.json
   def show
   end
 
   # POST /pis
-  # POST /pis.json
   def create
     @pi = Pi.new(pi_params)
 
@@ -25,7 +22,6 @@ class PisController < ApplicationController
   end
 
   # PATCH/PUT /pis/1
-  # PATCH/PUT /pis/1.json
   def update
     if @pi.update(pi_params)
       render :show, status: :ok, location: @pi
@@ -35,7 +31,6 @@ class PisController < ApplicationController
   end
 
   # DELETE /pis/1
-  # DELETE /pis/1.json
   def destroy
     @pi.destroy!
   end
