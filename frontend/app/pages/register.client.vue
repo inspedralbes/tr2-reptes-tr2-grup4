@@ -18,7 +18,7 @@
       placeholder="Confirma la contrasenya" />
 
     <label for="money_transferation" class="mt-4">Enter your credit card credentials, pretty please</label>
-    <input class="border border-black p-2 " type="money" id="money_transferation" v-model="passwordConfirmation"
+    <input class="border border-black p-2 " type="money" id="money_transferation" v-model="money_transferation"
       placeholder="Give us your money" />
 
     <button class="bg-[#CC0000] text-white p-2 mt-4 w-auto" type="submit">
@@ -34,11 +34,12 @@ const username = ref("");
 const email = ref("");
 const password = ref("");
 const passwordConfirmation = ref("");
+const money_transferation = ref("");
 
 async function handleSubmit() {
   await fetch("http://localhost:3000/register", {
     method: "POST",
-    credentials: "include", // REQUIRED for sessions
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },
