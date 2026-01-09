@@ -4,7 +4,7 @@
  <section v-for="section in document.sections" :key="section.id">
     <h3>{{ section.title }}</h3>
     <p>{{ section.content }}</p>
-  </section>
+ </section>
 </template>
 
 <script setup lang="ts">
