@@ -1,5 +1,5 @@
 <template>
- <h1>Greetings, {{ username }}! This is your personal cabinet.</h1>
+ <h1>Greetings, our unique and special {{ username }}! This is your personal cabinet.</h1>
  <h2>Document</h2>
  <section v-for="section in document.sections" :key="section.id">
     <h3>{{ section.title }}</h3>
