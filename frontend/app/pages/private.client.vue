@@ -32,7 +32,7 @@
         }
     }
 
-    function loadFakeDocument() {
+    function loadDocument() {
     document.value = {
         title: "User Agreement",
         sections: [
@@ -57,7 +57,7 @@
 
     onMounted(async () => {
         await checkEndpoint();
-        loadFakeDocument();
+        loadDocument();
     });
 
 </script>
