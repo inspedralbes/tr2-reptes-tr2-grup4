@@ -10,6 +10,7 @@ class UsersController < ApplicationController
       render json: { authenticated: true }, status: :ok
     else
       render json: { error: "Invalid email or password", authenticated: false }, status: :unauthorized
+      reset_session
     end
   end
 
@@ -42,7 +43,7 @@ def me
       render json: { authenticated: false }, status: :unauthorized
     end
   else
-    render json: { authenticated: false }, status: :unathorized
+    render json: { authenticated: false }, status: :unauthorized
   end
 end
 

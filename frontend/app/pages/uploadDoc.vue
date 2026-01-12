@@ -16,23 +16,23 @@
 </template>
 
 <script setup lang="ts">
-  import { ref } from "vue";
-  
-  const document = ref<File | null>(null);
+import { ref } from "vue";
 
-  async function handleSubmit() {
-    if (!document.value) {
-      alert("Please select a document to upload.");
-      return;
-    }
+const document = ref<File | null>(null);
 
-    const formData = new FormData();
-    formData.append("document", document.value);
-
-    await fetch("http://localhost:3000/upload", {
-      method: "POST",
-      credentials: "include", // REQUIRED for sessions
-      body: formData,
-    });
+async function handleSubmit() {
+  if (!document.value) {
+    alert("Please select a document to upload.");
+    return;
   }
+
+  const formData = new FormData();
+  formData.append("document", document.value);
+
+  await fetch("http://localhost:3000/upload", {
+    method: "POST",
+    credentials: "include",
+    body: formData,
+  });
+}
 </script>
