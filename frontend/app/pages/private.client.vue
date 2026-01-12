@@ -31,6 +31,7 @@
             console.log("User not authenticated");
         }
     }
+    //gigapigga
 
     async function loadDocument() {
         const res = await fetch("http://localhost:3000/pis/1", {
