@@ -13,4 +13,5 @@ Rails.application.routes.draw do
   # Base create and show
   # post "/pis", to: "pi#create"
   # get "/pis", to: "pi#index"
+  post "/upload", to: "upload_files#create"
 end
