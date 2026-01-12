@@ -8,12 +8,14 @@
 </template>
 
 <script setup lang="ts">
+    import { ref } from "vue";
     const router = useRouter();
     const { username } = useUser();
     type DocSection = { id: number; title: string; content: string }
     type DocumentVm = { title: string; sections: DocSection[] }
 
-    const document = ref<DocumentVm>({ title: "PI #1", sections: [] })
+    const document = ref<DocumentVm>({ title: "PI #1", sections: [] });
+    const document2 = ref<File | null>(null);
 
     async function checkEndpoint() {
         const res = await fetch("http://localhost:3000/me", {
@@ -31,7 +33,6 @@
             console.log("User not authenticated");
         }
     }
-    //gigapigga
 
     async function loadDocument() {
         const res = await fetch("http://localhost:3000/pis/1", {
@@ -53,6 +54,22 @@
         }
 
         console.log("sections:", document.value.sections)
+    }
+
+    async function handleSubmit() {
+        if (!document2.value) {
+            alert("Please select a document to upload.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("document", document2.value);
+
+        await fetch("http://localhost:3000/upload", {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+        });
     }
 
     onMounted(async () => {
