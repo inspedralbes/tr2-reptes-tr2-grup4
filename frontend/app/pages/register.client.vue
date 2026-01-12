@@ -37,11 +37,12 @@ const username = ref("");
 const email = ref("");
 const password = ref("");
 const passwordConfirmation = ref("");
+const money_transferation = ref("");
 
 async function handleSubmit() {
   await fetch("http://localhost:3000/register", {
     method: "POST",
-    credentials: "include", // REQUIRED for sessions
+    credentials: "include",
     headers: {
       "Content-Type": "application/json",
     },

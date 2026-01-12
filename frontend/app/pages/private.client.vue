@@ -1,19 +1,19 @@
 <template>
- <h1>Greetings, {{ username }}! This is your personal cabinet.</h1>
+ <h1>Greetings, our unique and special {{ username }}! This is your personal cabinet.</h1>
  <h2>Document</h2>
  <section v-for="section in document.sections" :key="section.id">
     <h3>{{ section.title }}</h3>
     <p>{{ section.content }}</p>
-  </section>
+ </section>
 </template>
 
 <script setup lang="ts">
     const router = useRouter();
     const { username } = useUser();
-    const document = ref({
-        title: "",
-        sections: [] as { id: number; title: string; content: string }[]
-    });
+    type DocSection = { id: number; title: string; content: string }
+    type DocumentVm = { title: string; sections: DocSection[] }
+
+    const document = ref<DocumentVm>({ title: "PI #1", sections: [] })
 
     async function checkEndpoint() {
         const res = await fetch("http://localhost:3000/me", {
@@ -32,32 +32,31 @@
         }
     }
 
-    function loadFakeDocument() {
-    document.value = {
-        title: "User Agreement",
-        sections: [
-        {
-            id: 1,
-            title: "Part 1",
-            content: "Some bs here, so it looked like I was doing something"
-        },
-        {
-            id: 2,
-            title: "Part 2",
-            content: "Some more bs"
-        },
-        {
-            id: 3,
-            title: "Part 3",
-            content: "Some more bs"
+    async function loadDocument() {
+        const res = await fetch("http://localhost:3000/pis/1", {
+        credentials: "include"
+        });
+        if (!res.ok) throw new Error(`Failed to load PI: ${res.status}`)
+
+        const pi = await res.json()
+
+        document.value = {
+            title: pi.title ?? `PI #${pi.id ?? 1}`,
+            sections: [
+            { id: 1, title: "Description", content: pi.description ?? "" },
+            { id: 2, title: "Observations", content: pi.observations ?? "" },
+            { id: 3, title: "Medical record", content: pi.medrec ?? "" },
+            { id: 4, title: "Activities", content: pi.activities ?? "" },
+            { id: 5, title: "Tutorial interaction", content: pi.interacttutorial ?? "" },
+            ],
         }
-        ]
-    };
+
+        console.log("sections:", document.value.sections)
     }
 
     onMounted(async () => {
         await checkEndpoint();
-        loadFakeDocument();
+        loadDocument();
     });
 
 </script>
