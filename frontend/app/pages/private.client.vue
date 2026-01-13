@@ -77,11 +77,11 @@
         document.value = {
             title: pi.title ?? `PI #${pi.id ?? 1}`,
             sections: [
-            { id: 1, title: "Description", content: pi.description ?? "" },
-            { id: 2, title: "Observations", content: pi.observations ?? "" },
-            { id: 3, title: "Medical record", content: pi.medrec ?? "" },
-            { id: 4, title: "Activities", content: pi.activities ?? "" },
-            { id: 5, title: "Tutorial interaction", content: pi.interacttutorial ?? "" },
+                { id: 1, title: "Description", content: pi.description ?? "" },
+                { id: 2, title: "Observations", content: pi.observations ?? "" },
+                { id: 3, title: "Medical record", content: pi.medrec ?? "" },
+                { id: 4, title: "Activities", content: pi.activities ?? "" },
+                { id: 5, title: "Tutorial interaction", content: pi.interacttutorial ?? "" },
             ],
         }
 
