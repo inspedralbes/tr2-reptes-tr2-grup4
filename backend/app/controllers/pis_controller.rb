@@ -38,11 +38,11 @@ class PisController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pi
-      @pi = Pi.find(params.expect(:id))
+      @pi = Pi.find(params.required(:id))
     end
 
     # Only allow a list of trusted parameters through.
     def pi_params
-      params.expect(pi: [ :description, :observations, :medrec, :activities, :interacttutorial ])
+      params.required(:pi).permit(:description, :observations, :medrec, :activities, :interacttutorial)
     end
 end
