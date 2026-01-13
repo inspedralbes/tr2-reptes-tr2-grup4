@@ -2,7 +2,20 @@
     <div class="max-w-5xl mx-auto px-4 py-6 min-h-screen">
         <h1>Greetings, our unique and special {{ username }}! This is your personal cabinet.</h1>
         <h2>Document</h2>
-        <section v-for="section in document.sections" :key="section.id">
+        <aside class="fixed left-4 top-24 w-48 border bg-white p-2">
+            <p class="font-semibold mb-2">Sections</p>
+
+            <button
+                v-for="s in docVM.sections"
+                :key="s.id"
+                type="button"
+                class="block w-full text-left px-2 py-1 hover:bg-gray-100"
+                @click="scrollTo(s.id)"
+            >
+                {{ s.title }}
+            </button>
+        </aside>
+        <section v-for="section in docVM.sections" :key="section.id" :id="`sec-${section.id}`" class="mt-6 scroll-mt-24">
             <h3>{{ section.title }}</h3>
             <p>{{ section.content }}</p>
         </section>
@@ -45,7 +58,7 @@
     type DocSection = { id: number; title: string; content: string }
     type DocumentVm = { title: string; sections: DocSection[] }
 
-    const document = ref<DocumentVm>({ title: "PI #1", sections: [] });
+    const docVM = ref<DocumentVm>({ title: "PI #1", sections: [] });
     const document2 = ref<File | null>(null);
     const open = ref(false)
 
@@ -74,7 +87,7 @@
 
         const pi = await res.json()
 
-        document.value = {
+        docVM.value = {
             title: pi.title ?? `PI #${pi.id ?? 1}`,
             sections: [
                 { id: 1, title: "Description", content: pi.description ?? "" },
@@ -85,7 +98,7 @@
             ],
         }
 
-        console.log("sections:", document.value.sections)
+        console.log("sections:", docVM.value.sections)
     }
 
     async function handleSubmit() {
@@ -103,6 +116,14 @@
             body: formData,
         });
         open.value = false
+    }
+
+    function scrollTo(id: number) {
+        if (import.meta.server) return;
+
+        window.document
+            .getElementById(`sec-${id}`)
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
     onMounted(async () => {
