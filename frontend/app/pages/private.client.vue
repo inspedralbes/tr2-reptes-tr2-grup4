@@ -1,7 +1,4 @@
-<template>  
-<div class="bg-[#404040] w-full">
-    <h1 class="text-[24px] text-white max-w-5xl mx-auto px-4 py-3">{{ username }}</h1>
-</div>
+<template> 
 <div class="max-w-5xl mx-auto px-4 py-6 min-h-screen">
     <h1>Greetings, our unique and special {{ username }}! This is your personal cabinet.</h1>
     <h2>Document</h2>
