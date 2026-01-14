@@ -31,5 +31,10 @@ module Backend
     # config/application.rb
     config.middleware.use ActionDispatch::Cookies
     config.middleware.use ActionDispatch::Session::CookieStore
+
+
+    # OLLAMA SERVICES
+    config.autoload_paths << Rails.root.join('app', 'services')
+    config.eager_load_paths << Rails.root.join('app', 'services')
   end
 end

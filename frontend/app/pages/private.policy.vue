@@ -8,7 +8,7 @@ function goToAreaPrivada() {
 
 <template>
   <div class="max-w-5xl px-6 py-10 min-h-screen">
-    <h1>Condicions d'ús i política de privacitat</h1>
+    <h1 class="text-2xl font-semibold mb-4">Condicions d'ús i política de privacitat</h1>
 
     <h4>
       Condicions d'ús i política de privacitat de l'Àrea privada ciutadana de la Generalitat de Catalunya
@@ -17,64 +17,113 @@ function goToAreaPrivada() {
       QUAN ACCEDEIXES A L'ÀREA PRIVADA CIUTADANA, MANIFESTES QUE HAS LLEGIT I ACCEPTES LES CONDICIONS D'ÚS I LA POLÍTICA DE PRIVACITAT. AQUEST APARTAT RECULL TOTA LA INFORMACIÓ RELATIVA ALS TEUS DRETS I OBLIGACIONS COM A USUARI D'AQUEST SERVEI.
     </h4>
     <br>
-  1. Què és l' Àrea privada ciutadana?
+    <b>1. Què és l' Àrea privada ciutadana?</b>
+    <br>
+    <br>
+    <a href="https://ovt.gencat.cat/carpetaciutadana360#/acces">L' Àrea privada ciutadana</a>
+    , és un servei titularitat de la Generalitat de Catalunya (NIF S-0811001-G) que facilita la interacció de la ciutadania amb l'Administració de la Generalitat de Catalunya des d'un únic punt d'accés. A través de la plataforma, es pot accedir a:
+    <br>
+    <br>
+    <ul>
+      <li>Tràmits i gestions</li>
+      <li>Bústia de contacte</li>
+      <li>Cites per atenció presencial</li>
+      <li>Notificacions</li>
+      <li>Subscripcions a avisos personalitzats</li>
+      <li>Consulta i gestió de dades i documents personals</li>
+    </ul>
+    <br>
+    <b>2. Ús i accés a l'Àrea privada ciutadana</b>
+    <br>
+    <br>
+    <a href="https://web.gencat.cat/ca/tramits/area-privada/#com-accedir-a-la-teva-area-privada">L' accés al servei de l'Àrea privada ciutadana</a>
+    , no requereix registre, només cal identificar-se amb un certificat digital o un sistema de clau concertada amb registre previ (idCat Mòbil, idCat Certificat, Cl@ve, etc.). L'ús d'aquest servei és gratuït, lliure i voluntari.
+    <br>
+    <br>
+    <b>3. Seguretat i privacitat</b>
+    <br>
+    <br>
+    Les mesures de seguretat de l'Àrea privada ciutadana compleixen amb les previstes en l'Annex II (Mesures de seguretat) 
+    del Reial decret 311/2022, de 3 de maig, pel qual es regula l'Esquema Nacional de Seguretat (ENS) i en el Marc de Ciberseguretat 
+    per a la Protecció de Dades de la Generalitat de Catalunya (MCPD). Les dades personals es tracten conforme a la Política de Privacitat 
+    de l'Àrea privada ciutadana:
+    <br>
+    <br>  
+    <b>4. Responsabilitat i obligacions</b>
+    <br>
+    <br>
+    L'Àrea privada ciutadana es compromet a oferir un servei de màxima qualitat, evitar errors i, en cas que es produeixin, arreglar-los o 
+    actualitzar-los tan aviat com sigui possible. L'usuari accepta que el servei pugui experimentar interrupcions per dur a terme tasques de 
+    manteniment, les quales duraran el temps necessari i imprescindible.L'usuari és responsable de l'exactitud i l'actualització de la informació 
+    personal que proporciona a través de l'Àrea privada ciutadana i que obté de diferents departaments, del sector públic de l'Administració de la 
+    Generalitat i d'altres Administracions Públiques.En qualsevol moment, i sense necessitat d'avís previ, aquest servei pot modificar-se i canviar 
+    les condicions d'accés o d'ús, sempre que el possible canvi no afecti els principis i drets de protecció de dades personals.L'usuari de l'Àrea 
+    privada ciutadana es compromet a:
+    <br>
+    <br>
+    <ul>
+      <li>Custodiar la informació d'accés a través del sistema d'identificació digital corresponent.</li>
+      <li>Fer un bon ús dels continguts obtinguts a través de l'Àrea privada ciutadana, conforme a la Llei, la bona fe i els bons costums generalment acceptats.</li>
+      <li>Ser responsable de l'ús dels serveis.</li>
+    </ul>
+    <br>
+    <br>
+    <b>5. Enllaços</b>
+    <br>
+    <br>
+    L'Àrea privada ciutadana inclou enllaços a llocs web d'altres Administracions Públiques i Organismes Públics per oferir una informació més personalitzada. 
+    Consulteu les polítiques de privacitat i condicions d'ús pròpies d'aquests altres llocs web.Els portals i seus electròniques que enllacen amb l'Àrea privada 
+    ciutadana han de tenir en compte que:
+    <br>
+    <br>
+    <ul>
+      <li>No implica l'existència de relacions entre l'Administració de la Generalitat i el propietari que estableix l'enllaç, ni l'acceptació i aprovació dels seus continguts i serveis.</li>
+      <li>No es poden dur a terme manifestacions o referències falses, incorrectes o inexactes sobre les pàgines i serveis oferts per l'Àrea privada ciutadana.</li>
+    </ul>
+    <br>
+    Es prohibeix explícitament la creació de qualsevol mena de navegador, programa, browser o border environment sobre les pàgines de l'Àrea privada ciutadana.
+    <br>
+    <br>
+    <b>6. Navegadors, galetes i Javascript</b>
+    <br>
+    <br>
+    Per raons de seguretat, el titular de l'Àrea privada ciutadana només en garanteix el correcte funcionament en navegadors compatibles amb HTML5 amb les versions 
+    suportades pels seus fabricants en el moment actual.L'ús de navegadors no compatibles pot afectar la visualització del contingut o la disponibilitat d'algunes funcions.
+    Es poden descarregar les actualitzacions dels navegadors en les pàgines web dels proveïdors d'aquests programes.És necessari habilitar Javascript per al correcte funcionament 
+    del servei.
+    <br>
+    <br>
+    <b>7. Llei Aplicable i Jurisdicció</b>
+    <br>
+    <br>
+    Aquestes condicions es regeixen i interpreten d'acord amb la llei espanyola i catalana. El titular i els usuaris, amb renúncia a qualsevol altre fur, se sotmeten als jutjats i tribunals
+    de Barcelona capital.
+    <br>
+    <br>
+    <b>8. Informació corporativa i contacte</b>
+    <br>
+    <br>
+    Per a consultes, queixes o suggeriments relacionades amb l'Àrea privada ciutadana o amb els serveis que s'hi ofereixen, es pot utilitzar el formulari disponible a la 
+    <a href="https://ovt.gencat.cat/carpetaciutadana360/mfe-fc-app/gsitfc/AppJava/conqxs/conqxsOVT.do">Bústia de contacte</a> 
+    o contactar al 
+    <a href="https://web.gencat.cat/ca/contacte/012/index.html">telèfon d'atenció 012.</a>
+    La ciutadania també es pot dirigir a la Direcció General de Serveis Digitals i Experiència Ciutadana, situada al carrer del Foc 57, Edifici B, 08038, Barcelona.
+    <br>
+    <br>
+    <b>Política de privacitat de l'Àrea privada ciutadana</b>
+    <br>
+    <br>
+    La política de privacitat de l'Àrea privada ciutadana detalla la informació sobre les dades tractades, els seus usos i els drets de les persones titulars.
 
-  L' Àrea privada ciutadana, és un servei titularitat de la Generalitat de Catalunya (NIF S-0811001-G) que facilita la interacció de la ciutadania amb l'Administració de la Generalitat de Catalunya des d'un únic punt d'accés. A través de la plataforma, es pot accedir a:
-
-      Tràmits i gestions
-      Bústia de contacte
-      Cites per atenció presencial
-      Notificacions
-      Subscripcions a avisos personalitzats
-      Consulta i gestió de dades i documents personals
-
-
-  2. Ús i accés a l'Àrea privada ciutadana
-
-  L' accés al servei de l'Àrea privada ciutadana, no requereix registre, només cal identificar-se amb un certificat digital o un sistema de clau concertada amb registre previ (idCat Mòbil, idCat Certificat, Cl@ve, etc.). L'ús d'aquest servei és gratuït, lliure i voluntari.
-
-  3. Seguretat i privacitat
-
-  Les mesures de seguretat de l'Àrea privada ciutadana compleixen amb les previstes en l'Annex II (Mesures de seguretat) del Reial decret 311/2022, de 3 de maig, pel qual es regula l'Esquema Nacional de Seguretat (ENS) i en el Marc de Ciberseguretat per a la Protecció de Dades de la Generalitat de Catalunya (MCPD). Les dades personals es tracten conforme a la Política de Privacitat de l'Àrea privada ciutadana:
-
-  4. Responsabilitat i obligacions
-
-  L'Àrea privada ciutadana es compromet a oferir un servei de màxima qualitat, evitar errors i, en cas que es produeixin, arreglar-los o actualitzar-los tan aviat com sigui possible. L'usuari accepta que el servei pugui experimentar interrupcions per dur a terme tasques de manteniment, les quals duraran el temps necessari i imprescindible.L'usuari és responsable de l'exactitud i l'actualització de la informació personal que proporciona a través de l'Àrea privada ciutadana i que obté de diferents departaments, del sector públic de l'Administració de la Generalitat i d'altres Administracions Públiques.En qualsevol moment, i sense necessitat d'avís previ, aquest servei pot modificar-se i canviar les condicions d'accés o d'ús, sempre que el possible canvi no afecti els principis i drets de protecció de dades personals.L'usuari de l'Àrea privada ciutadana es compromet a:
-
-      Custodiar la informació d'accés a través del sistema d'identificació digital corresponent.
-      Fer un bon ús dels continguts obtinguts a través de l'Àrea privada ciutadana, conforme a la Llei, la bona fe i els bons costums generalment acceptats.
-      Ser responsable de l'ús dels serveis.
-
-
-  5. Enllaços
-
-  L'Àrea privada ciutadana inclou enllaços a llocs web d'altres Administracions Públiques i Organismes Públics per oferir una informació més personalitzada. Consulteu les polítiques de privacitat i condicions d'ús pròpies d'aquests altres llocs web.Els portals i seus electròniques que enllacen amb l'Àrea privada ciutadana han de tenir en compte que:
-
-      No implica l'existència de relacions entre l'Administració de la Generalitat i el propietari que estableix l'enllaç, ni l'acceptació i aprovació dels seus continguts i serveis.
-      No es poden dur a terme manifestacions o referències falses, incorrectes o inexactes sobre les pàgines i serveis oferts per l'Àrea privada ciutadana.
-
-
-  Es prohibeix explícitament la creació de qualsevol mena de navegador, programa, browser o border environment sobre les pàgines de l'Àrea privada ciutadana.
-
-  6. Navegadors, galetes i Javascript
-
-  Per raons de seguretat, el titular de l'Àrea privada ciutadana només en garanteix el correcte funcionament en navegadors compatibles amb HTML5 amb les versions suportades pels seus fabricants en el moment actual.L'ús de navegadors no compatibles pot afectar la visualització del contingut o la disponibilitat d'algunes funcions. Es poden descarregar les actualitzacions dels navegadors en les pàgines web dels proveïdors d'aquests programes.És necessari habilitar Javascript per al correcte funcionament del servei.
-
-  7. Llei Aplicable i Jurisdicció
-
-  Aquestes condicions es regeixen i interpreten d'acord amb la llei espanyola i catalana. El titular i els usuaris, amb renúncia a qualsevol altre fur, se sotmeten als jutjats i tribunals de Barcelona capital.
-
-  8. Informació corporativa i contacte
-
-  Per a consultes, queixes o suggeriments relacionades amb l'Àrea privada ciutadana o amb els serveis que s'hi ofereixen, es pot utilitzar el formulari disponible a la Bústia de contacte o contactar al telèfon d'atenció 012.La ciutadania també es pot dirigir a la Direcció General de Serveis Digitals i Experiència Ciutadana, situada al carrer del Foc 57, Edifici B, 08038, Barcelona.
-
-  Política de Privacitat de l'Àrea privada ciutadana
-
-  La política de privacitat de l'Àrea privada ciutadana detalla la informació sobre les dades tractades, els seus usos i els drets de les persones titulars.1. Quin és l'òrgan responsable del tractament de les dades requerides per prestar el servei?
-
-      Direcció General de Serveis Digitals i Experiència Ciutadana
-      DPD: dpd.presidencia@gencat.cat.
-      Adreça: Carrer del Foc, 57, Edifici B, 08038, Barcelona
+    <b>1. Quin és l'òrgan responsable del tractament de les dades requerides per prestar el servei?</b>
+    <br>
+    <br>
+    <ul>
+      <li>Direcció General de Serveis Digitals i Experiència Ciutadana</li>
+      <li>DPD: dpd.presidencia@gencat.cat.</li>
+      <li>Adreça: Carrer del Foc, 57, Edifici B, 08038, Barcelona</li>
+    </ul>
+    <br>
 
 
   2. Quines dades personals es tracten?
