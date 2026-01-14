@@ -3,7 +3,11 @@ class PisController < ApplicationController
 
   # GET /pis
   def index
-    @pis = Pi.all
+    if current_user
+      render json: current_user.pi
+    else
+      render json: nil, status: :unauthorized
+    end
   end
 
   # GET /pis/1
@@ -12,12 +16,16 @@ class PisController < ApplicationController
 
   # POST /pis
   def create
-    @pi = Pi.new(pi_params)
+    if current_user
+      @pi = current_user.build_pi(pi_params)
 
-    if @pi.save
-      render :show, status: :created, location: @pi
+      if @pi.save
+        render :show, status: :created, location: @pi
+      else
+        render json: @pi.errors, status: :unprocessable_entity
+      end
     else
-      render json: @pi.errors, status: :unprocessable_entity
+      render json: { error: "Authentication required" }, status: :unauthorized
     end
   end
 
