@@ -124,65 +124,103 @@ function goToAreaPrivada() {
       <li>Adreça: Carrer del Foc, 57, Edifici B, 08038, Barcelona</li>
     </ul>
     <br>
+    <b>2. Quines dades personals es tracten?</b>
+    <br>
+    <br>
+    La informació personal que es tracta procedeix de fonts externes a l'Àrea privada ciutadana, excepte la informació que proporcionen els usuaris per:
+    <br>
+    <br>
+    <ul>
+      <li>Accedir al servei.</li>
+      <li>Configurar el servei.</li>
+      <li>Realitzar un tràmit.</li>
+      <li>Sol·licitar la modificació de les dades personals de contacte.</li>
+      <li>Sol·licitar la generació d'un justificant o un certificat.</li>
+    </ul>
+    <br>
+    Segons el servei o consulta realitzada a l'Àrea privada ciutadana, es poden tractar diferents tipus de dades personals, com ara:
+    <br>
+    <br>
+    <ul>
+      <li>Dades d'identificació o de contacte</li>
+      <li>Dades del dispositiu i sistema operatiu utilitzat</li>
+      <li>Dades sobre pròxims esdeveniments o cites concertades amb la Generalitat de Catalunya</li>
+      <li>Dades relacionades amb tràmits realitzats amb la Generalitat o altres administracions públiques</li>
+      <li>Dades sobre consultes, queixes o suggeriments fets a través del servei de Bústia de contacte</li>
+      <li>Informació educativa: títols obtinguts, beques i ajudes a l'estudi, etc.</li>
+      <li>Dades de salut i serveis socials: certificats de discapacitat, grau, situació de dependència, prestacions, ajudes, etc.</li>
+      <li>Informació professional: situació laboral, demanda d'ocupació, vida laboral, prestacions, sol·licitud de jubilació, etc.</li>
+      <li>Dades d'habitatge i urbanisme: béns immobles rústics o urbans, registre cadastral, etc.</li>
+      <li>Informació de vehicles i transports: vehicles propis, permís de conduir, punts del carnet, etc.</li>
+      <li>Dades relatives a notificacions</li>
+    </ul>
+    <br>
+    <b>3. Com s'obtenen les dades per a l'Àrea privada ciutadana i d'on provenen?</b>
+    <br>
+    <br>
+    Les dades s'obtenen per mitjà de consultes realitzades a les Administracions Públiques i Organismes Públics, els quals en són els responsables.
+    Una vegada que l'usuari accedeix al servei, es porten a terme consultes per mostrar les notificacions i avisos que l'afectin (incloses les cites programades) 
+    i les gestions fetes en el marc del tràmit. L'accés a aquestes dades es fa mitjançant els sistemes que cada Administració posi a disposició, així com a través 
+    dels serveis d'interoperabilitat que permetin accedir-hi. També es permet l'accés a les dades mitjançant altres serveis, si està prevista la interconnexió.
+
+    <b>4. Quina és la base jurídica per al tractament de les dades?</b>
+    <br>
+    <br>
+    Els tractaments de dades personals que es puguin fer a través de l'Àrea privada ciutadana estan justificats pel compliment d'una missió d'interès públic o per 
+    l'exercici de poders públics delegats al responsable del tractament, d'acord amb l'article 13 de la Llei 29/2010, del 3 d'agost, de l'ús dels mitjans electrònics 
+    al sector públic de Catalunya, l'article 28 de la Llei 39/2015, d'1 d'octubre, del Procediment Administratiu Comú de les Administracions Públiques, l'article 42 i 
+    45 del Reial decret 203/2021, de 30 de març, pel qual s'aprova el Reglament d'actuació i funcionament del sector públic per mitjans electrònics i l'article 19, 66 
+    i 74 del Decret 76/2020, de 4 d'agost, d'Administració digital, així com el consentiment, quan sigui pertinent.
+
+    <b>5. Per a què s'utilitzen les dades?</b>
+    <br>
+    <br>
+    La informació i dades recollides a l'Àrea privada ciutadana són tractades únicament amb l'objectiu d'oferir un servei personalitzat:
+    <br>
+    <br>
+    <ul>
+      <li>Accedir als tràmits i a les gestions.</li>
+      <li>Accedir a les notificacions i les comunicacions que tramet l'Administració.</li>
+      <li>Accedir a les dades i documents de l'usuari i modificar-los, si es considera necessari.</li>
+    </ul>
+    <br>
+    <b>6. Durant quant temps emmagatzemem les dades?</b>
+    <br>
+    <br>
+    Les dades personals es conserven durant el temps requerit per acomplir amb la finalitat per la qual es van recollire. Un cop s'ha assolit l'objectiu, 
+    les dades s'eliminen d'acord amb la 
+    <a href="https://cultura.gencat.cat/ca/temes/arxius-i-gestio-documental/cnaatd/">normativa i els procediments vigents en matèria de gestió documental i arxiu.</a>
+    <br>
+    <br>
+    <b>7. Qui té accés a les dades?</b>
+    <br>
+    <br>
+    Només el titular de les dades hi té accés. No obstant això, en alguns casos, com ara el suport a la tramitació, pot ser que un tercer hagi d'accedir a les dades mínimes 
+    imprescindibles per oferir l'assistència adequada, previ consentiment de l'usuari.
+    <br>
+    <br>
+    <b>8. Quins drets té l'usuari sobre les seves dades i com els pot exercir?</b>
+    <br>
+    <br>
+    L'usuari té dret a sol·licitar l'accés, la rectificació, la supressió, l'oposició i la limitació del tractament de les seves dades, mitjançant la petició genèrica disponible 
+    a Tràmits Gencat o bé amb una sol·licitud en suport paper al Departament de la Presidència (C/ Sant Honorat, 1-3, 08002 Barcelona). La presentació de la sol·licitud per mitjans 
+    electrònics requereix disposar de certificat electrònic o bé sistemes alternatius d'identificació. Cal indicar a la sol·licitud quins drets s'exerceixen. Més informació a la pàgina web 
+    <a href="https://presidencia.gencat.cat/ca/el_departament/proteccio-dades/drets-de-les-persones-interessades/">https://presidencia.gencat.cat/ca/el_departament/proteccio-dades/drets-de-les-persones-interessades/</a>.
+    <br>
+    <br>
+    <b>Política de galetes</b>
+    <br>
+    <br>
+    La informació relativa a les galetes utilitzades en aquest servei es troba a: 
+    <a href="https://presidencia.gencat.cat/ca/ajuda/politica-de-galetes/">https://presidencia.gencat.cat/ca/ajuda/politica-de-galetes/</a>
+    .
 
 
-  2. Quines dades personals es tracten?
-
-  La informació personal que es tracta procedeix de fonts externes a l'Àrea privada ciutadana, excepte la informació que proporcionen els usuaris per:
-
-      Accedir al servei.
-      Configurar el servei.
-      Realitzar un tràmit.
-      Sol·licitar la modificació de les dades personals de contacte.
-      Sol·licitar la generació d'un justificant o un certificat.
-
-
-  Segons el servei o consulta realitzada a l'Àrea privada ciutadana, es poden tractar diferents tipus de dades personals, com ara:
-
-      Dades d'identificació o de contacte
-      Dades del dispositiu i sistema operatiu utilitzat
-      Dades sobre pròxims esdeveniments o cites concertades amb la Generalitat de Catalunya
-      Dades relacionades amb tràmits realitzats amb la Generalitat o altres administracions públiques
-      Dades sobre consultes, queixes o suggeriments fets a través del servei de Bústia de contacte
-      Informació educativa: títols obtinguts, beques i ajudes a l'estudi, etc.
-      Dades de salut i serveis socials: certificats de discapacitat, grau, situació de dependència, prestacions, ajudes, etc.
-      Informació professional: situació laboral, demanda d'ocupació, vida laboral, prestacions, sol·licitud de jubilació, etc.
-      Dades d'habitatge i urbanisme: béns immobles rústics o urbans, registre cadastral, etc.
-      Informació de vehicles i transports: vehicles propis, permís de conduir, punts del carnet, etc.
-      Dades relatives a notificacions
-
-
-  3. Com s'obtenen les dades per a l'Àrea privada ciutadana i d'on provenen?
-
-  Les dades s'obtenen per mitjà de consultes realitzades a les Administracions Públiques i Organismes Públics, els quals en són els responsables. Una vegada que l'usuari accedeix al servei, es porten a terme consultes per mostrar les notificacions i avisos que l'afectin (incloses les cites programades) i les gestions fetes en el marc del tràmit. L'accés a aquestes dades es fa mitjançant els sistemes que cada Administració posi a disposició, així com a través dels serveis d'interoperabilitat que permetin accedir-hi. També es permet l'accés a les dades mitjançant altres serveis, si està prevista la interconnexió.4. Quina és la base jurídica per al tractament de les dades?
-
-  Els tractaments de dades personals que es puguin fer a través de l'Àrea privada ciutadana estan justificats pel compliment d'una missió d'interès públic o per l'exercici de poders públics delegats al responsable del tractament, d'acord amb l'article 13 de la Llei 29/2010, del 3 d'agost, de l'ús dels mitjans electrònics al sector públic de Catalunya, l'article 28 de la Llei 39/2015, d'1 d'octubre, del Procediment Administratiu Comú de les Administracions Públiques, l'article 42 i 45 del Reial decret 203/2021, de 30 de març, pel qual s'aprova el Reglament d'actuació i funcionament del sector públic per mitjans electrònics i l'article 19, 66 i 74 del Decret 76/2020, de 4 d'agost, d'Administració digital, així com el consentiment, quan sigui pertinent.5. Per a què s'utilitzen les dades?
-
-  La informació i dades recollides a l'Àrea privada ciutadana són tractades únicament amb l'objectiu d'oferir un servei personalitzat:
-
-      Accedir als tràmits i a les gestions.
-      Accedir a les notificacions i les comunicacions que tramet l'Administració.
-      Accedir a les dades i documents de l'usuari i modificar-los, si es considera necessari.
-
-
-  6. Durant quant temps emmagatzemem les dades?
-
-  Les dades personals es conserven durant el temps requerit per acomplir amb la finalitat per la qual es van recollir. Un cop s'ha assolit l'objectiu, les dades s'eliminen d'acord amb la normativa i els procediments vigents en matèria de gestió documental i arxiu.
-
-  7. Qui té accés a les dades?
-
-  Només el titular de les dades hi té accés.No obstant això, en alguns casos, com ara el suport a la tramitació, pot ser que un tercer hagi d'accedir a les dades mínimes imprescindibles per oferir l'assistència adequada, previ consentiment de l'usuari.
-
-  8. Quins drets té l'usuari sobre les seves dades i com els pot exercir?
-
-  L'usuari té dret a sol·licitar l'accés, la rectificació, la supressió, l'oposició i la limitació del tractament de les seves dades, mitjançant la petició genèrica disponible a Tràmits Gencat o bé amb una sol·licitud en suport paper al Departament de la Presidència (C/ Sant Honorat, 1-3, 08002 Barcelona). La presentació de la sol·licitud per mitjans electrònics requereix disposar de certificat electrònic o bé sistemes alternatius d'identificació. Cal indicar a la sol·licitud quins drets s'exerceixen. Més informació a la pàgina web https://presidencia.gencat.cat/ca/el_departament/proteccio-dades/drets-de-les-persones-interessades/.
-
-  Política de galetes
-
-  La informació relativa a les galetes utilitzades en aquest servei es troba a: https://presidencia.gencat.cat/ca/ajuda/politica-de-galetes/
-
+    <br>    <br>
+    <br>
   <input type="checkbox">He llegit i accepto les condicions d'ús i la política de privacitat de l'Àrea privada de la Generalitat de Catalunya
-
-  <button @click="goToAreaPrivada">Continua</button>
+    <br>
+    <br>
+  <button @click="goToAreaPrivada" class="border">Continua</button>
   </div>
 </template>

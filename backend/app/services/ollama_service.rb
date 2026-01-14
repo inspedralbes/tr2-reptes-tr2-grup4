@@ -18,7 +18,7 @@ class OllamaService
 
     # TIMEOUTS
     http.open_timeout = 10 
-    http.read_timeout = 300
+    http.read_timeout = 100
 
     request = Net::HTTP::Post.new(
       OLLAMA_URL.path,
@@ -26,7 +26,7 @@ class OllamaService
     )
 
     request.body = {
-      model: 'llama3',
+      model: 'phi3',
       prompt: prompt,
       stream: false,
     }.to_json
