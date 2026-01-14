@@ -6,6 +6,7 @@ one:
   medrec: MyText
   activities: MyText
   interacttutorial: MyText
+  user: one
 
 two:
   description: MyText
@@ -13,3 +14,4 @@ two:
   medrec: MyText
   activities: MyText
   interacttutorial: MyText
+  user: two
