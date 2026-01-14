@@ -26,7 +26,7 @@ class OllamaService
     )
 
     request.body = {
-      model: "phi3",
+      model: 'phi3',
       prompt: prompt,
       stream: false
     }.to_json
@@ -34,4 +34,3 @@ class OllamaService
     JSON.parse(response.body)["response"]
   end
 end
-
