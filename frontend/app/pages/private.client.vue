@@ -135,9 +135,11 @@
         }
     }
 
-async function loadPi() {
-  const res = await fetch("http://localhost:3000/pis", { credentials: "include" })
-  if (!res.ok) return
+    async function loadDocument() {
+        const res = await fetch("http://localhost:3000/pis/1", {
+        credentials: "include"
+        });
+        if (!res.ok) throw new Error(`Failed to load PI: ${res.status}`)
 
         const pi = await res.json()
 
@@ -155,16 +157,22 @@ async function loadPi() {
         console.log("sections:", docVM.value.sections)
     }
 
-async function handleSubmit() {
-  if (!documentFile) {
-    alert("Please select a document")
-    return
-  }
-  const formData = new FormData()
-  formData.append("document", documentFile)
-  await fetch("http://localhost:3000/upload", { method: "POST", credentials: "include", body: formData })
-  open.value = false
-}
+    async function handleSubmit() {
+        if (!document2.value) {
+            alert("Please select a document to upload.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("document", document2.value);
+
+        await fetch("http://localhost:3000/upload", {
+            method: "POST",
+            credentials: "include",
+            body: formData,
+        });
+        open.value = false
+    }
 
     function scrollTo(id: number) {
         if (import.meta.server) return;
@@ -227,8 +235,9 @@ async function handleSubmit() {
         }
     }
 
-onMounted(async () => {
-  await checkAuth()
-  await loadPi()
-})
+    onMounted(async () => {
+        await checkEndpoint();
+        loadDocument();
+    });
+
 </script>
