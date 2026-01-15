@@ -12,6 +12,10 @@ class PisController < ApplicationController
 
   # GET /pis/1
   def show
+    #return render json: nil, status: :unauthorized unless current_user
+    #pi = current_user.pi
+    #return render json: nil, status: :not_found unless pi
+    #render json: pi
   end
 
   # POST /pis
