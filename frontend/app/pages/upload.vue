@@ -53,5 +53,6 @@ async function handleSubmit() {
     body: formData,
   });
   const data = await res.json();
+  console.log(data);
 }
 </script>
