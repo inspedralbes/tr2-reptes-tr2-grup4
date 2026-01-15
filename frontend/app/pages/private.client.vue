@@ -78,6 +78,21 @@
             </section>
         </div>
         </div>
+            <!-- Read-only -->
+            <p v-if="editingId !== section.id" class="mt-3 whitespace-pre-wrap">
+                {{ section.content }}
+            </p>
+
+            <!-- Editable -->
+            <div v-else class="mt-3">
+                <textarea
+                class="w-full border rounded p-2 min-h-[140px]"
+                v-model="drafts[section.id]"
+                />
+                <p v-if="saveError" class="text-red-600 mt-2">{{ saveError }}</p>
+            </div>
+        </section>
+  
         <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white"
             type="button"
             @click="open = true">
@@ -108,6 +123,33 @@
             </form>
         </div>
       </form>
+
+        <button class="fixed right-4 bottom-[70px] px-4 py-2 bg-red-700 text-white"
+            type="button"
+            @click="open2 = true">
+            Descarrga document
+        </button>
+        <div v-if="open2"
+            class="fixed inset-0 grid place-items-center bg-black/50 p-4"
+            @click.self="open2 = false">
+
+            <form class="w-full max-w-sm bg-white p-4"
+                @submit.prevent="handleSubmit">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-semibold">Descarrega el document</h3>
+                <button type="button" class="text-xl" @click="open2 = false">×</button>
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <button type="button" class="px-3 py-2 border" @click="open2 = false">
+                Cancel
+                </button>
+                <button type="button" class="px-3 py-2 bg-red-700 text-white" @click="downloadPdf">
+                Descàrrega
+                </button>
+            </div>
+            </form>
+        </div>
     </div>
   </div>
 </template>
@@ -123,6 +165,7 @@
     const docVM = ref<DocumentVm>({ title: "PI #1", sections: [] });
     const document2 = ref<File | null>(null);
     const open = ref(false)
+    const open2 = ref(false)
     
     function onFileChange(e: Event) {
         const input = e.target as HTMLInputElement
@@ -210,5 +253,102 @@ onMounted(async () => {
   await checkEndpoint();
   loadDocument();
 });
+
+</script>
+    async function downloadPdf() {
+      try {
+        const response = await fetch(`http://localhost:3000/pis/${piId}/download`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          alert("Failed to download document.");
+          return;
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `PI_${piId}.pdf`; // Es pot modificar segons sigui necessari
+        document.body.appendChild(a);
+        a.click();
+
+        a.remove();
+        window.URL.revokeObjectURL(url);
+          
+        open2.value = false
+      } catch (error) {
+        console.error("Error downloading PDF:", error);
+      }
+    }
+
+    function scrollTo(id: number) {
+        if (import.meta.server) return;
+
+        window.document
+            .getElementById(`sec-${id}`)
+            ?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+
+    const piId = 1 // later you can take it from route params
+    const editingId = ref<number | null>(null)
+    const drafts = ref<Record<number, string>>({})
+    const saving = ref(false)
+    const saveError = ref<string | null>(null)
+
+    function startEdit(section: DocSection) {
+        saveError.value = null
+        editingId.value = section.id
+        drafts.value[section.id] = section.content
+    }
+
+    function cancelEdit(section: DocSection) {
+        saveError.value = null
+        drafts.value[section.id] = section.content
+        editingId.value = null
+    }
+
+    async function saveSection(section: DocSection) {
+        saveError.value = null
+        saving.value = true
+
+        try {
+            const newText = drafts.value[section.id] ?? ""
+
+            // Patch only the field you’re editing
+            const body = { pi: { [section.field]: newText } }
+
+            const res = await fetch(`http://localhost:3000/pis/${piId}`, {
+            method: "PATCH",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(body),
+            })
+
+            const data = await res.json().catch(() => ({}))
+            if (!res.ok) {
+            throw new Error(data?.error || (data?.errors?.join?.(", ")) || `Save failed (${res.status})`)
+            }
+
+            // Update local UI
+            const idx = docVM.value.sections.findIndex((x) => x.id === section.id)
+            const target = docVM.value.sections[idx]
+            if (target) target.content = newText
+
+            editingId.value = null
+        } catch (e: any) {
+            saveError.value = e?.message ?? "Failed to save"
+        } finally {
+            saving.value = false
+        }
+    }
+
+    onMounted(async () => {
+        await checkEndpoint();
+        loadDocument();
+    });
 
 </script>
