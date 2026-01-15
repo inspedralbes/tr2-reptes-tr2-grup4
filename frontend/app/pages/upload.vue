@@ -53,6 +53,7 @@ const cable = ref<any>(null)
 onMounted(() => {
   cable.value = usePdfUploadCable('ws://localhost:3000/cable')
   cable.value.connect()
+  console.log('WebSocket connecting...')
 })
 
 onUnmounted(() => {
@@ -102,6 +103,16 @@ async function handleSubmit() {
     return
   }
 
+  // Wait for connection to be established
+  if (!cable.value.isConnected.value) {
+    console.log('Waiting for connection...')
+    await new Promise(resolve => setTimeout(resolve, 500))
+    if (!cable.value.isConnected.value) {
+      alert('WebSocket still not connected. Please try again.')
+      return
+    }
+  }
+
   isUploading.value = true
   status.value = null
   summary.value = ''
@@ -125,6 +136,8 @@ async function handleSubmit() {
     }
 
     unsubscribe.value = cable.value.subscribeToPdfUpload(data.id, (update: any) => {
+      console.log('Received update:', update)
+      console.log('Current status before:', status.value)
       switch (update.status) {
         case 'processing':
           status.value = 'processing'
@@ -139,6 +152,7 @@ async function handleSubmit() {
           errorMessage.value = update.error || 'Unknown error'
           break
       }
+      console.log('Current status after:', status.value)
     })
 
   } catch (error) {
