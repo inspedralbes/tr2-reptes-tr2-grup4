@@ -220,7 +220,7 @@
 
         const a = document.createElement("a");
         a.href = url;
-        a.download = `PI_${piId}.pdf`; // You can set the desired file name here
+        a.download = `PI_${piId}.pdf`; // Es pot modificar segons sigui necessari
         document.body.appendChild(a);
         a.click();
 
