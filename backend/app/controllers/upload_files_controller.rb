@@ -12,18 +12,26 @@ class UploadFilesController < ApplicationController
       render json: { error: "Only PDF files allowed" }, status: :unsupported_media_type
     end
 
-    #  begin
-    #    pages = extract_text_from_pdf(uploaded_file)
-    #    text = clean_text(pages)
-    #    text = truncate_text(text)
-    #    summary = OllamaService.summarize(text)
-    #    render json: {
-    #      filename: uploaded_file.original_filename,
-    #      summary: summary
-    #    }, status: :ok
-    #  rescue => e
-    #    render json: { error: "Failed to process PDF: #{e.message}" }, status: :unprocessable_entity
-    #  end
+    begin
+      text = extract_text_from_pdf(uploaded_file)
+
+      pdf_upload = PdfUpload.create!(
+        user: current_user,
+        filename: uploaded_file.original_filename,
+        original_text: text,
+        status: :pending
+      )
+
+      SummarizePdfJob.perform_later(pdf_upload.id)
+
+      render json: {
+        id: pdf_upload.id,
+        status: "processing",
+        message: "PDF is being processed"
+      }, status: :accepted
+    rescue => e
+      render json: { error: "Failed to process PDF: #{e.message}" }, status: :unprocessable_entity
+    end
   end
 
   private
@@ -34,15 +42,6 @@ class UploadFilesController < ApplicationController
     reader.pages.map(&:text)
       .map { |t| t.gsub(/\s+/, " ").strip }
       .reject(&:empty?)
-  end
-
-  def clean_text(pages)
-    pages.join("\n")
-         .gsub(/\s+/, " ")
-         .strip
-  end
-
-  def truncate_text(text, max_chars = 3000)
-    text[0...max_chars]
+      .join("\n")
   end
 end
