@@ -1,9 +1,36 @@
-# Async adapter only works within the same process, so for manually triggering cable updates from a console,
-# and seeing results in the browser, you must do so from the web console (running inside the dev process),
-# not a terminal started via bin/rails console! Add "console" to any action or any ERB template view
-# to make the web console appear.
+# =============================================================================
+# Cable Configuration
+# =============================================================================
+# This file configures Action Cable (WebSocket) settings for different environments.
+#
+# ADAPTERS:
+# - async: In-memory adapter, good for testing but doesn't persist connections
+# - test: Adapter for running tests
+# - solid_cable: PostgreSQL-backed adapter (Rails 8's built-in solution)
+#   This is what we use for production and development
+#
+# SOLID CABLE OPTIONS:
+# - connects_to.database.writing: Which database to use for storing messages
+# - polling_interval: How often clients check for missed messages (when reconnecting)
+# - message_retention: How long to keep broadcast messages (older messages are deleted)
+#
+# =============================================================================
+
 development:
-  adapter: async
+  # Use solid_cable adapter for development
+  # This stores WebSocket messages in PostgreSQL (via Solid Cable)
+  # Benefits:
+  #   - Messages persist even if server restarts
+  #   - Multiple server instances can share messages
+  #   - Same as production setup
+  adapter: solid_cable
+  connects_to:
+    database:
+      writing: cable
+  # Clients check for missed messages every 0.5 seconds when reconnecting
+  polling_interval: 0.5.seconds
+  # Keep broadcast messages for 1 day
+  message_retention: 1.day
 
 test:
   adapter: test
