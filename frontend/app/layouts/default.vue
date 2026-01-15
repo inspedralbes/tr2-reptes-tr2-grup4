@@ -11,7 +11,7 @@
         </div>
       </nav>
     </header>
-    <main class="mx-auto">
+    <main class="mx-auto bg-[#F7F7F7]">
       <slot />
     </main>
     <footer>

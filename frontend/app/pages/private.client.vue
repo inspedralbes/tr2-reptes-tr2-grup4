@@ -1,73 +1,83 @@
 <template>  
-    <div class="max-w-5xl mx-auto px-4 py-6 min-h-screen">
-        <h1>Greetings, our unique and special {{ username }}! This is your personal cabinet.</h1>
-        <h2>Document</h2>
-        <aside class="fixed left-4 top-24 w-48 border bg-white p-2">
-            <p class="font-semibold mb-2">Sections</p>
+    <div class="max-w-5xl mx-auto px-4 py-6 min-h-screen bg-[#F7F7F7]">
+        <div class="flex gap-4">
+            <!-- Sidebar -->
+            <aside class="w-56 shrink-0">
+            <div class="sticky top-24 h-[calc(100vh-6rem)] overflow-auto border bg-white p-3">
+                <p class="font-semibold mb-2">Sections</p>
 
-            <button
+                <button
                 v-for="s in docVM.sections"
                 :key="s.id"
                 type="button"
                 class="block w-full text-left px-2 py-1 hover:bg-gray-100"
                 @click="scrollTo(s.id)"
-            >
-                {{ s.title }}
-            </button>
-        </aside>
-        <section
-            v-for="section in docVM.sections"
-            :key="section.id"
-            :id="`sec-${section.id}`"
-            class="mt-6 scroll-mt-24 border rounded-lg p-4 bg-white"
-            >
-            <div class="flex items-start justify-between gap-3">
-                <h3 class="font-semibold">{{ section.title }}</h3>
-
-                <div class="flex gap-2 shrink-0">
-                <button
-                    v-if="editingId !== section.id"
-                    class="border rounded px-3 py-1"
-                    type="button"
-                    @click="startEdit(section)"
                 >
-                    Edit
+                {{ s.title }}
                 </button>
+            </div>
+            </aside>
 
-                <template v-else>
+            <!-- Main document -->
+            <div class="flex-1">
+            <h1>Greetings, our unique and special {{ username }}! This is your personal cabinet.</h1>
+            <h2>Document</h2>
+
+            <section
+                v-for="section in docVM.sections"
+                :key="section.id"
+                :id="`sec-${section.id}`"
+                class="mt-6 scroll-mt-24 border p-4 bg-white"
+                >
+                <div class="flex items-start justify-between gap-3">
+                    <h3 class="font-semibold">{{ section.title }}</h3>
+
+                    <div class="flex gap-2 shrink-0">
                     <button
-                    class="border rounded px-3 py-1"
-                    type="button"
-                    :disabled="saving"
-                    @click="saveSection(section)"
+                        v-if="editingId !== section.id"
+                        class="border px-3 py-1"
+                        type="button"
+                        @click="startEdit(section)"
                     >
-                    Save
+                        Edit
                     </button>
-                    <button
-                    class="border rounded px-3 py-1"
-                    type="button"
-                    :disabled="saving"
-                    @click="cancelEdit(section)"
-                    >
-                    Cancel
-                    </button>
-                </template>
+
+                    <template v-else>
+                        <button
+                        class="border px-3 py-1"
+                        type="button"
+                        :disabled="saving"
+                        @click="saveSection(section)"
+                        >
+                        Save
+                        </button>
+                        <button
+                        class="border px-3 py-1"
+                        type="button"
+                        :disabled="saving"
+                        @click="cancelEdit(section)"
+                        >
+                        Cancel
+                        </button>
+                    </template>
+                    </div>
                 </div>
-            </div>
 
-            <p v-if="editingId !== section.id" class="mt-3 whitespace-pre-wrap">
-                {{ section.content }}
-            </p>
+                <p v-if="editingId !== section.id" class="mt-3 whitespace-pre-wrap">
+                    {{ section.content }}
+                </p>
 
-            <!-- Editable -->
-            <div v-else class="mt-3">
-                <textarea
-                class="w-full border rounded p-2 min-h-[140px]"
-                v-model="drafts[section.id]"
-                />
-                <p v-if="saveError" class="text-red-600 mt-2">{{ saveError }}</p>
-            </div>
-        </section>
+                <!-- Editable -->
+                <div v-else class="mt-3">
+                    <textarea
+                    class="w-full border p-2 min-h-[140px]"
+                    v-model="drafts[section.id]"
+                    />
+                    <p v-if="saveError" class="text-red-600 mt-2">{{ saveError }}</p>
+                </div>
+            </section>
+        </div>
+        </div>
         <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white"
             type="button"
             @click="open = true">
@@ -136,14 +146,22 @@
 
     async function loadDocument() {
         const res = await fetch("http://localhost:3000/pis/1", {
+        //const res = await fetch("http://localhost:3000/pis", {
+        //method: "GET",
         credentials: "include"
         });
         if (!res.ok) throw new Error(`Failed to load PI: ${res.status}`)
 
         const pi = await res.json()
 
+        /*if (!pi) {
+            docVM.value = { title: "No PI yet", sections: [] };
+            return;
+        }*/
+
         docVM.value = {
             title: pi.title ?? `PI #${pi.id ?? 1}`,
+            //title: pi.title ?? `PI #${pi.id ?? ""}`,
             sections: [
                 { id: 1, title: "Description", content: pi.description ?? "", field: "description" },
                 { id: 2, title: "Observations", content: pi.observations ?? "", field: "observations" },
