@@ -42,6 +42,31 @@ class PisController < ApplicationController
   def destroy
     @pi.destroy!
   end
+  # DESCARREGAR DOCUMENT
+  def download
+    pi = PI.fing(params[:id])
+
+    pdf = Prawn::Document.new
+
+    pdf.text "PLA DE SUPORT INDIVIDUALITZAT", size:18, style: :bold, align: :center
+    pdf.move_down 20
+
+    pdf.text "Descripció: #{pi.description}", size:12
+    pdf.move_down 10
+
+    pdf.text "Observacions: #{pi.observations}", size:12
+    pdf.move_down 10
+
+    pdf.text "Història mèdica: #{pi.medrec}", size:12
+    pdf.move_down 10
+
+    pdf.text "Activitats: #{pi.activities}", size:12
+    pdf.move_down 10
+
+    pdf.text "Interacció i tutorial: #{pi.interacttutorial}", size:12
+    pdf.move_down 10
+    
+  end
 
   private
     # Use callbacks to share common setup or constraints between actions.

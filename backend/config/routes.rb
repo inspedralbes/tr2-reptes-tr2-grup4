@@ -14,4 +14,7 @@ Rails.application.routes.draw do
   # post "/pis", to: "pi#create"
   # get "/pis", to: "pi#index"
   post "/upload", to: "upload_files#create"
+
+  # Descarrga ruta
+  get :download, to: "upload_files#download"
 end

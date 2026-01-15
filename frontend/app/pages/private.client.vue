@@ -69,6 +69,7 @@
                 <p v-if="saveError" class="text-red-600 mt-2">{{ saveError }}</p>
             </div>
         </section>
+  
         <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white"
             type="button"
             @click="open = true">
@@ -98,6 +99,33 @@
             </div>
             </form>
         </div>
+
+        <button class="fixed right-4 bottom-[70px] px-4 py-2 bg-red-700 text-white"
+            type="button"
+            @click="open2 = true">
+            Descarrga document
+        </button>
+        <div v-if="open2"
+            class="fixed inset-0 grid place-items-center bg-black/50 p-4"
+            @click.self="open2 = false">
+
+            <form class="w-full max-w-sm bg-white p-4"
+                @submit.prevent="handleSubmit">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-semibold">Descarrega el document</h3>
+                <button type="button" class="text-xl" @click="open2 = false">×</button>
+            </div>
+
+            <div class="flex justify-end gap-2">
+                <button type="button" class="px-3 py-2 border" @click="open2 = false">
+                Cancel
+                </button>
+                <button type="submit" class="px-3 py-2 bg-red-700 text-white">
+                Descarrga
+                </button>
+            </div>
+            </form>
+        </div>
     </div>
 </template>
 
@@ -112,6 +140,7 @@
     const docVM = ref<DocumentVm>({ title: "PI #1", sections: [] });
     const document2 = ref<File | null>(null);
     const open = ref(false)
+    const open2 = ref(false)
     
     function onFileChange(e: Event) {
         const input = e.target as HTMLInputElement
