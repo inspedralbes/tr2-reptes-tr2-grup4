@@ -10,9 +10,21 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.1].define(version: 2026_01_14_000000) do
+ActiveRecord::Schema[8.1].define(version: 2026_01_15_000000) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "pdf_uploads", force: :cascade do |t|
+    t.datetime "created_at", null: false
+    t.text "error_message"
+    t.string "filename"
+    t.text "original_text"
+    t.string "status", default: "pending"
+    t.text "summary"
+    t.datetime "updated_at", null: false
+    t.bigint "user_id", null: false
+    t.index ["user_id"], name: "index_pdf_uploads_on_user_id"
+  end
 
   create_table "pis", force: :cascade do |t|
     t.text "activities"
@@ -34,5 +46,6 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_14_000000) do
     t.string "username"
   end
 
+  add_foreign_key "pdf_uploads", "users"
   add_foreign_key "pis", "users"
 end

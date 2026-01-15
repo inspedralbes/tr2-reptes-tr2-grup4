@@ -27,6 +27,12 @@ class UsersController < ApplicationController
     end
   end
 
+  # POST /logout
+  def logout
+    reset_session
+    render json: { authenticated: false }, status: :ok
+  end
+
 # GET /me
 def me
   if session[:user_id]
