@@ -55,7 +55,6 @@
                 </div>
             </div>
 
-            <!-- Read-only -->
             <p v-if="editingId !== section.id" class="mt-3 whitespace-pre-wrap">
                 {{ section.content }}
             </p>
