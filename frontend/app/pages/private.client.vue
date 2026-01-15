@@ -120,8 +120,8 @@
                 <button type="button" class="px-3 py-2 border" @click="open2 = false">
                 Cancel
                 </button>
-                <button type="submit" class="px-3 py-2 bg-red-700 text-white">
-                Descarrga
+                <button type="button" class="px-3 py-2 bg-red-700 text-white" @click="downloadPdf">
+                Descàrrega
                 </button>
             </div>
             </form>
@@ -201,6 +201,36 @@
             body: formData,
         });
         open.value = false
+    }
+
+    async function downloadPdf() {
+      try {
+        const response = await fetch(`http://localhost:3000/pis/${piId}/download`, {
+          method: "GET",
+          credentials: "include",
+        });
+
+        if (!response.ok) {
+          alert("Failed to download document.");
+          return;
+        }
+
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+
+        const a = document.createElement("a");
+        a.href = url;
+        a.download = `PI_${piId}.pdf`; // You can set the desired file name here
+        document.body.appendChild(a);
+        a.click();
+
+        a.remove();
+        window.URL.revokeObjectURL(url);
+          
+        open2.value = false
+      } catch (error) {
+        console.error("Error downloading PDF:", error);
+      }
     }
 
     function scrollTo(id: number) {

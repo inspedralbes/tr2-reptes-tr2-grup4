@@ -1,5 +1,5 @@
 class PisController < ApplicationController
-  before_action :set_pi, only: %i[ show update destroy ]
+  before_action :set_pi, only: %i[ show update destroy download ]
 
   # GET /pis
   def index
@@ -44,28 +44,36 @@ class PisController < ApplicationController
   end
   # DESCARREGAR DOCUMENT
   def download
-    pi = PI.fing(params[:id])
-
     pdf = Prawn::Document.new
 
     pdf.text "PLA DE SUPORT INDIVIDUALITZAT", size:18, style: :bold, align: :center
     pdf.move_down 20
 
-    pdf.text "Descripció: #{pi.description}", size:12
+    pdf.text "Descripció", style: :bold
+    pdf.text @pi.description.to_s 
     pdf.move_down 10
 
-    pdf.text "Observacions: #{pi.observations}", size:12
+    pdf.text "Observacions", style: :bold
+    pdf.text @pi.observations.to_s
     pdf.move_down 10
 
-    pdf.text "Història mèdica: #{pi.medrec}", size:12
+    pdf.text "Història mèdica", style: :bold
+    pdf.text @pi.medrec.to_s
     pdf.move_down 10
 
-    pdf.text "Activitats: #{pi.activities}", size:12
+    pdf.text "Activitats", style: :bold
+    pdf.text @pi.activities.to_s
     pdf.move_down 10
 
-    pdf.text "Interacció i tutorial: #{pi.interacttutorial}", size:12
+    pdf.text "Interacció tutorial", style: :bold
+    pdf.text @pi.interacttutorial.to_s
     pdf.move_down 10
-    
+
+
+    send_data pdf.render, 
+      filename: "PI_#{@pi.id}.pdf", 
+      type: "application/pdf",
+      disposition: "attachment"
   end
 
   private
