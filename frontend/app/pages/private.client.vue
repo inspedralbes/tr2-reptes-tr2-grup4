@@ -32,7 +32,6 @@
         </div>
       </div>
 
-      <!-- Read-only -->
       <p v-if="editingId !== section.id" class="mt-3 whitespace-pre-wrap">
         {{ section.content }}
       </p>
@@ -67,6 +66,7 @@
         </div>
       </form>
     </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -77,8 +77,8 @@ type PiField = "description" | "observations" | "medrec" | "activities" | "inter
 type DocSection = { id: number; title: string; content: string; field: PiField }
 type DocumentVm = { title: string; sections: DocSection[] }
 
-const docVM = ref < DocumentVm > ({ title: "PI #1", sections: [] });
-const document2 = ref < File | null > (null);
+const docVM = ref<DocumentVm>({ title: "PI #1", sections: [] });
+const document2 = ref<File | null>(null);
 const open = ref(false)
 
 function onFileChange(e: Event) {
@@ -151,10 +151,10 @@ function scrollTo(id: number) {
 }
 
 const piId = 1 // later you can take it from route params
-const editingId = ref < number | null > (null)
-const drafts = ref < Record < number, string>> ({})
+const editingId = ref<number | null>(null)
+const drafts = ref<Record<number, string>>({})
 const saving = ref(false)
-const saveError = ref < string | null > (null)
+const saveError = ref<string | null>(null)
 
 function startEdit(section: DocSection) {
   saveError.value = null
