@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   get "up" => "rails/health#show", as: :rails_health_check
 
   post "/login", to: "users#login"
+  post "/logout", to: "users#logout"
   post "/register", to: "users#register"
   get "/me", to: "users#me"
 
@@ -14,4 +15,5 @@ Rails.application.routes.draw do
   # post "/pis", to: "pi#create"
   # get "/pis", to: "pi#index"
   post "/upload", to: "upload_files#create"
+  resources :pdf_uploads, only: [ :show ]
 end

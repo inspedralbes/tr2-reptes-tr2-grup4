@@ -15,21 +15,33 @@ class UploadFilesController < ApplicationController
     begin
       text = extract_text_from_pdf(uploaded_file)
 
-      render json: {
+      pdf_upload = PdfUpload.create!(
+        user: current_user,
         filename: uploaded_file.original_filename,
-        content_type: uploaded_file.content_type,
-        size: uploaded_file.size,
-        text: text
-      }, status: :ok
+        original_text: text,
+        status: :pending
+      )
+
+      SummarizePdfJob.perform_later(pdf_upload.id)
+
+      render json: {
+        id: pdf_upload.id,
+        status: "processing",
+        message: "PDF is being processed"
+      }, status: :accepted
     rescue => e
-      render json: { error: "Failed to read PDF: #{e.message}" }, status: :unprocessable_entity
+      render json: { error: "Failed to process PDF: #{e.message}" }, status: :unprocessable_entity
     end
   end
 
   private
 
   def extract_text_from_pdf(uploaded_file)
-    # Pass the path explicitly
-    PDF::Reader.new(uploaded_file.tempfile.path).pages.map(&:text).join("\n")
+    reader = PDF::Reader.new(uploaded_file.tempfile)
+
+    reader.pages.map(&:text)
+      .map { |t| t.gsub(/\s+/, " ").strip }
+      .reject(&:empty?)
+      .join("\n")
   end
 end
