@@ -56,96 +56,44 @@
     <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white" type="button" @click="open = true">
       Add document
     </button>
+    <label for="document" class="block mb-2">Document</label>
+    <input id="document" type="file" class="w-full border p-2 mb-3" @change="onFileChange" />
 
-    async function checkEndpoint() {
-        const res = await fetch("http://localhost:3000/me", {
-            method: "GET",
-            credentials: "include",
-            headers: {
-                "Content-Type": "application/json",
-            },
-        });
-        const data = await res.json()
-        if (data.authenticated) {
-            console.log("User authenticated");
-        } else {
-            router.push("/areaPrivada");
-            console.log("User not authenticated");
-        }
-    }
-
-    async function loadDocument() {
-        //const res = await fetch("http://localhost:3000/pis/1", {
-        const res = await fetch("http://localhost:3000/pis", {
-        method: "GET",
-        credentials: "include"
-        });
-        if (!res.ok) throw new Error(`Failed to load PI: ${res.status}`)
-
-        const pi = await res.json()
-
-        if (!pi) {
-            docVM.value = { title: "No PI yet", sections: [] };
-            return;
-        }
-
-        docVM.value = {
-            //title: pi.title ?? `PI #${pi.id ?? 1}`,
-            title: pi.title ?? `PI #${pi.id ?? ""}`,
-            sections: [
-                { id: 1, title: "Description", content: pi.description ?? "", field: "description" },
-                { id: 2, title: "Observations", content: pi.observations ?? "", field: "observations" },
-                { id: 3, title: "Medical record", content: pi.medrec ?? "", field: "medrec" },
-                { id: 4, title: "Activities", content: pi.activities ?? "", field: "activities" },
-                { id: 5, title: "Routine", content: pi.interacttutorial ?? "", field: "interacttutorial" },
-            ],
-        }
-
-        console.log("sections:", docVM.value.sections)
-    }
-
-        <label for="document" class="block mb-2">Document</label>
-        <input id="document" type="file" class="w-full border p-2 mb-3" @change="onFileChange" />
-
-        <div class="flex justify-end gap-2">
-          <button type="button" class="px-3 py-2 border" @click="open = false">
-            Cancel
-          </button>
-          <button type="submit" class="px-3 py-2 bg-red-700 text-white">
-            Upload
-          </button>
-        </div>
-      </form>
+    <div class="flex justify-end gap-2">
+      <button type="button" class="px-3 py-2 border" @click="open = false">
+        Cancel
+      </button>
+      <button type="submit" class="px-3 py-2 bg-red-700 text-white">
+        Upload
+      </button>
     </div>
+  </div>
 
-    <button class="fixed right-4 bottom-[70px] px-4 py-2 bg-red-700 text-white" type="button" @click="open2 = true">
-      Descarrga document
-    </button>
+  <button class="fixed right-4 bottom-[70px] px-4 py-2 bg-red-700 text-white" type="button" @click="open2 = true">
+    Descarrga document
+  </button>
 
-    <div v-if="open2" class="fixed inset-0 grid place-items-center bg-black/50 p-4" @click.self="open2 = false">
-      <div class="w-full max-w-sm bg-white p-4">
-        <div class="flex justify-between items-center mb-3">
-          <h3 class="font-semibold">Descarrega el document</h3>
-          <button type="button" class="text-xl" @click="open2 = false">×</button>
-        </div>
+  <div v-if="open2" class="fixed inset-0 grid place-items-center bg-black/50 p-4" @click.self="open2 = false">
+    <div class="w-full max-w-sm bg-white p-4">
+      <div class="flex justify-between items-center mb-3">
+        <h3 class="font-semibold">Descarrega el document</h3>
+        <button type="button" class="text-xl" @click="open2 = false">×</button>
+      </div>
 
-        <div class="flex justify-end gap-2">
-          <button type="button" class="px-3 py-2 border" @click="open2 = false">
-            Cancel
-          </button>
-          <button type="button" class="px-3 py-2 bg-red-700 text-white" @click="downloadPdf">
-            Descàrrega
-          </button>
-        </div>
+      <div class="flex justify-end gap-2">
+        <button type="button" class="px-3 py-2 border" @click="open2 = false">
+          Cancel
+        </button>
+        <button type="button" class="px-3 py-2 bg-red-700 text-white" @click="downloadPdf">
+          Descàrrega
+        </button>
       </div>
     </div>
   </div>
 </template>
-
 <script setup lang="ts">
 import { ref, onMounted } from "vue";
 import type { Ref } from "vue";
-
 const router = useRouter();
 const { username } = useUser();
 
