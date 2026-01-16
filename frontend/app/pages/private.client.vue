@@ -145,29 +145,29 @@
     }
 
     async function loadDocument() {
-        const res = await fetch("http://localhost:3000/pis/1", {
-        //const res = await fetch("http://localhost:3000/pis", {
-        //method: "GET",
+        //const res = await fetch("http://localhost:3000/pis/1", {
+        const res = await fetch("http://localhost:3000/pis", {
+        method: "GET",
         credentials: "include"
         });
         if (!res.ok) throw new Error(`Failed to load PI: ${res.status}`)
 
         const pi = await res.json()
 
-        /*if (!pi) {
+        if (!pi) {
             docVM.value = { title: "No PI yet", sections: [] };
             return;
-        }*/
+        }
 
         docVM.value = {
-            title: pi.title ?? `PI #${pi.id ?? 1}`,
-            //title: pi.title ?? `PI #${pi.id ?? ""}`,
+            //title: pi.title ?? `PI #${pi.id ?? 1}`,
+            title: pi.title ?? `PI #${pi.id ?? ""}`,
             sections: [
                 { id: 1, title: "Description", content: pi.description ?? "", field: "description" },
                 { id: 2, title: "Observations", content: pi.observations ?? "", field: "observations" },
                 { id: 3, title: "Medical record", content: pi.medrec ?? "", field: "medrec" },
                 { id: 4, title: "Activities", content: pi.activities ?? "", field: "activities" },
-                { id: 5, title: "Tutorial interaction", content: pi.interacttutorial ?? "", field: "interacttutorial" },
+                { id: 5, title: "Routine", content: pi.interacttutorial ?? "", field: "interacttutorial" },
             ],
         }
 
