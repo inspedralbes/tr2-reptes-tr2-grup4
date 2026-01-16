@@ -53,20 +53,35 @@
       </div>
     </div>
 
-    <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white" type="button" @click="open = true">
-      Add document
-    </button>
-    <label for="document" class="block mb-2">Document</label>
-    <input id="document" type="file" class="w-full border p-2 mb-3" @change="onFileChange" />
+    <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white"
+            type="button"
+            @click="open = true">
+            Add document
+        </button>
+        <div v-if="open"
+            class="fixed inset-0 grid place-items-center bg-black/50 p-4"
+            @click.self="open = false">
 
-    <div class="flex justify-end gap-2">
-      <button type="button" class="px-3 py-2 border" @click="open = false">
-        Cancel
-      </button>
-      <button type="submit" class="px-3 py-2 bg-red-700 text-white">
-        Upload
-      </button>
-    </div>
+            <form class="w-full max-w-sm bg-white p-4"
+                @submit.prevent="handleSubmit">
+            <div class="flex justify-between items-center mb-3">
+                <h3 class="font-semibold">Upload document</h3>
+                <button type="button" class="text-xl" @click="open = false">×</button>
+            </div>
+
+            <label for="document" class="block mb-2">Document</label>
+            <input id="document" type="file" class="w-full border p-2 mb-3" @change="onFileChange" />
+
+            <div class="flex justify-end gap-2">
+                <button type="button" class="px-3 py-2 border" @click="open = false">
+                Cancel
+                </button>
+                <button type="submit" class="px-3 py-2 bg-red-700 text-white">
+                Upload
+                </button>
+            </div>
+            </form>
+        </div>
   </div>
 
   <button class="fixed right-4 bottom-[70px] px-4 py-2 bg-red-700 text-white" type="button" @click="open2 = true">
@@ -145,15 +160,21 @@ async function checkEndpoint() {
 }
 
 async function loadDocument() {
-  const res = await fetch("http://localhost:3000/pis/1", {
+  const res = await fetch("http://localhost:3000/pis", {
+    method: "GET",
     credentials: "include"
   });
   if (!res.ok) throw new Error(`Failed to load PI: ${res.status}`);
 
   const pi = await res.json();
 
+  if (!pi) {
+            docVM.value = { title: "No PI yet", sections: [] };
+            return;
+        }
+
   docVM.value = {
-    title: pi.title ?? `PI #${pi.id ?? 1}`,
+    title: pi.title ?? `PI #${pi.id ?? ""}`,
     sections: [
       { id: 1, title: "Description", content: pi.description ?? "", field: "description" },
       { id: 2, title: "Observations", content: pi.observations ?? "", field: "observations" },
