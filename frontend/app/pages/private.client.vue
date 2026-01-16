@@ -174,7 +174,6 @@ async function handleSubmit() {
 
   const formData = new FormData();
   formData.append("document", document2.value);
-
   await fetch("http://localhost:3000/upload", {
     method: "POST",
     credentials: "include",
