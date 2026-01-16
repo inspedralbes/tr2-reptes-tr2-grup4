@@ -180,7 +180,7 @@ async function loadDocument() {
       { id: 2, title: "Observations", content: pi.observations ?? "", field: "observations" },
       { id: 3, title: "Medical record", content: pi.medrec ?? "", field: "medrec" },
       { id: 4, title: "Activities", content: pi.activities ?? "", field: "activities" },
-      { id: 5, title: "Tutorial interaction", content: pi.interacttutorial ?? "", field: "interacttutorial" },
+      { id: 5, title: "Interaction tutorial", content: pi.interacttutorial ?? "", field: "interacttutorial" },
     ],
   };
 
