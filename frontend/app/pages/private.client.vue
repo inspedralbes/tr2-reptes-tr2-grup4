@@ -199,7 +199,7 @@
             ?.scrollIntoView({ behavior: "smooth", block: "start" });
     }
 
-    const piId = 1 // later we can use it from route params so I didn't delete it
+    const piId = 1 // later we can use it from route params so I didn't delete it BRUH
     const editingId = ref<number | null>(null)
     const drafts = ref<Record<number, string>>({})
     const saving = ref(false)
