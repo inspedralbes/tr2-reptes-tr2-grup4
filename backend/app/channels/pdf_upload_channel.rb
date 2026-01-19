@@ -22,31 +22,34 @@
 #   Frontend: cable.subscribe('PdfUploadChannel', { id: 123 }, callback)
 #
 class PdfUploadChannel < ApplicationCable::Channel
-  # Called when a client subscribes to this channel
-  #
-  # The frontend sends:
-  #   {"command":"subscribe","identifier":"{\"channel\":\"PdfUploadChannel\",\"id\":123}"}
-  #
-  # We respond by streaming from "pdf_upload_123"
-  # Any broadcast to this channel name will be sent to the subscriber
-  #
-  def subscribed
-    # Extract the PDF upload ID from the subscription params
-    # The params come from the identifier JSON sent by the frontend
-    pdf_upload_id = params[:id]
-    logger.info "[PdfUploadChannel] Subscription attempt with params: #{params.inspect}"
+   # Called when a client subscribes to this channel
+   #
+   # The frontend sends:
+   #   {"command":"subscribe","identifier":"{\"channel\":\"PdfUploadChannel\",\"id\":123}"}
+   #
+   # We respond by streaming from "pdf_upload_123"
+   # Any broadcast to this channel name will be sent to the subscriber
+   #
+   def subscribed
+     # Extract the PDF upload ID from the subscription params
+     # The params come from the identifier JSON sent by the frontend
+     pdf_upload_id = params[:id]
+     logger.info "[PdfUploadChannel] Subscription attempt with params: #{params.inspect}"
 
-    if pdf_upload_id
-      # Stream from a channel named "pdf_upload_{id}"
-      # Example: If id is 123, we stream from "pdf_upload_123"
-      stream_from "pdf_upload_#{pdf_upload_id}"
-      logger.info "[PdfUploadChannel] Client subscribed to pdf_upload_#{pdf_upload_id}"
-    else
-      # Reject the subscription if no ID provided
-      logger.warn "[PdfUploadChannel] Subscription rejected - no ID provided"
-      reject
-    end
-  end
+     if pdf_upload_id
+       # Find the PDF upload to get the correct channel name for broadcasting
+       pdf_upload = PdfUpload.find(pdf_upload_id)
+       # Stream from the channel name used by broadcast_to(model)
+       # broadcast_to(model) uses "#{model.class.underscore}:#{model.to_gid_param}"
+       channel_name = "#{pdf_upload.class.name.underscore}:#{pdf_upload.to_gid_param}"
+       stream_from channel_name
+       logger.info "[PdfUploadChannel] Client subscribed to #{channel_name}"
+     else
+       # Reject the subscription if no ID provided
+       logger.warn "[PdfUploadChannel] Subscription rejected - no ID provided"
+       reject
+     end
+   end
 
   # Called when a client unsubscribes from this channel
   #

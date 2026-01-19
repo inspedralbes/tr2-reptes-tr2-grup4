@@ -3,7 +3,7 @@ import { ref, onMounted, onUnmounted } from 'vue'
 export function useActionCable(url: string) {
   const socket = ref<WebSocket | null>(null)
   const isConnected = ref(false)
-  const subscriptions = ref<Record<string, (data: any) => void>>({})
+  const subscriptions = ref<Record<string, { subscriptionId: string; callback: (data: any) => void }>>({})
 
   function connect() {
     if (socket.value?.readyState === WebSocket.OPEN) return
@@ -14,9 +14,10 @@ export function useActionCable(url: string) {
       isConnected.value = true
       console.log('[ActionCable] Connected')
       // Re-subscribe to all channels
-      Object.keys(subscriptions.value).forEach(identifier => {
-        console.log('[ActionCable] Re-subscribing to:', identifier)
-        socket.value?.send(JSON.stringify({ command: 'subscribe', identifier }))
+      Object.keys(subscriptions.value).forEach(channelKey => {
+        const { subscriptionId } = subscriptions.value[channelKey]
+        console.log('[ActionCable] Re-subscribing to:', subscriptionId, 'for channel:', channelKey)
+        socket.value?.send(JSON.stringify({ command: 'subscribe', identifier: subscriptionId }))
       })
     }
 
@@ -47,13 +48,13 @@ export function useActionCable(url: string) {
         console.error('[ActionCable] Subscription rejected for:', data.identifier)
       } else if (data.identifier && data.message) {
         console.log('[ActionCable] Broadcast message:', data)
-        const identifier = data.identifier
-        const callback = subscriptions.value[identifier]
-        if (callback) {
-          console.log('[ActionCable] Calling callback for:', identifier)
-          callback(data.message)
+        const channelKey = data.identifier
+        const subscription = subscriptions.value[channelKey]
+        if (subscription) {
+          console.log('[ActionCable] Calling callback for:', channelKey)
+          subscription.callback(data.message)
         } else {
-          console.warn('[ActionCable] No callback found for:', identifier)
+          console.warn('[ActionCable] No callback found for:', channelKey)
           console.log('[ActionCable] Available subscriptions:', Object.keys(subscriptions.value))
         }
       } else if (data.type === 'ping') {
@@ -65,23 +66,25 @@ export function useActionCable(url: string) {
   }
 
   function subscribe(channelName: string, params: Record<string, any>, callback: (data: any) => void) {
-    const identifier = JSON.stringify({ channel: channelName, ...params })
-    console.log('[ActionCable] Subscribing to:', identifier, 'isConnected:', isConnected.value)
-    subscriptions.value[identifier] = callback
+    const subscriptionId = JSON.stringify({ channel: channelName, ...params })
+    const channelKey = `pdf_upload_${params.id}`
+    console.log('[ActionCable] Subscribing to:', subscriptionId, 'channel key:', channelKey, 'isConnected:', isConnected.value)
+    subscriptions.value[channelKey] = { subscriptionId, callback }
 
     if (isConnected.value && socket.value?.readyState === WebSocket.OPEN) {
       console.log('[ActionCable] Sending subscribe command')
-      socket.value.send(JSON.stringify({ command: 'subscribe', identifier }))
+      socket.value.send(JSON.stringify({ command: 'subscribe', identifier: subscriptionId }))
     } else {
       console.log('[ActionCable] Cannot subscribe - not connected yet, will retry on open')
     }
   }
 
   function unsubscribe(channelName: string, params: Record<string, any>) {
-    const identifier = JSON.stringify({ channel: channelName, ...params })
-    delete subscriptions.value[identifier]
+    const subscriptionId = JSON.stringify({ channel: channelName, ...params })
+    const channelKey = `pdf_upload_${params.id}`
+    delete subscriptions.value[channelKey]
     if (isConnected.value) {
-      socket.value?.send(JSON.stringify({ command: 'unsubscribe', identifier }))
+      socket.value?.send(JSON.stringify({ command: 'unsubscribe', identifier: subscriptionId }))
     }
   }
 

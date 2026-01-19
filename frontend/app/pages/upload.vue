@@ -52,11 +52,11 @@ const cable = ref<any>(null)
 
 onMounted(async () => {
   // Check if user is authenticated
-  try {
-    const res = await fetch('http://localhost:3000/me', {
-      method: 'GET',
-      credentials: 'include',
-    })
+    try {
+     const res = await fetch('http://backend:3000/me', {
+       method: 'GET',
+       credentials: 'include',
+     })
     const data = await res.json()
 
     if (!data.authenticated) {
@@ -70,7 +70,7 @@ onMounted(async () => {
     return
   }
 
-  cable.value = usePdfUploadCable('ws://localhost:3000/cable')
+  cable.value = usePdfUploadCable('ws://backend:3000/cable')
   cable.value.connect()
   console.log('WebSocket connecting...')
 })
@@ -119,7 +119,7 @@ function onFileChange(event: Event) {
 
     // Check authentication again before upload
     try {
-      const authRes = await fetch('http://localhost:3000/me', {
+      const authRes = await fetch('http://backend:3000/me', {
         method: 'GET',
         credentials: 'include',
       })
@@ -160,7 +160,7 @@ function onFileChange(event: Event) {
     const formData = new FormData()
     formData.append('document', document.value)
 
-    const res = await fetch('http://localhost:3000/upload', {
+    const res = await fetch('http://backend:3000/upload', {
       method: 'POST',
       credentials: 'include',
       body: formData,

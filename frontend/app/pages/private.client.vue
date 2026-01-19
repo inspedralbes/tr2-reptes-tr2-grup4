@@ -15,7 +15,7 @@
 
       <!-- Main document -->
       <div class="flex-1">
-        <h1>Greetings, our unique and special {{ username }}! This is your personal cabinet.</h1>
+        <h1>Greetings, our unique and special{{ username }}! This is your personal cabinet.</h1>
         <h2>Document</h2>
 
         <section v-for="section in docVM.sections" :key="section.id" :id="`sec-${section.id}`"
@@ -29,14 +29,13 @@
                 Edit
               </button>
 
-              <template v-else>
-                <button class="border px-3 py-1" type="button" :disabled="saving" @click="saveSection(section)">
-                  Save
-                </button>
+              <div v-else>
+                <button class="border px-3 py-1" type="button" :disabled="saving"
+                  @click="saveSection(section)">Save</button>
                 <button class="border px-3 py-1" type="button" :disabled="saving" @click="cancelEdit(section)">
                   Cancel
                 </button>
-              </template>
+              </div>
             </div>
           </div>
 
@@ -53,66 +52,62 @@
       </div>
     </div>
 
-      <!-- Read-only -->
-      <p v-if="editingId !== section.id" class="mt-3 whitespace-pre-wrap">
-        {{ section.content }}
-      </p>
-
-      <!-- Editable -->
-      <div v-else class="mt-3">
-        <textarea class="w-full border rounded p-2 min-h-[140px]" v-model="drafts[section.id]" />
-        <p v-if="saveError" class="text-red-600 mt-2">{{ saveError }}</p>
+    <!-- Upload Status Display -->
+    <div v-if="uploadStatus" class="fixed top-4 right-4 p-4 rounded shadow-lg z-50" :class="uploadStatus === 'completed' ? 'bg-green-100 border-green-300' :
+      uploadStatus === 'failed' ? 'bg-red-100 border-red-300' :
+        'bg-blue-100 border-blue-300'">
+      <div v-if="uploadStatus === 'processing'" class="flex items-center gap-2">
+        <div class="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+        <span>{{ uploadMessage }}</span>
       </div>
-    </section>
-     <!-- Upload Status Display -->
-     <div v-if="uploadStatus" class="fixed top-4 right-4 p-4 rounded shadow-lg z-50"
-          :class="uploadStatus === 'completed' ? 'bg-green-100 border-green-300' :
-                 uploadStatus === 'failed' ? 'bg-red-100 border-red-300' :
-                 'bg-blue-100 border-blue-300'">
-       <div v-if="uploadStatus === 'processing'" class="flex items-center gap-2">
-         <div class="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
-         <span>{{ uploadMessage }}</span>
-       </div>
-       <div v-else-if="uploadStatus === 'completed'" class="text-green-700">
-         <p class="font-bold">Upload Complete!</p>
-         <p class="text-sm">{{ uploadMessage }}</p>
-       </div>
-       <div v-else-if="uploadStatus === 'failed'" class="text-red-700">
-         <p class="font-bold">Upload Failed</p>
-         <p class="text-sm">{{ uploadMessage }}</p>
-       </div>
-     </div>
+      <div v-else-if="uploadStatus === 'completed'" class="text-green-700">
+        <p class="font-bold">Upload Complete!</p>
+        <p class="text-sm">{{ uploadMessage }}</p>
+      </div>
+      <div v-else-if="uploadStatus === 'failed'" class="text-red-700">
+        <p class="font-bold">Upload Failed</p>
+        <p class="text-sm">{{ uploadMessage }}</p>
+      </div>
+    </div>
 
-     <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white" type="button" @click="open = true">
-       Add document
-     </button>
+    <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white" type="button" @click="open = true">
+      Add document
+    </button>
     <div v-if="open" class="fixed inset-0 grid place-items-center bg-black/50 p-4" @click.self="open = false">
-
       <form class="w-full max-w-sm bg-white p-4" @submit.prevent="handleSubmit">
         <div class="flex justify-between items-center mb-3">
           <h3 class="font-semibold">Upload document</h3>
           <button type="button" class="text-xl" @click="open = false">×</button>
         </div>
-  </div>
 
-  <button class="fixed right-4 bottom-[70px] px-4 py-2 bg-red-700 text-white" type="button" @click="open2 = true">
-    Descarrga document
-  </button>
+        <input type="file" @change="onFileChange" required />
 
-  <div v-if="open2" class="fixed inset-0 grid place-items-center bg-black/50 p-4" @click.self="open2 = false">
-    <div class="w-full max-w-sm bg-white p-4">
-      <div class="flex justify-between items-center mb-3">
-        <h3 class="font-semibold">Descarrega el document</h3>
-        <button type="button" class="text-xl" @click="open2 = false">×</button>
-      </div>
+        <div class="flex justify-end gap-2 mt-3">
+          <button type="button" class="px-3 py-2 border" @click="open = false">Cancel</button>
+          <button type="submit" class="px-3 py-2 bg-red-700 text-white">Upload</button>
+        </div>
+      </form>
+    </div>
 
-      <div class="flex justify-end gap-2">
-        <button type="button" class="px-3 py-2 border" @click="open2 = false">
-          Cancel
-        </button>
-        <button type="button" class="px-3 py-2 bg-red-700 text-white" @click="downloadPdf">
-          Descàrrega
-        </button>
+    <button class="fixed right-4 bottom-[70px] px-4 py-2 bg-red-700 text-white" type="button" @click="open2 = true">
+      Descarrga document
+    </button>
+
+    <div v-if="open2" class="fixed inset-0 grid place-items-center bg-black/50 p-4" @click.self="open2 = false">
+      <div class="w-full max-w-sm bg-white p-4">
+        <div class="flex justify-between items-center mb-3">
+          <h3 class="font-semibold">Descarrega el document</h3>
+          <button type="button" class="text-xl" @click="open2 = false">×</button>
+        </div>
+
+        <div class="flex justify-end gap-2">
+          <button type="button" class="px-3 py-2 border" @click="open2 = false">
+            Cancel
+          </button>
+          <button type="button" class="px-3 py-2 bg-red-700 text-white" @click="downloadPdf">
+            Descàrrega
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -129,10 +124,6 @@ const uploadStatus = ref<string | null>(null)
 const uploadMessage = ref('')
 const uploadSummary = ref('')
 const uploadUnsubscribe = ref<(() => void) | null>(null)
-type PiField = "description" | "observations" | "medrec" | "activities" | "interacttutorial"
-type DocSection = { id: number; title: string; content: string; field: PiField }
-type DocumentVm = { title: string; sections: DocSection[] }
-
 type PiField = "description" | "observations" | "medrec" | "activities" | "interacttutorial";
 
 type DocSection = {
@@ -190,9 +181,9 @@ async function loadDocument() {
   const pi = await res.json();
 
   if (!pi) {
-            docVM.value = { title: "No PI yet", sections: [] };
-            return;
-        }
+    docVM.value = { title: "No PI yet", sections: [] };
+    return;
+  }
 
   docVM.value = {
     title: pi.title ?? `PI #${pi.id ?? ""}`,
