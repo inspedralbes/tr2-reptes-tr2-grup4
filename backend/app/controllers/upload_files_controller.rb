@@ -9,7 +9,7 @@ class UploadFilesController < ApplicationController
     end
 
     unless uploaded_file.content_type == "application/pdf"
-      render json: { error: "Only PDF files allowed" }, status: :unsupported_media_type
+      return render json: { error: "Only PDF files allowed" }, status: :unsupported_media_type
     end
 
     begin
@@ -19,7 +19,7 @@ class UploadFilesController < ApplicationController
         user: current_user,
         filename: uploaded_file.original_filename,
         original_text: text,
-        status: :pending
+        status: "pending"
       )
 
       SummarizePdfJob.perform_later(pdf_upload.id)
@@ -37,7 +37,7 @@ class UploadFilesController < ApplicationController
   private
 
   def extract_text_from_pdf(uploaded_file)
-    reader = PDF::Reader.new(uploaded_file.tempfile)
+    reader = PDF::Reader.new(uploaded_file.tempfile.path)
 
     reader.pages.map(&:text)
       .map { |t| t.gsub(/\s+/, " ").strip }

@@ -1,12 +1,12 @@
 class PdfUpload < ApplicationRecord
   belongs_to :user
 
-  enum status: {
+  STATUSES = {
     pending: "pending",
     processing: "processing",
     completed: "completed",
     failed: "failed"
-  }
+  }.freeze
 
   validates :user, presence: true
   validates :filename, presence: true

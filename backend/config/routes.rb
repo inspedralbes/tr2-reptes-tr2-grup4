@@ -20,4 +20,9 @@ Rails.application.routes.draw do
   # get "/pis", to: "pi#index"
   post "/upload", to: "upload_files#create"
   resources :pdf_uploads, only: [ :show ]
+
+  # Mount Action Cable for WebSocket connections
+  # This allows clients to connect to ws://localhost:3000/cable
+  # for real-time updates on PDF processing
+  mount ActionCable.server => "/cable"
 end
