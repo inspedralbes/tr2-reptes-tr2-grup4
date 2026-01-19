@@ -37,7 +37,7 @@ class UploadFilesController < ApplicationController
   private
 
   def extract_text_from_pdf(uploaded_file)
-    reader = PDF::Reader.new(uploaded_file.tempfile)
+    reader = PDF::Reader.new(uploaded_file.tempfile.path)
 
     reader.pages.map(&:text)
       .map { |t| t.gsub(/\s+/, " ").strip }

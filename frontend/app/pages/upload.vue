@@ -50,7 +50,26 @@ const unsubscribe = ref<(() => void) | null>(null)
 
 const cable = ref<any>(null)
 
-onMounted(() => {
+onMounted(async () => {
+  // Check if user is authenticated
+  try {
+    const res = await fetch('http://localhost:3000/me', {
+      method: 'GET',
+      credentials: 'include',
+    })
+    const data = await res.json()
+
+    if (!data.authenticated) {
+      alert('You must be logged in to upload documents. Redirecting to login page.')
+      window.location.href = '/login'
+      return
+    }
+  } catch (error) {
+    alert('Authentication check failed. Redirecting to login page.')
+    window.location.href = '/login'
+    return
+  }
+
   cable.value = usePdfUploadCable('ws://localhost:3000/cable')
   cable.value.connect()
   console.log('WebSocket connecting...')
@@ -92,26 +111,44 @@ function onFileChange(event: Event) {
   document.value = file
 }
 
-async function handleSubmit() {
-  if (!document.value) {
-    alert('Please select a document to upload.')
-    return
-  }
-
-  if (!cable.value) {
-    alert('WebSocket not connected. Please refresh the page.')
-    return
-  }
-
-  // Wait for connection to be established
-  if (!cable.value.isConnected.value) {
-    console.log('Waiting for connection...')
-    await new Promise(resolve => setTimeout(resolve, 500))
-    if (!cable.value.isConnected.value) {
-      alert('WebSocket still not connected. Please try again.')
+  async function handleSubmit() {
+    if (!document.value) {
+      alert('Please select a document to upload.')
       return
     }
-  }
+
+    // Check authentication again before upload
+    try {
+      const authRes = await fetch('http://localhost:3000/me', {
+        method: 'GET',
+        credentials: 'include',
+      })
+      const authData = await authRes.json()
+
+      if (!authData.authenticated) {
+        alert('Your session has expired. Please log in again.')
+        window.location.href = '/login'
+        return
+      }
+    } catch (error) {
+      alert('Authentication check failed. Please try again.')
+      return
+    }
+
+    if (!cable.value) {
+      alert('WebSocket not connected. Please refresh the page.')
+      return
+    }
+
+    // Wait for connection to be established
+    if (!cable.value.isConnected.value) {
+      console.log('Waiting for connection...')
+      await new Promise(resolve => setTimeout(resolve, 500))
+      if (!cable.value.isConnected.value) {
+        alert('WebSocket still not connected. Please try again.')
+        return
+      }
+    }
 
   isUploading.value = true
   status.value = null

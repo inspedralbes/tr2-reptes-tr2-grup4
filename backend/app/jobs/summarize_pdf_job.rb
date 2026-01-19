@@ -37,13 +37,17 @@ class SummarizePdfJob < ApplicationJob
   # 5. Broadcast the final result to all subscribed clients
   #
   def perform(pdf_upload_id)
+    logger.info "[SummarizePdfJob] Starting job for PDF upload #{pdf_upload_id}"
+
     # Find the PDF upload record in the database
     # This raises ActiveRecord::RecordNotFound if the record doesn't exist
     pdf_upload = PdfUpload.find(pdf_upload_id)
+    logger.info "[SummarizePdfJob] Found PDF upload: #{pdf_upload.id}, text length: #{pdf_upload.original_text.length}"
 
     # Update status to "processing" so we know the job started
     # This helps track which jobs are currently running
     pdf_upload.update!(status: "processing")
+    logger.info "[SummarizePdfJob] Updated status to processing"
 
     # BROADCAST: Tell all WebSocket subscribers that processing started
     # This sends a message to everyone subscribed to "pdf_upload_{id}"
@@ -53,6 +57,7 @@ class SummarizePdfJob < ApplicationJob
     # 2. Serializes the data hash to JSON
     # 3. Publishes to the pub/sub channel
     # 4. All subscribers to "pdf_upload_{pdf_upload.id}" receive this message
+    logger.info "[SummarizePdfJob] Broadcasting processing status to pdf_upload_#{pdf_upload.id}"
     PdfUploadChannel.broadcast_to(
       pdf_upload,
       {

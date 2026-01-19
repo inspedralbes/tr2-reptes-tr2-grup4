@@ -43,9 +43,28 @@
         <p v-if="saveError" class="text-red-600 mt-2">{{ saveError }}</p>
       </div>
     </section>
-    <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white" type="button" @click="open = true">
-      Add document
-    </button>
+     <!-- Upload Status Display -->
+     <div v-if="uploadStatus" class="fixed top-4 right-4 p-4 rounded shadow-lg z-50"
+          :class="uploadStatus === 'completed' ? 'bg-green-100 border-green-300' :
+                 uploadStatus === 'failed' ? 'bg-red-100 border-red-300' :
+                 'bg-blue-100 border-blue-300'">
+       <div v-if="uploadStatus === 'processing'" class="flex items-center gap-2">
+         <div class="animate-spin h-4 w-4 border-2 border-blue-500 border-t-transparent rounded-full"></div>
+         <span>{{ uploadMessage }}</span>
+       </div>
+       <div v-else-if="uploadStatus === 'completed'" class="text-green-700">
+         <p class="font-bold">Upload Complete!</p>
+         <p class="text-sm">{{ uploadMessage }}</p>
+       </div>
+       <div v-else-if="uploadStatus === 'failed'" class="text-red-700">
+         <p class="font-bold">Upload Failed</p>
+         <p class="text-sm">{{ uploadMessage }}</p>
+       </div>
+     </div>
+
+     <button class="fixed right-4 bottom-4 px-4 py-2 bg-red-700 text-white" type="button" @click="open = true">
+       Add document
+     </button>
     <div v-if="open" class="fixed inset-0 grid place-items-center bg-black/50 p-4" @click.self="open = false">
 
       <form class="w-full max-w-sm bg-white p-4" @submit.prevent="handleSubmit">
@@ -71,9 +90,17 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from "vue";
+import { ref, onMounted, onUnmounted } from "vue";
+import { usePdfUploadCable } from "~/composables/useActionCable";
 const router = useRouter();
 const { username } = useUser();
+
+// ActionCable setup
+const cable = ref<any>(null)
+const uploadStatus = ref<string | null>(null)
+const uploadMessage = ref('')
+const uploadSummary = ref('')
+const uploadUnsubscribe = ref<(() => void) | null>(null)
 type PiField = "description" | "observations" | "medrec" | "activities" | "interacttutorial"
 type DocSection = { id: number; title: string; content: string; field: PiField }
 type DocumentVm = { title: string; sections: DocSection[] }
@@ -132,15 +159,48 @@ async function handleSubmit() {
     return;
   }
 
-  const formData = new FormData();
-  formData.append("document", document2.value);
+  if (!cable.value) {
+    alert('WebSocket not connected. Please refresh the page.')
+    return
+  }
 
-  await fetch("http://localhost:3000/upload", {
-    method: "POST",
-    credentials: "include",
-    body: formData,
-  });
-  open.value = false
+  uploadStatus.value = null
+  uploadMessage.value = ''
+  uploadSummary.value = ''
+
+  try {
+    const formData = new FormData();
+    formData.append("document", document2.value);
+
+    const res = await fetch("http://localhost:3000/upload", {
+      method: "POST",
+      credentials: "include",
+      body: formData,
+    });
+
+    const data = await res.json()
+
+    if (!res.ok) {
+      throw new Error(data.error || 'Upload failed')
+    }
+
+    // Subscribe to the upload channel
+    uploadUnsubscribe.value = cable.value.subscribeToPdfUpload(data.id, (update: any) => {
+      console.log('Upload update:', update)
+      uploadStatus.value = update.status
+      uploadMessage.value = update.message || ''
+      if (update.status === 'completed') {
+        uploadSummary.value = update.summary || ''
+        console.log('Ollama Summary:', update.summary)
+        // Refresh the document list or show success
+        loadDocument()
+      }
+    })
+
+    open.value = false
+  } catch (error: any) {
+    alert(`Upload failed: ${error.message}`)
+  }
 }
 
 function scrollTo(id: number) {
@@ -207,6 +267,22 @@ async function saveSection(section: DocSection) {
 onMounted(async () => {
   await checkEndpoint();
   loadDocument();
+
+  // Setup ActionCable
+  cable.value = usePdfUploadCable('ws://localhost:3000/cable')
+  cable.value.connect()
+  console.log('WebSocket connecting for uploads...')
 });
+
+onUnmounted(() => {
+  if (uploadUnsubscribe.value) {
+    uploadUnsubscribe.value()
+    uploadUnsubscribe.value = null
+  }
+  if (cable.value) {
+    cable.value.disconnect()
+    cable.value = null
+  }
+})
 
 </script>

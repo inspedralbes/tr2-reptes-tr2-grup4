@@ -39,30 +39,41 @@ export function useActionCable(url: string) {
 
     socket.value.onmessage = (event) => {
       const data = JSON.parse(event.data)
-      
+      console.log('[ActionCable] Raw message:', JSON.stringify(data, null, 2))
+
       if (data.type === 'confirm_subscription') {
-        console.log('[ActionCable] Subscription confirmed')
+        console.log('[ActionCable] Subscription confirmed for:', data.identifier)
       } else if (data.type === 'reject_subscription') {
-        console.error('[ActionCable] Subscription rejected')
-      } else if (data.type === 'message') {
-        console.log('[ActionCable] Message received:', data)
-        if (data.message && data.identifier) {
-          const callback = subscriptions.value[data.identifier]
-          if (callback) {
-            callback(data.message)
-          }
+        console.error('[ActionCable] Subscription rejected for:', data.identifier)
+      } else if (data.identifier && data.message) {
+        console.log('[ActionCable] Broadcast message:', data)
+        const identifier = data.identifier
+        const callback = subscriptions.value[identifier]
+        if (callback) {
+          console.log('[ActionCable] Calling callback for:', identifier)
+          callback(data.message)
+        } else {
+          console.warn('[ActionCable] No callback found for:', identifier)
+          console.log('[ActionCable] Available subscriptions:', Object.keys(subscriptions.value))
         }
+      } else if (data.type === 'ping') {
+        // Ignore ping messages
+      } else {
+        console.log('[ActionCable] Unhandled message type:', data.type)
       }
     }
   }
 
   function subscribe(channelName: string, params: Record<string, any>, callback: (data: any) => void) {
     const identifier = JSON.stringify({ channel: channelName, ...params })
-    console.log('[ActionCable] Subscribing to:', identifier)
+    console.log('[ActionCable] Subscribing to:', identifier, 'isConnected:', isConnected.value)
     subscriptions.value[identifier] = callback
-    
-    if (isConnected.value) {
-      socket.value?.send(JSON.stringify({ command: 'subscribe', identifier }))
+
+    if (isConnected.value && socket.value?.readyState === WebSocket.OPEN) {
+      console.log('[ActionCable] Sending subscribe command')
+      socket.value.send(JSON.stringify({ command: 'subscribe', identifier }))
+    } else {
+      console.log('[ActionCable] Cannot subscribe - not connected yet, will retry on open')
     }
   }
 

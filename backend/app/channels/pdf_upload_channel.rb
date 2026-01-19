@@ -34,6 +34,7 @@ class PdfUploadChannel < ApplicationCable::Channel
     # Extract the PDF upload ID from the subscription params
     # The params come from the identifier JSON sent by the frontend
     pdf_upload_id = params[:id]
+    logger.info "[PdfUploadChannel] Subscription attempt with params: #{params.inspect}"
 
     if pdf_upload_id
       # Stream from a channel named "pdf_upload_{id}"
