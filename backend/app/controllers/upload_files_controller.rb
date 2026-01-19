@@ -2,12 +2,14 @@ require "pdf/reader"
 
 class UploadFilesController < ApplicationController
   def create
+    # Gets the document from the request
     uploaded_file = params[:document]
 
     unless uploaded_file
       return render json: { error: "No file received" }, status: :bad_request
     end
 
+    # Checks if its a pdf or not
     unless uploaded_file.content_type == "application/pdf"
       return render json: { error: "Only PDF files allowed" }, status: :unsupported_media_type
     end
@@ -15,6 +17,7 @@ class UploadFilesController < ApplicationController
     begin
       text = extract_text_from_pdf(uploaded_file)
 
+      # Creates a new value in the table
       pdf_upload = PdfUpload.create!(
         user: current_user,
         filename: uploaded_file.original_filename,
@@ -22,6 +25,7 @@ class UploadFilesController < ApplicationController
         status: "pending"
       )
 
+      # Runs the job with the pdf item
       SummarizePdfJob.perform_later(pdf_upload.id)
 
       render json: {
@@ -36,6 +40,7 @@ class UploadFilesController < ApplicationController
 
   private
 
+  # Method/Function that extracts text from the pdf based on filters
   def extract_text_from_pdf(uploaded_file)
     reader = PDF::Reader.new(uploaded_file.tempfile.path)
 

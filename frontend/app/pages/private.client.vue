@@ -119,7 +119,7 @@ const router = useRouter();
 const { username } = useUser();
 
 // ActionCable setup
-const cable = ref<any>(null)
+const cable = usePdfUploadCable('ws://localhost:3000/cable')
 const uploadStatus = ref<string | null>(null)
 const uploadMessage = ref('')
 const uploadSummary = ref('')
@@ -205,7 +205,7 @@ async function handleSubmit() {
     return;
   }
 
-  if (!cable.value) {
+  if (!cable.isConnected) {
     alert('WebSocket not connected. Please refresh the page.')
     return
   }
@@ -231,7 +231,7 @@ async function handleSubmit() {
     }
 
     // Subscribe to the upload channel
-    uploadUnsubscribe.value = cable.value.subscribeToPdfUpload(data.id, (update: any) => {
+    uploadUnsubscribe.value = cable.subscribeToPdfUpload(data.id, (update: any) => {
       console.log('Upload update:', update)
       uploadStatus.value = update.status
       uploadMessage.value = update.message || ''
@@ -307,8 +307,7 @@ onMounted(async () => {
   loadDocument();
 
   // Setup ActionCable
-  cable.value = usePdfUploadCable('ws://localhost:3000/cable')
-  cable.value.connect()
+  cable.connect()
   console.log('WebSocket connecting for uploads...')
 });
 
@@ -317,10 +316,7 @@ onUnmounted(() => {
     uploadUnsubscribe.value()
     uploadUnsubscribe.value = null
   }
-  if (cable.value) {
-    cable.value.disconnect()
-    cable.value = null
-  }
+  cable.disconnect()
 })
 
 </script>

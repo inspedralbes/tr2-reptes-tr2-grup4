@@ -22,7 +22,7 @@ class OllamaService
 
     # TIMEOUTS
     http.open_timeout = 10
-    http.read_timeout = 300
+    http.read_timeout = 600
 
     request = Net::HTTP::Post.new(
       OLLAMA_URL.path,

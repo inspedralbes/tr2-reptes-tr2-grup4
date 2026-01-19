@@ -48,7 +48,7 @@ const errorMessage = ref('')
 const statusMessage = ref('')
 const unsubscribe = ref<(() => void) | null>(null)
 
-const cable = ref<any>(null)
+const cable = usePdfUploadCable('ws://backend:3000/cable')
 
 onMounted(async () => {
   // Check if user is authenticated
@@ -70,8 +70,7 @@ onMounted(async () => {
     return
   }
 
-  cable.value = usePdfUploadCable('ws://backend:3000/cable')
-  cable.value.connect()
+   cable.connect()
   console.log('WebSocket connecting...')
 })
 
@@ -80,10 +79,7 @@ onUnmounted(() => {
     unsubscribe.value()
     unsubscribe.value = null
   }
-  if (cable.value) {
-    cable.value.disconnect()
-    cable.value = null
-  }
+  cable.disconnect()
 })
 
 const statusClass = computed(() => {
@@ -135,16 +131,16 @@ function onFileChange(event: Event) {
       return
     }
 
-    if (!cable.value) {
+    if (!cable.isConnected) {
       alert('WebSocket not connected. Please refresh the page.')
       return
     }
 
     // Wait for connection to be established
-    if (!cable.value.isConnected.value) {
+    if (!cable.isConnected) {
       console.log('Waiting for connection...')
       await new Promise(resolve => setTimeout(resolve, 500))
-      if (!cable.value.isConnected.value) {
+      if (!cable.isConnected) {
         alert('WebSocket still not connected. Please try again.')
         return
       }
@@ -172,7 +168,7 @@ function onFileChange(event: Event) {
       throw new Error(data.error || 'Upload failed')
     }
 
-    unsubscribe.value = cable.value.subscribeToPdfUpload(data.id, (update: any) => {
+    unsubscribe.value = cable.subscribeToPdfUpload(data.id, (update: any) => {
       console.log('Received update:', update)
       console.log('Current status before:', status.value)
       switch (update.status) {

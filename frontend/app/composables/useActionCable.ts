@@ -1,4 +1,4 @@
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, reactive } from 'vue'
 
 export function useActionCable(url: string) {
   const socket = ref<WebSocket | null>(null)
@@ -40,7 +40,6 @@ export function useActionCable(url: string) {
 
     socket.value.onmessage = (event) => {
       const data = JSON.parse(event.data)
-      console.log('[ActionCable] Raw message:', JSON.stringify(data, null, 2))
 
       if (data.type === 'confirm_subscription') {
         console.log('[ActionCable] Subscription confirmed for:', data.identifier)
@@ -114,8 +113,8 @@ export function usePdfUploadCable(url: string) {
     return () => cable.unsubscribe('PdfUploadChannel', { id })
   }
 
-  return {
+  return reactive({
     ...cable,
     subscribeToPdfUpload
-  }
+  })
 }
