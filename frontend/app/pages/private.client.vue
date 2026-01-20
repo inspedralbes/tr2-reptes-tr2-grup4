@@ -214,12 +214,11 @@ async function handleSubmit() {
   uploadMessage.value = ''
   uploadSummary.value = ''
 
+async function downloadPdf() {
+  // await loadDocument();
   try {
-    const formData = new FormData();
-    formData.append("document", document2.value);
-
-    const res = await fetch("http://localhost:3000/upload", {
-      method: "POST",
+    const response = await fetch(`http://localhost:3000/pis/my-pi/download`, {
+      method: "GET",
       credentials: "include",
       body: formData,
     });

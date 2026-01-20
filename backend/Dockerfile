@@ -4,7 +4,12 @@ RUN apt-get update -qq && apt-get install -y \
   build-essential \
   libpq-dev \
   nodejs \
-  yarn
+  yarn \
+  wkhtmltopdf \
+  fontconfig \
+  libxrender1 \
+  libxext6 \
+  ca-certificates && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
