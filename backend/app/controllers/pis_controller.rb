@@ -12,10 +12,10 @@ class PisController < ApplicationController
 
   # GET /pis/1
   def show
-    #return render json: nil, status: :unauthorized unless current_user
-    #pi = current_user.pi
-    #return render json: nil, status: :not_found unless pi
-    #render json: pi
+    #  return render json: nil, status: :unauthorized unless current_user
+    #  pi = current_user.pi
+    #  return render json: nil, status: :not_found unless pi
+    #  render json: pi
   end
 
   # POST /pis
@@ -50,11 +50,11 @@ class PisController < ApplicationController
   def download
     pdf = Prawn::Document.new
 
-    pdf.text "PLA DE SUPORT INDIVIDUALITZAT", size:18, style: :bold, align: :center
+    pdf.text "PLA DE SUPORT INDIVIDUALITZAT", size: 18, style: :bold, align: :center
     pdf.move_down 20
 
     pdf.text "Descripció", style: :bold
-    pdf.text @pi.description.to_s 
+    pdf.text @pi.description.to_s
     pdf.move_down 10
 
     pdf.text "Observacions", style: :bold
@@ -74,8 +74,8 @@ class PisController < ApplicationController
     pdf.move_down 10
 
 
-    send_data pdf.render, 
-      filename: "PI_#{@pi.id}.pdf", 
+    send_data pdf.render,
+      filename: "PI_#{@pi.id}.pdf",
       type: "application/pdf",
       disposition: "attachment"
   end
