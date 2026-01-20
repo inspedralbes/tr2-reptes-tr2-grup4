@@ -14,6 +14,10 @@ Rails.application.routes.draw do
   post "/logout", to: "users#logout"
   post "/register", to: "users#register"
   get "/me", to: "users#me"
+  get "/teacher/students", to: "teachers#students"
+  get "/teacher/students/:id/document", to: "teachers#student_document"
+
+
 
   # Base create and show
   # post "/pis", to: "pi#create"

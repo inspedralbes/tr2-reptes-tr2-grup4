@@ -4,6 +4,10 @@ const router = useRouter();
 function goToLogin() {
   router.push('/login');
 }
+
+function goToLoginTeacher() {
+  router.push('/loginTeacher');
+}
 </script>
 <template>
     <div class="bg-[#404040] w-full">
@@ -13,6 +17,9 @@ function goToLogin() {
     <p>Per accedir a l'Àrea privada cal que t'identifiquis amb un dels mecanismes d'identificació digital vàlids.</p>
     <button @click="goToLogin" class="bg-[#C00000] text-white p-[0.5em] rounded-sm hover:bg-[#C00000]/50 ">
       <i class="fas fa-lock"></i> Soc estudiant
+    </button>
+    <button @click="goToLoginTeacher" class="bg-[#C00000] text-white p-[0.5em] rounded-sm hover:bg-[#C00000]/50 ml-4">
+      <i class="fas fa-lock"></i> Soc professor
     </button>
     <p>Què pots fer a la teva Àrea privada?</p>
     <ul>
