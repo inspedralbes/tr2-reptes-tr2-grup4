@@ -265,7 +265,7 @@ async function downloadPdf() {
     a.download = 'document.pdf';
     a.click();
     URL.revokeObjectURL(url);
-  } catch (error) {
+  } catch (error:any) {
     alert(`Download failed: ${error.message}`);
   }
 }
