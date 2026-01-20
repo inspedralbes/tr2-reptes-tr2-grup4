@@ -1,5 +1,6 @@
 class PisController < ApplicationController
-  before_action :set_pi, only: %i[ show update destroy download ]
+  before_action :authenticate_user!
+  before_action :set_pi, only: %i[ show update destroy]
 
   # GET /pis
   def index
@@ -38,56 +39,29 @@ class PisController < ApplicationController
     if @pi.update(pi_params)
       render :show, status: :ok, location: @pi
     else
-      render json: @pi.errors, status: :unprocessable_entity
+      render json: {errror: @pi.errors.full_messages}, status: :unprocessable_entity
     end
   end
 
   # DELETE /pis/1
   def destroy
-    @pi.destroy!
-  end
-  # DESCARREGAR DOCUMENT
-  def download
-    pdf = Prawn::Document.new
-
-    pdf.text "PLA DE SUPORT INDIVIDUALITZAT", size:18, style: :bold, align: :center
-    pdf.move_down 20
-
-    pdf.text "Descripció", style: :bold
-    pdf.text @pi.description.to_s 
-    pdf.move_down 10
-
-    pdf.text "Observacions", style: :bold
-    pdf.text @pi.observations.to_s
-    pdf.move_down 10
-
-    pdf.text "Història mèdica", style: :bold
-    pdf.text @pi.medrec.to_s
-    pdf.move_down 10
-
-    pdf.text "Activitats", style: :bold
-    pdf.text @pi.activities.to_s
-    pdf.move_down 10
-
-    pdf.text "Interacció tutorial", style: :bold
-    pdf.text @pi.interacttutorial.to_s
-    pdf.move_down 10
-
-
-    send_data pdf.render, 
-      filename: "PI_#{@pi.id}.pdf", 
-      type: "application/pdf",
-      disposition: "attachment"
+    @pi.destroy
   end
 
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pi
-      @pi = Pi.find(params.required(:id))
+      # @pi = Pi.find(params.required(:id))ç
+      @pi = current_user.pi
+      render json: { error: "PI no encontrado" }, status: :not_found if @pi.nil?
     end
 
     # Only allow a list of trusted parameters through.
     def pi_params
       params.required(:pi).permit(:description, :observations, :medrec, :activities, :interacttutorial)
+    end
+
+    def authenticate_user!
+      render json: { error: "No autenticado" }, status: :unauthorized unless current_user
     end
 end

@@ -204,8 +204,9 @@ async function handleSubmit() {
 }
 
 async function downloadPdf() {
+  // await loadDocument();
   try {
-    const response = await fetch(`http://localhost:3000/pis/${piId}/download`, {
+    const response = await fetch(`http://localhost:3000/pis/my-pi/download`, {
       method: "GET",
       credentials: "include",
     });
