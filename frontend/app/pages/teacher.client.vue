@@ -15,7 +15,7 @@
             :class="selectedStudentId === st.id ? 'bg-gray-100 font-semibold' : ''"
             @click="selectStudent(st.id)"
           >
-            {{ st.name }}
+            {{ st.username }}
           </button>
 
           <p v-if="students.length === 0 && !loadingStudents" class="text-sm text-gray-500">
@@ -84,7 +84,7 @@
 </template>
 
 <script setup lang="ts">
-type Student = { id: number; name: string }
+type Student = { id: number; username: string; email?: string }
 type DocSection = { id: string; title: string; content: string }
 
 // Simple VM like you used in private.client.vue
@@ -98,7 +98,7 @@ const docError = ref<string | null>(null)
 
 const selectedStudentName = computed(() => {
   if (!selectedStudentId.value) return null
-  return students.value.find(s => s.id === selectedStudentId.value)?.name ?? null
+  return students.value.find(s => s.id === selectedStudentId.value)?.username ?? null
 })
 
 function scrollTo(sectionId: string) {
