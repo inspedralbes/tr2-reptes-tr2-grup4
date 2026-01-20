@@ -18,8 +18,13 @@ function goToLoginTeacher() {
     <button @click="goToLogin" class="bg-[#C00000] text-white p-[0.5em] rounded-sm hover:bg-[#C00000]/50 ">
       <i class="fas fa-lock"></i> Soc estudiant
     </button>
+    <br>
     <button @click="goToLoginTeacher" class="bg-[#C00000] text-white p-[0.5em] rounded-sm hover:bg-[#C00000]/50 ml-4">
       <i class="fas fa-lock"></i> Soc professor
+    </button>
+    <br>
+    <button @click="goToLoginAdmin" class="bg-[#C00000] text-white p-[0.5em] rounded-sm hover:bg-[#C00000]/50 ml-4">
+      <i class="fas fa-lock"></i> Soc Admin
     </button>
     <p>Què pots fer a la teva Àrea privada?</p>
     <ul>
