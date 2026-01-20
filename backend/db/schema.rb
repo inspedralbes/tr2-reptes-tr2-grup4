@@ -167,6 +167,8 @@ ActiveRecord::Schema[8.1].define(version: 2026_01_20_085721) do
     t.index ["expires_at"], name: "index_solid_queue_semaphores_on_expires_at"
     t.index ["key", "value"], name: "index_solid_queue_semaphores_on_key_and_value"
     t.index ["key"], name: "index_solid_queue_semaphores_on_key", unique: true
+  end
+
   create_table "teachers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.string "email"
