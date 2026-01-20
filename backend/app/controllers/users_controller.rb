@@ -53,6 +53,16 @@ def me
   end
 end
 
+# GET /teacher/students
+def teacher_students
+  user = User.find_by(id: session[:user_id])
+  return render json: { error: "Unauthorized" }, status: :unauthorized unless user
+
+  return render json: { error: "Forbidden" }, status: :forbidden unless user.role == "teacher"
+
+  render json: user.students.as_json(only: [:id, :username, :email]), status: :ok
+end
+
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   # def update

@@ -3,6 +3,11 @@ docker exec -it backend2 bash
 rails db:migrate:reset
 rails db:seed
 
+
+Don't do it, it's for me(Roma): 
+trails g migration AddRoleAndTeacherIdToUsers role:string teacher_id:bigint
+rails routes | grep teacher
+
 # transversals
 Esquema mínim de carpetes pels projectes transversals
 
