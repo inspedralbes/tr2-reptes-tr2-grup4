@@ -214,18 +214,19 @@ async function handleSubmit() {
   uploadMessage.value = ''
   uploadSummary.value = ''
 
-async function downloadPdf() {
-  // await loadDocument();
   try {
-    const response = await fetch(`http://localhost:3000/pis/my-pi/download`, {
-      method: "GET",
+    const formData = new FormData();
+    formData.append('document', document2.value);
+
+    const response = await fetch('http://localhost:3000/pis', {
+      method: "POST",
       credentials: "include",
       body: formData,
     });
 
-    const data = await res.json()
+    const data = await response.json()
 
-    if (!res.ok) {
+    if (!response.ok) {
       throw new Error(data.error || 'Upload failed')
     }
 
@@ -245,6 +246,27 @@ async function downloadPdf() {
     open.value = false
   } catch (error: any) {
     alert(`Upload failed: ${error.message}`)
+  }
+}
+
+async function downloadPdf() {
+  try {
+    const response = await fetch(`http://localhost:3000/pis/my-pi/download`, {
+      method: "GET",
+      credentials: "include",
+    });
+
+    if (!response.ok) throw new Error('Download failed');
+
+    const blob = await response.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'document.pdf';
+    a.click();
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    alert(`Download failed: ${error.message}`);
   }
 }
 
