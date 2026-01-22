@@ -119,7 +119,7 @@ const router = useRouter();
 const { username } = useUser();
 
 // ActionCable setup
-const cable = usePdfUploadCable('ws://localhost:3000/cable')
+const cable = usePdfUploadCable('wss://localhost/api/cable')
 const uploadStatus = ref<string | null>(null)
 const uploadMessage = ref('')
 const uploadSummary = ref('')
@@ -155,7 +155,7 @@ function onFileChange(e: Event) {
 }
 
 async function checkEndpoint() {
-  const res = await fetch("http://localhost:3000/me", {
+  const res = await fetch("/api/me", {
     method: "GET",
     credentials: "include",
     headers: {
@@ -172,7 +172,7 @@ async function checkEndpoint() {
 }
 
 async function loadDocument() {
-  const res = await fetch("http://localhost:3000/pis", {
+  const res = await fetch("/api/pis", {
     method: "GET",
     credentials: "include"
   });
@@ -218,7 +218,7 @@ async function handleSubmit() {
     const formData = new FormData();
     formData.append('document', document2.value);
 
-    const response = await fetch('http://localhost:3000/pis', {
+    const response = await fetch('/api/upload', {
       method: "POST",
       credentials: "include",
       body: formData,
@@ -251,7 +251,7 @@ async function handleSubmit() {
 
 async function downloadPdf() {
   try {
-    const response = await fetch(`http://localhost:3000/pis/my-pi/download`, {
+    const response = await fetch(`/api/pis/my-pi/download`, {
       method: "GET",
       credentials: "include",
     });
@@ -265,7 +265,7 @@ async function downloadPdf() {
     a.download = 'document.pdf';
     a.click();
     URL.revokeObjectURL(url);
-  } catch (error:any) {
+  } catch (error: any) {
     alert(`Download failed: ${error.message}`);
   }
 }
@@ -299,7 +299,7 @@ async function saveSection(section: DocSection) {
 
     const body = { pi: { [section.field]: newText } };
 
-    const res = await fetch(`http://localhost:3000/pis/${piId}`, {
+    const res = await fetch(`/api/pis/${piId}`, {
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },

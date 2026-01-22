@@ -13,7 +13,7 @@ describe('Base Application Flow', () => {
       return false;
     });
 
-    cy.visit("http://localhost:3001");
+    cy.visit("/");
   })
 
   it('should navigate through the main user journey', () => {

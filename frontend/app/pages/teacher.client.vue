@@ -111,7 +111,7 @@ async function fetchStudents() {
   loadingStudents.value = true
   try {
     // /teacher/students
-    const res = await fetch("http://localhost:3000/teacher/students", {
+    const res = await fetch("/api/teacher/students", {
       method: "GET",
       credentials: "include",
     })
@@ -138,7 +138,7 @@ async function fetchStudentDoc(studentId: number) {
   docError.value = null
   try {
     // /teacher/students/:id/document
-    const res = await fetch(`http://localhost:3000/teacher/students/${studentId}/document`, {
+    const res = await fetch(`/api/teacher/students/${studentId}/document`, {
       credentials: "include",
     })
     if (!res.ok) throw new Error(`Document fetch failed (${res.status})`)

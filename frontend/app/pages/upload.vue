@@ -48,12 +48,12 @@ const errorMessage = ref('')
 const statusMessage = ref('')
 const unsubscribe = ref<(() => void) | null>(null)
 
-const cable = usePdfUploadCable('ws://backend:3000/cable')
+const cable = usePdfUploadCable('wss://localhost/api/cable')
 
 onMounted(async () => {
   // Check if user is authenticated
     try {
-     const res = await fetch('http://backend:3000/me', {
+     const res = await fetch('/api/me', {
        method: 'GET',
        credentials: 'include',
      })
@@ -115,7 +115,7 @@ function onFileChange(event: Event) {
 
     // Check authentication again before upload
     try {
-      const authRes = await fetch('http://backend:3000/me', {
+      const authRes = await fetch('/api/me', {
         method: 'GET',
         credentials: 'include',
       })
@@ -156,7 +156,7 @@ function onFileChange(event: Event) {
     const formData = new FormData()
     formData.append('document', document.value)
 
-    const res = await fetch('http://backend:3000/upload', {
+    const res = await fetch('/api/upload', {
       method: 'POST',
       credentials: 'include',
       body: formData,

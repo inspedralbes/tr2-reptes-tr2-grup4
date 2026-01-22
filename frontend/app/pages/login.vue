@@ -43,7 +43,7 @@ async function handleSubmit() {
   debug.value = null;
 
   try {
-    const res = await fetch("http://localhost:3000/login", {
+    const res = await fetch("/api/login", {
       method: "POST",
       credentials: "include",
       headers: {

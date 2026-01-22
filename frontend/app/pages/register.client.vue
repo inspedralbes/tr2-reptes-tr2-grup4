@@ -40,7 +40,7 @@ const passwordConfirmation = ref("");
 const money_transferation = ref("");
 
 async function handleSubmit() {
-  await fetch("http://localhost:3000/register", {
+  await fetch("/api/register", {
     method: "POST",
     credentials: "include",
     headers: {
