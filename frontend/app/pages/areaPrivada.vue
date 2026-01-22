@@ -8,6 +8,12 @@ function goToLogin() {
 function goToLoginTeacher() {
   router.push('/loginTeacher');
 }
+
+function goToLoginAdmin() {
+  router.push('/loginAdmin');
+}
+
+
 </script>
 <template>
     <div class="bg-[#404040] w-full">
@@ -18,9 +24,11 @@ function goToLoginTeacher() {
     <button @click="goToLogin" class="bg-[#C00000] text-white p-[0.5em] rounded-sm hover:bg-[#C00000]/50 ">
       <i class="fas fa-lock"></i> Soc estudiant
     </button>
-    <button @click="goToLoginTeacher" class="bg-[#C00000] text-white p-[0.5em] rounded-sm hover:bg-[#C00000]/50 ml-4">
+    <br> <br>
+    <button @click="goToLoginTeacher" class="bg-[#C00000] text-white p-[0.5em] rounded-sm hover:bg-[#C00000]/50">
       <i class="fas fa-lock"></i> Soc professor
     </button>
+    <br>
     <p>Què pots fer a la teva Àrea privada?</p>
     <ul>
       <li> <i class="fas fa-calendar-days"></i> Fer el seguiment dels teus tràmits i gestions, si ets intermediari, també
