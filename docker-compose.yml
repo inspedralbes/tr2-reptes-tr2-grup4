@@ -21,11 +21,14 @@ services:
       - "3000:3000"
     depends_on:
       - db
+      - ollama
     environment:
       DATABASE_HOST: db
       DATABASE_USERNAME: postgres
       DATABASE_PASSWORD: postgres
       SOLID_QUEUE_IN_PUMA: "true"
+      OLLAMA_BASE_URL: "http://ollama:11434"
+      OLLAMA_MODEL: "llama3.1"
 
   frontend:
     build:
