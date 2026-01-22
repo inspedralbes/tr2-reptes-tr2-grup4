@@ -20,6 +20,13 @@ Rails.application.routes.draw do
   get "/me", to: "users#me"
   get "/teacher/students", to: "teachers#students"
   get "/teacher/students/:id/document", to: "teachers#student_document"
+  get "/teacher/students/:id/summary", to: "teachers#student_summary"
+  post  "/teacher/students/:id/document", to: "teachers#upload_student_document"
+  get   "/teacher/students/:id/document/download", to: "teachers#download_student_document"
+  patch "/teacher/students/:id/pi", to: "teachers#update_student_pi"
+  get   "/teacher/students/:id/summary", to: "teachers#student_summary"
+
+
 
 
 

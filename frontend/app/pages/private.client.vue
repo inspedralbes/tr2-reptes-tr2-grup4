@@ -15,7 +15,7 @@
 
       <!-- Main document -->
       <div class="flex-1">
-        <h1>Greetings, our unique and special{{ username }}! This is your personal cabinet.</h1>
+        <h1>Greetings, our unique and special {{ username }}! This is your personal cabinet.</h1>
         <h2>Document</h2>
 
         <section v-for="section in docVM.sections" :key="section.id" :id="`sec-${section.id}`"
