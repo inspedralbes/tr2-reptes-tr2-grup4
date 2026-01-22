@@ -1,2 +1,4 @@
 ollama
 .env
+node_modules
+testing/node_modules
