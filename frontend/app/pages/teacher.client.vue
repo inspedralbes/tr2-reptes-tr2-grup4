@@ -57,6 +57,16 @@
           </p>
         </div>
 
+        <button
+            type="button"
+            class="px-3 py-2 rounded bg-black text-white text-sm disabled:opacity-40 disabled:cursor-not-allowed"
+            :disabled="!selectedStudentId || loadingDoc || !!docError || docVM.sections.length === 0"
+            @click="goToSummary()"
+            title="Summarize this student's whole document"
+          >
+            Summarize
+        </button>
+
         <div class="mt-4 space-y-4">
           <section
             v-for="sec in docVM.sections"
@@ -87,7 +97,8 @@
 type Student = { id: number; username: string; email?: string }
 type DocSection = { id: string; title: string; content: string }
 
-// Simple VM like you used in private.client.vue
+const router = useRouter()
+
 const docVM = reactive<{ sections: DocSection[] }>({ sections: [] })
 
 const students = ref<Student[]>([])
@@ -107,10 +118,18 @@ function scrollTo(sectionId: string) {
   el.scrollIntoView({ behavior: "smooth", block: "start" })
 }
 
+function goToSummary() {
+  if (!selectedStudentId.value) return
+  router.push({
+    path: "/teacher/summary",
+    query: { studentId: String(selectedStudentId.value) },
+  })
+}
+
 async function fetchStudents() {
   loadingStudents.value = true
   try {
-    // /teacher/students
+    // /teacher/students endpoint duh
     const res = await fetch("http://localhost:3000/teacher/students", {
       method: "GET",
       credentials: "include",
@@ -119,13 +138,12 @@ async function fetchStudents() {
     const data = (await res.json()) as Student[]
     students.value = data
 
-    // auto-select first student (optional)
+    // this sh auto select first student
     const firstStudent = students.value[0]
     if (firstStudent) {
       await selectStudent(firstStudent.id)
     }
   } catch (e: any) {
-    // keep it simple; you can show an error box if you want
     students.value = []
     console.error(e)
   } finally {
