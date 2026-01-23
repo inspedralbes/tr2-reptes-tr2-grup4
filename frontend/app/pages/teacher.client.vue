@@ -219,6 +219,21 @@ const loadingStudents = ref(false)
 const loadingDoc = ref(false)
 const docError = ref<string | null>(null)
 
+async function checkEndpoint() {
+  const res = await fetch("http://localhost:3000/me", {
+    method: "GET",
+    credentials: "include",
+    headers: { "Content-Type": "application/json" },
+  })
+
+  const data = await res.json().catch(() => ({}))
+
+  if (!data?.authenticated) {
+    router.push("/areaPrivada")
+    throw new Error("Not authenticated")
+  }
+}
+
 const selectedStudentName = computed(() => {
   if (!selectedStudentId.value) return null
   return students.value.find(s => s.id === selectedStudentId.value)?.username ?? null
@@ -428,6 +443,7 @@ async function downloadPdf() {
 }
 
 onMounted(async () => {
+  await checkEndpoint()
   await fetchStudents()
 })
 </script>

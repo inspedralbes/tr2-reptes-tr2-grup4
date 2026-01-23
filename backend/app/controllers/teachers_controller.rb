@@ -41,33 +41,63 @@ class TeachersController < ApplicationController
     render json: { sections: sections }, status: :ok
   end
 
+  def download_student_document
+    user = User.find_by(id: session[:user_id])
+    return render json: { error: "Unauthorized" }, status: :unauthorized unless user
+
+    student = User.find_by(id: params[:id])
+    return render json: { error: "Student not found" }, status: :not_found unless student
+
+    # Optional: if you use teacher_id to restrict access
+    if student.teacher_id.present? && student.teacher_id != user.id
+      return render json: { error: "Forbidden" }, status: :forbidden
+    end
+
+    @pi = Pi.find_by(user_id: student.id)
+    if @pi.blank?
+      render json: { error: "This student has no PI yet." }, status: :not_found
+      return
+    end
+
+    @pi.reload
+    @pdf_user = student
+
+    html = render_to_string(template: "pis_layout/pdf", layout: "layouts/pdf", formats: [:html])
+    pdf = WickedPdf.new.pdf_from_string(html, wkhtmltopdf_options)
+
+    send_data pdf,
+              filename: "pi_student_#{student.id}_#{Date.today}.pdf",
+              type: "application/pdf",
+              disposition: "attachment"
+  end
+
   # GET /teacher/students/:id/summary
   def student_summary
-  user = User.find_by(id: session[:user_id])
-  return render json: { error: "Unauthorized" }, status: :unauthorized unless user
+    user = User.find_by(id: session[:user_id])
+    return render json: { error: "Unauthorized" }, status: :unauthorized unless user
 
-  student = User.find(params[:id])
+    student = User.find(params[:id])
 
-  pi = Pi.find_by(user_id: student.id)
-  return render json: { summary: "", error: "No document found." }, status: :unprocessable_entity unless pi
+    pi = Pi.find_by(user_id: student.id)
+    return render json: { summary: "", error: "No document found." }, status: :unprocessable_entity unless pi
 
-  input_text = OllamaTeacher.build_text_from_pi(
-    description: pi.description,
-    observations: pi.observations,
-    medrec: pi.medrec,
-    activities: pi.activities,
-    interacttutorial: pi.interacttutorial
-  )
+    input_text = OllamaTeacher.build_text_from_pi(
+      description: pi.description,
+      observations: pi.observations,
+      medrec: pi.medrec,
+      activities: pi.activities,
+      interacttutorial: pi.interacttutorial
+    )
 
-  begin
-    summary = OllamaTeacher.summarize(input_text, student_name: student.username)
-    render json: { summary: summary }
-  rescue => e
-    render json: { error: e.message, summary: "" }, status: :unprocessable_entity
+    begin
+      summary = OllamaTeacher.summarize(input_text, student_name: student.username)
+      render json: { summary: summary }
+    rescue => e
+      render json: { error: e.message, summary: "" }, status: :unprocessable_entity
+    end
   end
-end
 
-  # --- Scaffolded teacher CRUD (keep if you use it) ---
+    # --- Scaffolded teacher CRUD (keep if you use it) ---
 
   def index
     @teachers = Teacher.all
@@ -99,6 +129,16 @@ end
   end
 
   private
+
+  def wkhtmltopdf_options
+    {
+      "page-size": "A4",
+      "margin-top": "0.75in",
+      "margin-right": "0.75in",
+      "margin-bottom": "0.75in",
+      "margin-left": "0.75in"
+    }
+  end
 
   def sections_to_text(sections)
     sections.map do |s|
