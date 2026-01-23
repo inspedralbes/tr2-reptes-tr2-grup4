@@ -216,7 +216,7 @@ async function handleSubmit() {
 
   try {
     const formData = new FormData();
-    formData.append('document', document2.value);
+    formData.append("pi[document]", document2.value);
 
     const response = await fetch('http://localhost:3000/pis', {
       method: "POST",
