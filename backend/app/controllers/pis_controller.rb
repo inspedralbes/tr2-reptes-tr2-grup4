@@ -1,6 +1,7 @@
 class PisController < ApplicationController
   before_action :authenticate_user!
-  before_action :set_pi, only: %i[ show update destroy]
+  before_action :authorize_student!, except: %i[show]
+  before_action :set_pi, only: %i[show update destroy]
 
   # GET /pis
   def index
@@ -13,10 +14,11 @@ class PisController < ApplicationController
 
   # GET /pis/1
   def show
-    #  return render json: nil, status: :unauthorized unless current_user
-    #  pi = current_user.pi
-    #  return render json: nil, status: :not_found unless pi
-    #  render json: pi
+    if @pi && (@pi.user_id == current_user.id || current_user.teacher?)
+      render json: @pi
+    else
+      render json: { error: "Not found" }, status: :not_found
+    end
   end
 
   # POST /pis
@@ -25,7 +27,7 @@ class PisController < ApplicationController
       @pi = current_user.build_pi(pi_params)
 
       if @pi.save
-        render :show, status: :created, location: @pi
+        render json: @pi, status: :created
       else
         render json: @pi.errors, status: :unprocessable_entity
       end
@@ -37,9 +39,9 @@ class PisController < ApplicationController
   # PATCH/PUT /pis/1
   def update
     if @pi.update(pi_params)
-      render :show, status: :ok, location: @pi
+      render json: @pi, status: :ok
     else
-      render json: {errror: @pi.errors.full_messages}, status: :unprocessable_entity
+      render json: { error: @pi.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -51,7 +53,6 @@ class PisController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_pi
-      # @pi = Pi.find(params.required(:id))ç
       @pi = current_user.pi
       render json: { error: "PI no encontrado" }, status: :not_found if @pi.nil?
     end
@@ -59,9 +60,5 @@ class PisController < ApplicationController
     # Only allow a list of trusted parameters through.
     def pi_params
       params.required(:pi).permit(:description, :observations, :medrec, :activities, :interacttutorial, :document)
-    end
-
-    def authenticate_user!
-      render json: { error: "No autenticado" }, status: :unauthorized unless current_user
     end
 end

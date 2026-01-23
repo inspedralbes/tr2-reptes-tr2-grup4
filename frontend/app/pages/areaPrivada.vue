@@ -17,7 +17,7 @@ function goToLoginAdmin() {
 </script>
 <template>
     <div class="bg-[#404040] w-full">
-      <h1 class=" text-[24px] text-white max-w-5xl mx-auto px-4 py-3">Accés</h1>
+      <h1 class=" text-[24px] text-white max-w-5xl mx-auto px-4 py-3" @click="goToLoginAdmin">Accés</h1>
     </div>
   <div class="max-w-5xl mx-auto px-6 py-10 min-h-screen bg-white">
     <p>Per accedir a l'Àrea privada cal que t'identifiquis amb un dels mecanismes d'identificació digital vàlids.</p>
