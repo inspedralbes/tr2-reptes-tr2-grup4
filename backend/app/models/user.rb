@@ -1,8 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
+  has_one :pi
 
-  has_one :pi, dependent: :destroy
-
+  # has_many :students, class_name: "User", foreign_key: "teacher_id", dependent: :nullify
+ 
   belongs_to :teacher, class_name: "User", optional: true
   has_many :students, class_name: "User", foreign_key: "teacher_id"
 
