@@ -8,6 +8,8 @@ class PisPdfController < PdfRendererController
       return
     end
 
+    @pdf_user = current_user
+
     html = render_to_string(template: "pis_layout/pdf", layout: "layouts/pdf", formats: [:html])
     pdf = WickedPdf.new.pdf_from_string(html, wkhtmltopdf_options)
     send_data pdf, filename: "pi_#{@pi.id}_#{Date.today}.pdf", type: 'application/pdf', disposition: 'attachment'

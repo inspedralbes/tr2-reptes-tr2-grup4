@@ -58,7 +58,7 @@ class PisController < ApplicationController
 
     # Only allow a list of trusted parameters through.
     def pi_params
-      params.required(:pi).permit(:description, :observations, :medrec, :activities, :interacttutorial)
+      params.required(:pi).permit(:description, :observations, :medrec, :activities, :interacttutorial, :document)
     end
 
     def authenticate_user!
