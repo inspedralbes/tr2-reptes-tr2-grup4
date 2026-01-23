@@ -233,7 +233,10 @@ function scrollTo(sectionId: string) {
 // Sidebar butts
 function goToSummary() {
   if (!selectedStudentId.value) return
-  router.push({ path: "/teacher/summary", query: { studentId: String(selectedStudentId.value) } })
+  router.push({
+    path: "/summary",
+    query: { studentId: String(selectedStudentId.value) },
+  })
 }
 
 // Fetching

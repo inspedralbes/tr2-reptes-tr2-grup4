@@ -43,22 +43,25 @@ class TeachersController < ApplicationController
 
   # GET /teacher/students/:id/summary
   def student_summary
-    student = User.find(params[:id])
+  user = User.find_by(id: session[:user_id])
+  return render json: { error: "Unauthorized" }, status: :unauthorized unless user
 
-    sections = student.pi&.sections || []
-    text = sections_to_text(sections)
+  student = User.find(params[:id])
 
-    if text.blank?
-      return render json: { summary: "", error: "No document found." }, status: :unprocessable_entity
-    end
+  pi = Pi.find_by(user_id: student.id)
+  return render json: { summary: "", error: "No document found." }, status: :unprocessable_entity unless pi
 
-    # TEMP STUB (AI later)
-    render json: {
-      summary: "Summary for student ##{student.id}. (Stub — replace with Ollama call)"
-    }
-  rescue ActiveRecord::RecordNotFound
-    render json: { error: "Student not found" }, status: :not_found
-  end
+  input_text = OllamaTeacher.build_text_from_pi(
+    description: pi.description,
+    observations: pi.observations,
+    medrec: pi.medrec,
+    activities: pi.activities,
+    interacttutorial: pi.interacttutorial
+  )
+
+  summary = OllamaTeacher.summarize(input_text, student_name: student.username)
+  render json: { summary: summary }
+end
 
   # --- Scaffolded teacher CRUD (keep if you use it) ---
 
