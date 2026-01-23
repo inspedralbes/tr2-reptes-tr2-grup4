@@ -116,6 +116,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 import { usePdfUploadCable } from "~/composables/useActionCable";
 const router = useRouter();
+const config = useRuntimeConfig();
 const { username } = useUser();
 
 // ActionCable setup
@@ -218,7 +219,7 @@ async function handleSubmit() {
     const formData = new FormData();
     formData.append("document", document2.value);
 
-    const response = await fetch("http://localhost:3000/upload", {
+    const response = await fetch(`${config.public.apiBase}/upload`, {
       method: "POST",
       credentials: "include",
       body: formData,

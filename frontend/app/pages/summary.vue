@@ -42,6 +42,7 @@
 <script setup lang="ts">
 const route = useRoute()
 const router = useRouter()
+const config = useRuntimeConfig()
 
 const studentId = computed(() => {
   const raw = route.query.studentId
@@ -64,7 +65,7 @@ async function fetchSummary() {
   error.value = null
   summary.value = ""
   try {
-    const res = await fetch(`http://localhost:3000/teacher/students/${studentId.value}/summary`, {
+    const res = await fetch(`${config.public.apiBase}/teacher/students/${studentId.value}/summary`, {
       credentials: "include",
     })
     if (!res.ok) {

@@ -210,6 +210,7 @@ type PiField = "description" | "observations" | "medrec" | "activities" | "inter
 type DocSectionWithField = DocSection & { field?: PiField }
 
 const router = useRouter()
+const config = useRuntimeConfig()
 
 const docVM = reactive<{ sections: DocSectionWithField[] }>({ sections: [] })
 
@@ -220,7 +221,7 @@ const loadingDoc = ref(false)
 const docError = ref<string | null>(null)
 
 async function checkEndpoint() {
-  const res = await fetch("http://localhost:3000/me", {
+  const res = await fetch(`${config.public.apiBase}/me`, {
     method: "GET",
     credentials: "include",
     headers: { "Content-Type": "application/json" },
@@ -258,7 +259,7 @@ function goToSummary() {
 async function fetchStudents() {
   loadingStudents.value = true
   try {
-    const res = await fetch("http://localhost:3000/teacher/students", {
+    const res = await fetch(`${config.public.apiBase}/teacher/students`, {
       method: "GET",
       credentials: "include",
     })
@@ -279,7 +280,7 @@ async function fetchStudentDoc(studentId: number) {
   loadingDoc.value = true
   docError.value = null
   try {
-    const res = await fetch(`http://localhost:3000/teacher/students/${studentId}/document`, {
+    const res = await fetch(`${config.public.apiBase}/teacher/students/${studentId}/document`, {
       credentials: "include",
     })
     if (!res.ok) throw new Error(`Document fetch failed (${res.status})`)
@@ -336,7 +337,7 @@ async function saveSection(sec: DocSectionWithField) {
     const body = { pi: { [sec.field]: newText } }
 
     // patch "/teacher/students/:id/pi", to: "teachers#update_student_pi"
-    const res = await fetch(`http://localhost:3000/teacher/students/${selectedStudentId.value}/pi`, {
+    const res = await fetch(`${config.public.apiBase}/teacher/students/${selectedStudentId.value}/pi`, {
       method: "PATCH",
       credentials: "include",
       headers: { "Content-Type": "application/json" },
@@ -390,7 +391,7 @@ async function handleUpload() {
     const formData = new FormData()
     formData.append("document", selectedFile.value)
 
-    const res = await fetch(`http://localhost:3000/teacher/students/${selectedStudentId.value}/document`, {
+    const res = await fetch(`${config.public.apiBase}/teacher/students/${selectedStudentId.value}/document`, {
       method: "POST",
       credentials: "include",
       body: formData,
@@ -419,7 +420,7 @@ async function downloadPdf() {
   downloadError.value = null
 
   try {
-    const res = await fetch(`http://localhost:3000/teacher/students/${selectedStudentId.value}/document/download`, {
+    const res = await fetch(`${config.public.apiBase}/teacher/students/${selectedStudentId.value}/document/download`, {
       method: "GET",
       credentials: "include",
     })
