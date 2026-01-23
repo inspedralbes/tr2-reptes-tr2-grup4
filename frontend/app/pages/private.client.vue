@@ -15,7 +15,7 @@
 
       <!-- Main document -->
       <div class="flex-1">
-        <h1>Greetings, our unique and special{{ username }}! This is your personal cabinet.</h1>
+        <h1>Greetings, our unique and special {{ username }}! This is your personal cabinet.</h1>
         <h2>Document</h2>
 
         <section v-for="section in docVM.sections" :key="section.id" :id="`sec-${section.id}`"
@@ -216,9 +216,9 @@ async function handleSubmit() {
 
   try {
     const formData = new FormData();
-    formData.append('document', document2.value);
+    formData.append("document", document2.value);
 
-    const response = await fetch('/api/upload', {
+    const response = await fetch("http://localhost:3000/upload", {
       method: "POST",
       credentials: "include",
       body: formData,

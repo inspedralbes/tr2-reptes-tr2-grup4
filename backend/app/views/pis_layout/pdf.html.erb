@@ -41,7 +41,7 @@
     </tr>
     <tr>
       <td><strong>Correu electrònic:</strong></td>
-      <td><%= @pi.present? ? current_user.email : '' %></td>
+      <td><%= @pi.present? ? (@pdf_user&.email || '') : '' %></td>
 
     </tr>
   </table>
