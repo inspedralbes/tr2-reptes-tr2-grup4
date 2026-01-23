@@ -28,7 +28,7 @@ services:
       DATABASE_PASSWORD: postgres
       SOLID_QUEUE_IN_PUMA: "true"
       OLLAMA_BASE_URL: "http://ollama:11434"
-      OLLAMA_MODEL: "llama3.1"
+      OLLAMA_MODEL: "phi3"
 
   frontend:
     build:

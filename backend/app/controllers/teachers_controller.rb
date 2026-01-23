@@ -59,8 +59,12 @@ class TeachersController < ApplicationController
     interacttutorial: pi.interacttutorial
   )
 
-  summary = OllamaTeacher.summarize(input_text, student_name: student.username)
-  render json: { summary: summary }
+  begin
+    summary = OllamaTeacher.summarize(input_text, student_name: student.username)
+    render json: { summary: summary }
+  rescue => e
+    render json: { error: e.message, summary: "" }, status: :unprocessable_entity
+  end
 end
 
   # --- Scaffolded teacher CRUD (keep if you use it) ---
