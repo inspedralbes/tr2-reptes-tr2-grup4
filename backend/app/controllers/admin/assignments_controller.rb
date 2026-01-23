@@ -1,7 +1,7 @@
 module Admin
   class AssignmentsController < ApplicationController
     # Si usas cookies/sesión
-    # protect_from_forgery with: :null_session
+    protect_from_forgery with: :null_session
 
     def index
       students = User

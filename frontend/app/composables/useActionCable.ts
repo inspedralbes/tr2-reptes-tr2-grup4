@@ -1,99 +1,168 @@
-import { ref, reactive } from 'vue'
+import { ref, reactive } from "vue";
+
+type Subscription = {
+  subscriptionId: string;
+  callback: (data: any) => void;
+};
 
 export function useActionCable(url: string) {
-  const socket = ref<WebSocket | null>(null)
-  const isConnected = ref(false)
-  const subscriptions = ref<Record<string, { subscriptionId: string; callback: (data: any) => void }>>({})
+  const socket = ref<WebSocket | null>(null);
+  const isConnected = ref(false);
 
-  function connect() {
-    if (socket.value?.readyState === WebSocket.OPEN) return
+  const subscriptions = reactive<Record<string, Subscription>>({});
 
-    socket.value = new WebSocket(url)
+  let reconnectAttempts = 0;
+  let manualDisconnect = false;
 
-    socket.value.onopen = () => {
-      isConnected.value = true
-      console.log('[ActionCable] Connected')
-      // Re-subscribe to all channels
-      Object.keys(subscriptions.value).forEach(channelKey => {
-        const { subscriptionId } = subscriptions.value[channelKey]
-        console.log('[ActionCable] Re-subscribing to:', subscriptionId, 'for channel:', channelKey)
-        socket.value?.send(JSON.stringify({ command: 'subscribe', identifier: subscriptionId }))
-      })
-    }
-
-    socket.value.onclose = () => {
-      isConnected.value = false
-      socket.value = null
-      console.log('[ActionCable] Disconnected')
-      // Try to reconnect after 1 second
-      setTimeout(() => {
-        if (!isConnected.value) {
-          console.log('[ActionCable] Reconnecting...')
-          connect()
-        }
-      }, 1000)
-    }
-
-    socket.value.onerror = (error) => {
-      console.error('[ActionCable] Error:', error)
-    }
-
-    socket.value.onmessage = (event) => {
-      const data = JSON.parse(event.data)
-
-      if (data.type === 'confirm_subscription') {
-        console.log('[ActionCable] Subscription confirmed for:', data.identifier)
-      } else if (data.type === 'reject_subscription') {
-        console.error('[ActionCable] Subscription rejected for:', data.identifier)
-      } else if (data.identifier && data.message) {
-        console.log('[ActionCable] Broadcast message:', data)
-        const channelKey = data.identifier
-        const subscription = subscriptions.value[channelKey]
-        if (subscription) {
-          console.log('[ActionCable] Calling callback for:', channelKey)
-          subscription.callback(data.message)
-        } else {
-          console.warn('[ActionCable] No callback found for:', channelKey)
-          console.log('[ActionCable] Available subscriptions:', Object.keys(subscriptions.value))
-        }
-      } else if (data.type === 'ping') {
-        // Ignore ping messages
-      } else {
-        console.log('[ActionCable] Unhandled message type:', data.type)
-      }
-    }
+  function normalizeWsUrl(url: string) {
+    if (url.startsWith("http://")) return url.replace("http://", "ws://");
+    if (url.startsWith("https://")) return url.replace("https://", "wss://");
+    return url;
   }
 
-  function subscribe(channelName: string, params: Record<string, any>, callback: (data: any) => void) {
-    const subscriptionId = JSON.stringify({ channel: channelName, ...params })
-    const channelKey = `pdf_upload_${params.id}`
-    console.log('[ActionCable] Subscribing to:', subscriptionId, 'channel key:', channelKey, 'isConnected:', isConnected.value)
-    subscriptions.value[channelKey] = { subscriptionId, callback }
+  function connect() {
+    if (socket.value?.readyState === WebSocket.OPEN) return;
+
+    manualDisconnect = false;
+    const wsUrl = normalizeWsUrl(url);
+    socket.value = new WebSocket(wsUrl);
+
+    socket.value.onopen = () => {
+      isConnected.value = true;
+      reconnectAttempts = 0;
+      console.log("[ActionCable] Connected");
+
+      Object.values(subscriptions).forEach(({ subscriptionId }) => {
+        socket.value?.send(
+          JSON.stringify({
+            command: "subscribe",
+            identifier: subscriptionId,
+          }),
+        );
+      });
+    };
+
+    socket.value.onclose = () => {
+      isConnected.value = false;
+      socket.value = null;
+
+      if (manualDisconnect) {
+        console.log("[ActionCable] Disconnected manually");
+        return;
+      }
+
+      reconnectAttempts++;
+      const timeout = Math.min(1000 * reconnectAttempts, 10000);
+
+      console.log(
+        `[ActionCable] Disconnected. Reconnecting in ${timeout}ms...`,
+      );
+
+      setTimeout(() => {
+        if (!isConnected.value) {
+          connect();
+        }
+      }, timeout);
+    };
+
+    socket.value.onerror = (error) => {
+      console.error("[ActionCable] Error:", error);
+    };
+
+    socket.value.onmessage = (event) => {
+      let data: any;
+
+      try {
+        data = JSON.parse(event.data);
+      } catch {
+        console.warn("[ActionCable] Invalid JSON:", event.data);
+        return;
+      }
+
+      if (data.type === "ping") return;
+
+      if (data.type === "confirm_subscription") {
+        console.log(
+          "[ActionCable] Subscription confirmed:",
+          data.identifier,
+        );
+        return;
+      }
+
+      if (data.type === "reject_subscription") {
+        console.error(
+          "[ActionCable] Subscription rejected:",
+          data.identifier,
+        );
+        return;
+      }
+
+      if (data.identifier && data.message) {
+        const subscription = subscriptions[data.identifier];
+
+        if (subscription) {
+          subscription.callback(data.message);
+        } else {
+          console.warn(
+            "[ActionCable] No subscription found for:",
+            data.identifier,
+          );
+        }
+      }
+    };
+  }
+
+  function subscribe(
+    channelName: string,
+    params: Record<string, any>,
+    callback: (data: any) => void,
+  ) {
+    const subscriptionId = JSON.stringify({
+      channel: channelName,
+      ...params,
+    });
+
+    subscriptions[subscriptionId] = {
+      subscriptionId,
+      callback,
+    };
 
     if (isConnected.value && socket.value?.readyState === WebSocket.OPEN) {
-      console.log('[ActionCable] Sending subscribe command')
-      socket.value.send(JSON.stringify({ command: 'subscribe', identifier: subscriptionId }))
-    } else {
-      console.log('[ActionCable] Cannot subscribe - not connected yet, will retry on open')
+      socket.value.send(
+        JSON.stringify({
+          command: "subscribe",
+          identifier: subscriptionId,
+        }),
+      );
     }
   }
 
   function unsubscribe(channelName: string, params: Record<string, any>) {
-    const subscriptionId = JSON.stringify({ channel: channelName, ...params })
-    const channelKey = `pdf_upload_${params.id}`
-    delete subscriptions.value[channelKey]
-    if (isConnected.value) {
-      socket.value?.send(JSON.stringify({ command: 'unsubscribe', identifier: subscriptionId }))
+    const subscriptionId = JSON.stringify({
+      channel: channelName,
+      ...params,
+    });
+
+    delete subscriptions[subscriptionId];
+
+    if (isConnected.value && socket.value) {
+      socket.value.send(
+        JSON.stringify({
+          command: "unsubscribe",
+          identifier: subscriptionId,
+        }),
+      );
     }
   }
 
   function disconnect() {
-    if (socket.value) {
-      socket.value.close()
-      socket.value = null
-    }
-    isConnected.value = false
-    subscriptions.value = {}
+    manualDisconnect = true;
+    isConnected.value = false;
+
+    Object.keys(subscriptions).forEach((key) => delete subscriptions[key]);
+
+    socket.value?.close();
+    socket.value = null;
   }
 
   return {
@@ -101,20 +170,23 @@ export function useActionCable(url: string) {
     connect,
     disconnect,
     subscribe,
-    unsubscribe
-  }
+    unsubscribe,
+  };
 }
 
 export function usePdfUploadCable(url: string) {
-  const cable = useActionCable(url)
+  const cable = useActionCable(url);
 
-  function subscribeToPdfUpload(id: number, callback: (data: any) => void) {
-    cable.subscribe('PdfUploadChannel', { id }, callback)
-    return () => cable.unsubscribe('PdfUploadChannel', { id })
+  function subscribeToPdfUpload(
+    id: number,
+    callback: (data: any) => void,
+  ) {
+    cable.subscribe("PdfUploadChannel", { id }, callback);
+    return () => cable.unsubscribe("PdfUploadChannel", { id });
   }
 
-  return reactive({
+  return {
     ...cable,
-    subscribeToPdfUpload
-  })
+    subscribeToPdfUpload,
+  };
 }
