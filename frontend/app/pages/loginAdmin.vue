@@ -56,7 +56,7 @@ async function handleSubmit() {
     });
 
     const data = await res.json().catch(() => ({}));
-    router.push("/private");
+    router.push("/admin");
     debug.value = { status: res.status, data };
 
   } catch (err: any) {

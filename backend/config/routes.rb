@@ -4,7 +4,14 @@ Rails.application.routes.draw do
       get 'download', to: 'pis_pdf#download'
     end
   end
-  
+
+ # Admin
+  namespace :admin do
+    get "assignments", to: "assignments#index"
+    patch "assignments/:student_id", to: "assignments#update"
+  end
+
+
   # Download PI for current user (no ID required)
   get "/pis/my-pi/download", to: "pis_pdf#download", as: :my_pi_download
   
