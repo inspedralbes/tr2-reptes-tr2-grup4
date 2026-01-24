@@ -1,4 +1,4 @@
-import { useRouter } from 'vue-router';
+import { useRouter } from "vue-router";
 
 export async function useAuthorization(requiredRole?: string) {
   const router = useRouter();
@@ -9,30 +9,30 @@ export async function useAuthorization(requiredRole?: string) {
     user?: any;
   }> => {
     try {
-      const res = await fetch('http://localhost:3000/me', {
-        method: 'GET',
-        credentials: 'include',
+      const res = await fetch("http://localhost:3000/me", {
+        method: "GET",
+        credentials: "include",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
       });
 
       const data = await res.json();
 
       if (!data.authenticated) {
-        router.push('/login');
+        router.push("/login");
         return { authenticated: false };
       }
 
       // Validar rol si se requiere uno específico
       if (requiredRole && data.user?.role !== requiredRole) {
         // Redirigir al login del rol correspondiente
-        if (data.user?.role === 'teacher') {
-          router.push('/loginTeacher');
-        } else if (data.user?.role === 'student') {
-          router.push('/login');
+        if (data.user?.role === "teacher") {
+          router.push("/loginTeacher");
+        } else if (data.user?.role === "student") {
+          router.push("/login");
         } else {
-          router.push('/loginAdmin');
+          router.push("/loginAdmin");
         }
         return { authenticated: false };
       }
@@ -43,8 +43,8 @@ export async function useAuthorization(requiredRole?: string) {
         user: data.user,
       };
     } catch (error) {
-      console.error('Error checking authorization:', error);
-      router.push('/login');
+      console.error("Error checking authorization:", error);
+      router.push("/login");
       return { authenticated: false };
     }
   };

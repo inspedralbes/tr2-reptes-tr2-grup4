@@ -1,10 +1,6 @@
 module Authorization
   extend ActiveSupport::Concern
 
-  included do
-    before_action :authenticate_user!, unless: :public_action?
-  end
-
   private
 
   def authenticate_user!
@@ -47,9 +43,5 @@ module Authorization
       return false
     end
     true
-  end
-
-  def public_action?
-    action_name.in?(['login', 'register', 'logout', 'login_page'])
   end
 end

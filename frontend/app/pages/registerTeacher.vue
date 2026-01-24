@@ -1,55 +1,64 @@
 <template>
   <div class="bg-[#404040] w-full">
-    <h1 class="text-[24px] text-white max-w-5xl mx-auto px-4 py-3 hover:underline">Registre de Professor</h1>
+    <h1
+      class="text-[24px] text-white max-w-5xl mx-auto px-4 py-3 hover:underline"
+    >
+      Registre de Professor
+    </h1>
   </div>
   <div class="max-w-5xl mx-auto px-4 py-6">
-    <form class="bg-white min-h-screen flex flex-col text-xl" @submit.prevent="handleSubmit">
+    <form
+      class="bg-white min-h-screen flex flex-col text-xl"
+      @submit.prevent="handleSubmit"
+    >
       <label for="username" class="mt-4 font-semibold">Nom d'usuari</label>
-      <input 
-        class="border border-black p-2" 
-        type="text" 
-        id="username" 
-        v-model="username" 
+      <input
+        class="border border-black p-2"
+        type="text"
+        id="username"
+        v-model="username"
         placeholder="Ex: professor_joan"
         required
       />
 
       <label for="email" class="mt-4 font-semibold">Email</label>
-      <input 
-        class="border border-black p-2" 
-        type="email" 
-        id="email" 
+      <input
+        class="border border-black p-2"
+        type="email"
+        id="email"
         v-model="email"
         placeholder="Ex: joan@escola.cat"
         required
       />
 
       <label for="password" class="mt-4 font-semibold">Contrasenya</label>
-      <input 
-        class="border border-black p-2" 
-        type="password" 
-        id="password" 
+      <input
+        class="border border-black p-2"
+        type="password"
+        id="password"
         v-model="password"
         placeholder="Contrasenya (mínim 6 caràcters)"
         required
       />
 
-      <label for="password_confirmation" class="mt-4 font-semibold">Confirmar contrasenya</label>
-      <input 
-        class="border border-black p-2" 
-        type="password" 
-        id="password_confirmation" 
+      <label for="password_confirmation" class="mt-4 font-semibold"
+        >Confirmar contrasenya</label
+      >
+      <input
+        class="border border-black p-2"
+        type="password"
+        id="password_confirmation"
         v-model="passwordConfirmation"
         placeholder="Confirma la contrasenya"
         required
       />
 
-      <button 
-        class="bg-[#CC0000] text-white p-2 mt-6 w-auto font-semibold hover:bg-red-700" 
+      <button
+        class="bg-[#CC0000] text-white p-2 mt-6 w-auto font-semibold hover:bg-red-700"
         type="submit"
         :disabled="isLoading"
       >
-        {{ isLoading ? 'Registrant...' : 'Registrar-me com a Professor' }}
+        {{ isLoading ? "Registrant..." : "Registrar-me com a Professor" }}
       </button>
 
       <p v-if="successMessage" class="mt-4 text-green-600 font-semibold">
@@ -60,7 +69,10 @@
         {{ errorMessage }}
       </p>
 
-      <NuxtLink to="/login" class="bg-gray-400 text-black p-2 inline-block mt-4 text-center">
+      <NuxtLink
+        to="/login"
+        class="bg-gray-400 text-black p-2 inline-block mt-4 text-center"
+      >
         ¿Ya tienes cuenta? Inicia sesión
       </NuxtLink>
     </form>
@@ -111,7 +123,7 @@ async function handleSubmit() {
         email: email.value,
         password: password.value,
         password_confirmation: passwordConfirmation.value,
-        role: "teacher"  // Especificar que es profesor
+        role: "teacher", // Especificar que es profesor
       }),
     });
 
@@ -123,7 +135,8 @@ async function handleSubmit() {
         router.push("/loginTeacher");
       }, 2000);
     } else {
-      errorMessage.value = data.error || data.errors?.email?.[0] || "Error al registrarse";
+      errorMessage.value =
+        data.error || data.errors?.email?.[0] || "Error al registrarse";
     }
   } catch (error) {
     console.error("Error:", error);

@@ -23,6 +23,10 @@ Rails.application.routes.draw do
   get   "/teacher/students/:id/document/download", to: "teachers#download_student_document"
   patch "/teacher/students/:id/pi", to: "teachers#update_student_pi"
   
+  # Admin routes
+  get "/admin/assignments", to: "admin#assignments"
+  patch "/admin/assignments/:id", to: "admin#update_assignment"
+  
   # Health check
   get "up" => "rails/health#show", as: :rails_health_check
 

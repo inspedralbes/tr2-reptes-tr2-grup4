@@ -9,7 +9,8 @@ RUN apt-get update -qq && apt-get install -y \
   fontconfig \
   libxrender1 \
   libxext6 \
-  ca-certificates && rm -rf /var/lib/apt/lists/*
+  ca-certificates \
+  dos2unix && rm -rf /var/lib/apt/lists/*
 
 WORKDIR /app
 
@@ -17,5 +18,8 @@ COPY Gemfile Gemfile.lock ./
 RUN bundle install
 
 COPY . .
+
+# Convert CRLF to LF in bin files for Windows compatibility
+RUN find bin -type f -exec dos2unix {} \;
 
 EXPOSE 3000

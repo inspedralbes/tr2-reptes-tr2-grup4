@@ -1,46 +1,63 @@
 <template>
   <div class="bg-[#404040] w-full">
-    <h1 class="text-[24px] text-white max-w-5xl mx-auto px-4 py-3">Inici de Sessió - Estudiants</h1>
+    <h1 class="text-[24px] text-white max-w-5xl mx-auto px-4 py-3">
+      Inici de Sessió - Estudiants
+    </h1>
   </div>
   <div class="max-w-5xl mx-auto px-4 py-6">
-    <form class="bg-white min-h-screen flex flex-col" @submit.prevent="handleSubmit">
+    <form
+      class="bg-white min-h-screen flex flex-col"
+      @submit.prevent="handleSubmit"
+    >
       <label for="username" class="font-semibold">Nom d'usuari</label>
-      <input 
-        class="border border-black p-2" 
-        type="text" 
-        id="username" 
-        v-model="username" 
+      <input
+        class="border border-black p-2"
+        type="text"
+        id="username"
+        v-model="username"
         autocomplete="username"
         required
       />
 
       <label for="password" class="mt-4 font-semibold">Contrasenya</label>
-      <input 
-        class="border border-black p-2" 
-        type="password" 
-        id="password" 
+      <input
+        class="border border-black p-2"
+        type="password"
+        id="password"
         v-model="password"
         autocomplete="current-password"
         required
       />
 
-      <button 
-        class="bg-gray-400 text-black p-2 mt-4 font-semibold hover:bg-gray-500" 
+      <button
+        class="bg-gray-400 text-black p-2 mt-4 font-semibold hover:bg-gray-500"
         type="submit"
         :disabled="isLoading"
       >
-        {{ isLoading ? 'Entrant...' : 'Entrar' }}
+        {{ isLoading ? "Entrant..." : "Entrar" }}
       </button>
 
-      <NuxtLink to="/register" class="bg-pink-400 text-black p-2 inline-block mt-4 text-center">
+      <NuxtLink
+        to="/register"
+        class="bg-pink-400 text-black p-2 inline-block mt-4 text-center"
+      >
         ¿No tienes cuenta? ¡Regístrate como estudiante!
       </NuxtLink>
 
-      <div v-if="message" class="mt-4 p-2 rounded" :class="errorMessage ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'">
+      <div
+        v-if="message"
+        class="mt-4 p-2 rounded"
+        :class="
+          errorMessage ? 'bg-red-100 text-red-700' : 'bg-blue-100 text-blue-700'
+        "
+      >
         <p class="font-semibold">{{ message }}</p>
       </div>
 
-      <pre v-if="debug" class="mt-2 text-xs whitespace-pre-wrap bg-gray-100 p-2 rounded">
+      <pre
+        v-if="debug"
+        class="mt-2 text-xs whitespace-pre-wrap bg-gray-100 p-2 rounded"
+      >
         {{ debug }}
       </pre>
     </form>
