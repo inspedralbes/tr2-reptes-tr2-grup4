@@ -1,4 +1,5 @@
 class ApplicationController < ActionController::API
+  include Authorization
   before_action :set_current_user
 
   private

@@ -1,7 +1,7 @@
 <template>
   <div class="bg-[#404040] w-full">
     <h1 class="text-[24px] text-white max-w-5xl mx-auto px-4 py-3">
-      Inici de Sessió - Estudiants
+      Inici de Sessió - Administrador
     </h1>
   </div>
   <div class="max-w-5xl mx-auto px-4 py-6">
@@ -9,13 +9,16 @@
       class="bg-white min-h-screen flex flex-col"
       @submit.prevent="handleSubmit"
     >
-      <label for="username" class="font-semibold">Nom d'usuari</label>
+      <label for="username" class="font-semibold"
+        >Nom d'usuari (ex: Admin User)</label
+      >
       <input
         class="border border-black p-2"
         type="text"
         id="username"
         v-model="username"
         autocomplete="username"
+        placeholder="Introdueix el nom d'usuari"
         required
       />
 
@@ -36,13 +39,6 @@
       >
         {{ isLoading ? "Entrant..." : "Entrar" }}
       </button>
-
-      <NuxtLink
-        to="/register"
-        class="bg-pink-400 text-black p-2 inline-block mt-4 text-center"
-      >
-        ¿No tienes cuenta? ¡Regístrate como estudiante!
-      </NuxtLink>
 
       <div
         v-if="message"
@@ -82,7 +78,7 @@ async function handleSubmit() {
   isLoading.value = true;
 
   try {
-    const res = await fetch("/api/login", {
+    const res = await fetch("http://localhost:3000/login", {
       method: "POST",
       credentials: "include",
       headers: {
@@ -98,15 +94,15 @@ async function handleSubmit() {
     debug.value = { status: res.status, data };
 
     if (res.ok && data.authenticated) {
-      // Validar que el usuario sea estudiante
-      if (data.role === "student") {
+      // Validar que el usuario sea admin
+      if (data.role === "admin") {
         message.value = `¡Bienvenido, ${data.user?.username}!`;
         setTimeout(() => {
-          router.push("/private");
+          router.push("/admin");
         }, 500);
       } else {
         errorMessage.value = true;
-        message.value = `❌ Error: Eres ${data.role}. Este login es solo para estudiantes. Por favor, usa el login correcto.`;
+        message.value = `❌ Error: Eres ${data.role}. Este login es solo para administradores. Por favor, usa el login correcto.`;
       }
     } else {
       errorMessage.value = true;

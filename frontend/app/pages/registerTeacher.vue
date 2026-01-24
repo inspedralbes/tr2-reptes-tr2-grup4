@@ -3,7 +3,7 @@
     <h1
       class="text-[24px] text-white max-w-5xl mx-auto px-4 py-3 hover:underline"
     >
-      Registre d'Estudiants
+      Registre de Professor
     </h1>
   </div>
   <div class="max-w-5xl mx-auto px-4 py-6">
@@ -17,7 +17,7 @@
         type="text"
         id="username"
         v-model="username"
-        placeholder="Ex: alvaro"
+        placeholder="Ex: professor_joan"
         required
       />
 
@@ -27,7 +27,7 @@
         type="email"
         id="email"
         v-model="email"
-        placeholder="Ex: alvaro@gmail.com"
+        placeholder="Ex: joan@escola.cat"
         required
       />
 
@@ -58,7 +58,7 @@
         type="submit"
         :disabled="isLoading"
       >
-        {{ isLoading ? "Registrant..." : "Registrar-me com a Estudiante" }}
+        {{ isLoading ? "Registrant..." : "Registrar-me com a Professor" }}
       </button>
 
       <p v-if="successMessage" class="mt-4 text-green-600 font-semibold">
@@ -123,16 +123,16 @@ async function handleSubmit() {
         email: email.value,
         password: password.value,
         password_confirmation: passwordConfirmation.value,
-        role: "student", // Especificar que es estudiante
+        role: "teacher", // Especificar que es profesor
       }),
     });
 
     const data = await res.json();
 
     if (res.ok) {
-      successMessage.value = `¡Bienvenido, ${data.username}! Redirigiendo al área de estudiantes...`;
+      successMessage.value = `¡Bienvenido, ${data.username}! Redirigiendo al área de profesores...`;
       setTimeout(() => {
-        router.push("/private");
+        router.push("/loginTeacher");
       }, 2000);
     } else {
       errorMessage.value =

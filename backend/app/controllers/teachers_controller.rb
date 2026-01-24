@@ -1,25 +1,21 @@
 class TeachersController < ApplicationController
-  # before_action :set_teacher, only: %i[ show update destroy ]
+  before_action :authenticate_user!
+  before_action :authorize_teacher!, except: []
 
   # GET /teacher/students
   def students
-    user = User.find_by(id: session[:user_id])
-    return render json: { error: "Unauthorized" }, status: :unauthorized unless user
-
-    # TEMPORARY (until you wire real relation):
-    render json: User.all.as_json(only: [:id, :username, :email]), status: :ok
+    # Only return students assigned to current teacher
+    assigned_students = User.where(role: "student", teacher_id: @current_user.id)
+    render json: assigned_students.as_json(only: [:id, :username, :email]), status: :ok
   end
 
   # GET /teacher/students/:id/document
   def student_document
-    user = User.find_by(id: session[:user_id])
-    return render json: { error: "Unauthorized" }, status: :unauthorized unless user
-
     student = User.find_by(id: params[:id])
     return render json: { error: "Student not found" }, status: :not_found unless student
 
-    # If you haven't wired teacher_id yet, comment this out for now.
-    if student.teacher_id.present? && student.teacher_id != user.id
+    # Check that the student is assigned to this teacher
+    if student.teacher_id != @current_user.id
       return render json: { error: "Forbidden" }, status: :forbidden
     end
 
@@ -42,14 +38,11 @@ class TeachersController < ApplicationController
   end
 
   def download_student_document
-    user = User.find_by(id: session[:user_id])
-    return render json: { error: "Unauthorized" }, status: :unauthorized unless user
-
     student = User.find_by(id: params[:id])
     return render json: { error: "Student not found" }, status: :not_found unless student
 
-    # Optional: if you use teacher_id to restrict access
-    if student.teacher_id.present? && student.teacher_id != user.id
+    # Check that the student is assigned to this teacher
+    if student.teacher_id != @current_user.id
       return render json: { error: "Forbidden" }, status: :forbidden
     end
 
@@ -73,10 +66,12 @@ class TeachersController < ApplicationController
 
   # GET /teacher/students/:id/summary
   def student_summary
-    user = User.find_by(id: session[:user_id])
-    return render json: { error: "Unauthorized" }, status: :unauthorized unless user
-
     student = User.find(params[:id])
+    
+    # Check that the student is assigned to this teacher
+    if student.teacher_id != @current_user.id
+      return render json: { error: "Forbidden" }, status: :forbidden
+    end
 
     pi = Pi.find_by(user_id: student.id)
     return render json: { summary: "", error: "No document found." }, status: :unprocessable_entity unless pi
@@ -99,14 +94,11 @@ class TeachersController < ApplicationController
 
   # POST /teacher/students/:id/document
   def upload_student_document
-    user = User.find_by(id: session[:user_id])
-    return render json: { error: "Unauthorized" }, status: :unauthorized unless user
-
     student = User.find_by(id: params[:id])
     return render json: { error: "Student not found" }, status: :not_found unless student
 
-    # Optional restriction
-    if student.teacher_id.present? && student.teacher_id != user.id
+    # Check that the student is assigned to this teacher
+    if student.teacher_id != @current_user.id
       return render json: { error: "Forbidden" }, status: :forbidden
     end
 
