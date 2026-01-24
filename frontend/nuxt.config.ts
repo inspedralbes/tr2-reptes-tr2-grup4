@@ -5,7 +5,8 @@ export default defineNuxtConfig({
   modules: ['@nuxtjs/tailwindcss'],
   runtimeConfig: {
     public: {
-      apiBase: '/api'
+      apiBase: '/api',
+      wsUrl: process.env.WS_URL || 'wss://localhost/api/cable'
     }
   },
   nitro: {

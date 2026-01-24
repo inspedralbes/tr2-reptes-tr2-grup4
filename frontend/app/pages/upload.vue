@@ -48,7 +48,8 @@ const errorMessage = ref('')
 const statusMessage = ref('')
 const unsubscribe = ref<(() => void) | null>(null)
 
-const cable = usePdfUploadCable('wss://localhost/api/cable')
+const config = useRuntimeConfig()
+const cable = usePdfUploadCable(config.public.wsUrl)
 
 onMounted(async () => {
   // Check if user is authenticated

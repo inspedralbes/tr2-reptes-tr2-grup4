@@ -39,6 +39,7 @@ services:
       - node_modules:/app/node_modules
     environment:
       CHOKIDAR_USEPOLLING: "true"
+      WS_URL: "wss://betterpi.daw.inspedralbes.cat/api/cable"
   ollama:
     image: ollama/ollama
     container_name: ollama

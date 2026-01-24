@@ -120,7 +120,8 @@ const config = useRuntimeConfig();
 const { username } = useUser();
 
 // ActionCable setup
-const cable = usePdfUploadCable('wss://localhost/api/cable')
+const config = useRuntimeConfig()
+const cable = usePdfUploadCable(config.public.wsUrl)
 const uploadStatus = ref<string | null>(null)
 const uploadMessage = ref('')
 const uploadSummary = ref('')
