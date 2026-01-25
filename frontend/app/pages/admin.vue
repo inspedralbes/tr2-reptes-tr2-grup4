@@ -237,7 +237,7 @@ function selectStudent(id: number) {
 onMounted(async () => {
   // Check authorization - redirect if not admin
   try {
-    const userData = (await $fetch("http://localhost:3000/me", {
+    const userData = (await $fetch("/api/me", {
       credentials: "include",
     })) as any;
 
@@ -254,7 +254,7 @@ onMounted(async () => {
     return;
   }
 
-  const response = (await $fetch("http://localhost:3000/admin/assignments", {
+  const response = (await $fetch("/api/admin/assignments", {
     credentials: "include",
   })) as any;
 
@@ -289,7 +289,7 @@ async function saveAssignment() {
 
   try {
     await $fetch(
-      `http://localhost:3000/admin/assignments/${selectedStudent.value.id}`,
+      `/api/admin/assignments/${selectedStudent.value.id}`,
       {
         method: "PATCH",
         body: {

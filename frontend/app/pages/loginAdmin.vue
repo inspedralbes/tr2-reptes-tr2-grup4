@@ -78,7 +78,7 @@ async function handleSubmit() {
   isLoading.value = true;
 
   try {
-    const res = await fetch("http://localhost:3000/login", {
+    const res = await fetch("/api/login", {
       method: "POST",
       credentials: "include",
       headers: {

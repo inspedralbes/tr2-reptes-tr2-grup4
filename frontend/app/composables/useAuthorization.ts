@@ -9,7 +9,7 @@ export async function useAuthorization(requiredRole?: string) {
     user?: any;
   }> => {
     try {
-      const res = await fetch("http://localhost:3000/me", {
+      const res = await fetch("/api/me", {
         method: "GET",
         credentials: "include",
         headers: {

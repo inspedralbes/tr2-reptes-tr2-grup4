@@ -15,8 +15,8 @@ class UsersController < ApplicationController
 
     if user&.authenticate(params[:password])
       session[:user_id] = user.id
-      render json: { 
-        authenticated: true, 
+      render json: {
+        authenticated: true,
         role: user.role,
         user: {
           id: user.id,
@@ -34,12 +34,12 @@ class UsersController < ApplicationController
   def register
     # Si se proporciona un rol, usarlo; si no, por defecto es "student"
     role = params[:role] || "student"
-    
+
     # Validar que el rol sea válido
     unless %w[student teacher].include?(role)
-      return render json: { 
+      return render json: {
         error: "Invalid role. Must be 'student' or 'teacher'",
-        authenticated: false 
+        authenticated: false
       }, status: :unprocessable_entity
     end
 
@@ -95,3 +95,4 @@ class UsersController < ApplicationController
     params.permit(:username, :email, :password, :password_confirmation, :role)
   end
 end
+
