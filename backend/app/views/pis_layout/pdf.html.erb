@@ -1,55 +1,3 @@
-<%# Página 1 %>
-<div class="page">
-  <div class="header">
-    <% if File.exist?(Rails.root.join('app/assets/images/Consorci_Pedralbes.png')) %>
-      <%= wicked_pdf_image_tag('Consorci_Pedralbes.png', class: 'logo') %>
-    <% end %>
-  </div>
-
-  <div style="align-items: center; justify-content: center;">
-      <h1>Pla de suport individualitzat</h1>
-      <p>ESO</p>
-      <p>Arxiu: Plantilla PI Versió 2.0</p>
-      <p>Data d'entrada en vigor: Setembre 2024</p>
-  </div>
-  <div class="section-title">1. DADES PERSONALS</div>
-  
-  <table class="table bg-indigo-600">
-    <tr>
-      <td width="250"><strong>Nom i cognoms de l'alumne/a:</strong></td>
-      <td><%= @pi.present? ? @pi.user.username : 'N/A'%></td> 
-    </tr>
-    <tr>
-      <td><strong>Data de naixement:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.birth_date.present? ? @pi.user.birth_date.strftime('%d/%m/%Y') : '') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Curs:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.course.present? ? @pi.user.course : '') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Tutor/a:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.tutor.present? ? @pi.user.tutor : '') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Adreça:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.address.present? ? @pi.user.address : '') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Telèfon de contacte:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.phone.present? ? @pi.user.phone : '') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Correu electrònic:</strong></td>
-      <td><%= @pi.present? ? (@pdf_user&.email || '') : '' %></td>
-
-    </tr>
-  </table>
-  
-  <div class="lateral-text">S<br>P<br>E<br>R<br>A<br>L<br>E<br>S</div>
-</div>
-
-<%# Página 2 %>
 <div style="page-break-before: always;">
   <div class="header">
     <% if File.exist?(Rails.root.join('app/assets/images/Consorci_Pedralbes.png')) %>
@@ -64,86 +12,7 @@
     </div>
   </div>
   
-  <div class="section-title">2. DADES ESCOLARS</div>
-  
-  <table class="table">
-    <tr>
-      <td width="250"><strong>Centre educatiu:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.school.present? ? @pi.user.school : '') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Curs actual:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.course.present? ? @pi.user.course : '') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Grup classe:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.classroom_group.present? ? @pi.user.classroom_group : '') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Tutor/a:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.tutor.present? ? @pi.user.tutor : '') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Repeticions de curs anteriors:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.course_repetitions.present? ? @pi.user.course_repetitions : '0') : '' %></td> %>
-    </tr>
-    <tr>
-      <td><strong>Incorporació al centre:</strong></td>
-      <%# <td><%= @pi.present? ? (@pi.user.school_entry_date.present? ? @pi.user.school_entry_date.strftime('%d/%m/%Y') : '') : '' %></td> %>
-    </tr>
-  </table>
-  
-  <div class="lateral-text">INS<br>PEDRALBES</div>
-</div>
-
-<%# Página 3 %>
-<div style="page-break-before: always;">
-  <div class="header">
-    <% if File.exist?(Rails.root.join('app/assets/images/Consorci_Pedralbes.png')) %>
-      <%= wicked_pdf_image_tag('Consorci_Pedralbes.png', class: 'logo') %>
-    <% end %>
-    
-    <div style="margin-left: 80px;">
-      <h1>Pla de suport individualitzat</h1>
-      <p>ESO</p>
-      <p>Arxiu: Plantilla PI Versió 2.0</p>
-      <p>Data d'entrada en vigor: Setembre 2024</p>
-    </div>
-  </div>
-  
-  <div class="section-title">3. JUSTIFICACIÓ DEL PLA DE SUPORT INDIVIDUALITZAT</div>
-  
-  <% if @pi.present? %>
-    <p><strong>• Motivat per:</strong></p>
-    
-    <p><span class="checkbox">☐</span> Informe de reconeixement de necessitats específiques de suport educatiu.</p>
-    <p><span class="checkbox">☐</span> Avaluació psicopedagògica.</p>
-    <p><span class="checkbox">☐</span> Decisió de la CAEI.</p>
-  <% else %>
-    <div class="info-box">
-      <p><strong>El usuari és nou i encara no té cap Plan de Suport Individualitzat creat.</strong></p>
-    </div>
-  <% end %>
-
-  <div class="lateral-text">INS<br>PEDRALBES</div>
-</div>
-
-<%# Página 4 %>
-<div style="page-break-before: always;">
-  <div class="header">
-    <% if File.exist?(Rails.root.join('app/assets/images/Consorci_Pedralbes.png')) %>
-      <%= wicked_pdf_image_tag('Consorci_Pedralbes.png', class: 'logo') %>
-    <% end %>
-    
-    <div style="margin-left: 80px;">
-      <h1>Pla de suport individualitzat</h1>
-      <p>ESO</p>
-      <p>Arxiu: Plantilla PI Versió 2.0</p>
-      <p>Data d'entrada en vigor: Setembre 2024</p>
-    </div>
-  </div>
-  
-  <div class="section-title">4. PROPOSTA EDUCATIVA: MESURES I SUPORT</div>
+  <div class="section-title">1. PROPOSTA EDUCATIVA: MESURES I SUPORT</div>
   
   <% if @pi.present? %>
     <table class="table table-bordered">
@@ -198,40 +67,6 @@
       <p><strong>No hi ha informació per mostrar.</strong> El usuari és nou i no disposa de dades en el seu Plan.</p>
     </div>
   <% end %>
-  
-  <div class="lateral-text">INS<br>PEDRALBES</div>
-</div>
-
-<%# Página 5 %>
-<div style="page-break-before: always;">
-  <div class="header">
-    <% if File.exist?(Rails.root.join('app/assets/images/Consorci_Pedralbes.png')) %>
-      <%= wicked_pdf_image_tag('Consorci_Pedralbes.png', class: 'logo') %>
-    <% end %>
-    
-    <div style="margin-left: 80px;">
-      <h1>Pla de suport individualitzat</h1>
-      <p>ESO</p>
-      <p>Arxiu: Plantilla PI Versió 2.0</p>
-      <p>Data d'entrada en vigor: Setembre 2024</p>
-    </div>
-  </div>
-  
-  <div class="section-title">5. CONFORMITAT I SIGNATURES</div>
-  
-  <div class="signature-box">
-    <p>Signatura pare/mare o tutor/a legal:</p>
-    <div class="signature-line"></div>
-    
-    <p>Signatura del tutor/a:</p>
-    <div class="signature-line"></div>
-    
-    <p>Vistiplau direcció:</p>
-    <div class="signature-line"></div>
-    
-    <p>Lloc i data: <%= Date.today.strftime('%d de %B de %Y') %></p>
-    <div class="signature-line"></div>
-  </div>
   
   <div class="lateral-text">INS<br>PEDRALBES</div>
 </div>
