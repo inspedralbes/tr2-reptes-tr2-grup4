@@ -65,11 +65,11 @@ end
 
 if student_one
   Pi.create!(
-    description: "Behavior intervention plan developed to address pattern of classroom disruptions and non-compliance that has been interfering with student's own learning as well as that of peers. The plan incorporates positive behavioral supports, structured routines, and self-regulation strategies. Goal is to increase prosocial behaviors and independent functioning while reducing frequency and intensity of disruptive incidents through proactive interventions and consistent consequences.",
-    observations: "Student frequently calls out during instruction without raising hand, leaves seat without permission, and has difficulty following multi-step directions. Patterns observed: behaviors intensify during transitions, after recess, and when facing tasks perceived as difficult. When calm and engaged, student demonstrates age-appropriate academic skills. Strong social motivation observed - behaviors often seek peer attention. Student can identify triggers but struggles to use replacement behaviors independently. Improvement noted when classroom environment is highly structured with clear expectations.",
-    medrec: "Formal diagnosis of Attention-Deficit/Hyperactivity Disorder (Combined Type) confirmed by pediatric neurologist on March 10, 2024. Currently managed with stimulant medication prescribed by primary care physician, administered at home before school. 504 Plan in place with accommodations including extended time on tests, preferential seating, and movement breaks. Medication effectiveness monitored through daily report cards. No reported side effects affecting appetite or sleep. Annual follow-up scheduled for March 2026.",
-    activities: "Implementation of positive reinforcement behavior system with tangible rewards earned for meeting daily behavior goals. Structured visual schedule posted in classroom with countdowns for transitions. Scheduled movement breaks every 45 minutes to address sensory needs and maintain attention. Use of break card allowing student to request self-regulation breaks when feeling overwhelmed. participation in school-wide social-emotional learning curriculum (Second Step). Weekly 30-minute sessions with school counselor focusing on emotional regulation and social skills. Pre-teaching of expectations before special events or schedule changes.",
-    interacttutorial: "Bi-weekly 45-minute meetings with school counselor to review behavior data and develop coping strategies. Weekly 15-minute check-ins with homeroom teacher to discuss progress and adjust goals. Monthly collaboration meetings with parents, teacher, counselor, and 504 coordinator to review behavior report cards and medication effectiveness. Daily behavior report sent home for parent review and signature. Crisis intervention protocol established for instances of severe behavioral escalation. Communication app (ClassDojo) used for real-time updates between home and school.",
+    description: " ",
+    observations: " ",
+    medrec: " ",
+    activities: " ",
+    interacttutorial: " ",
     user_id: teacher_user.id
   )
   puts "✅ Created PI for Student One"
