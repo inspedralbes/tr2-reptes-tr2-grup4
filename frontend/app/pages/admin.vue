@@ -79,30 +79,6 @@
             </p>
           </section>
 
-          <!-- FILTERS -->
-          <section class="bg-white border border-gray-300 p-6 mb-6">
-            <h3 class="font-semibold mb-4">Filtres</h3>
-
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
-              <input
-                type="text"
-                placeholder="Nom de l’alumne"
-                class="border border-gray-300 px-3 py-2 rounded"
-              />
-
-              <select class="border border-gray-300 px-3 py-2 rounded">
-                <option>Professor assignat</option>
-                <option>Sense assignar</option>
-              </select>
-
-              <button
-                class="self-end px-4 py-2 bg-[#C00000] text-white rounded hover:bg-[#333] transition"
-              >
-                Filtrar
-              </button>
-            </div>
-          </section>
-
           <!-- TABLE -->
           <section class="bg-white border border-gray-300">
             <table class="w-full text-sm">
@@ -127,10 +103,10 @@
                     <span v-if="student.teacher">{{
                       student.teacher.username
                     }}</span>
-                    <span v-else class="text-gray-600">- Sense assignar -</span>
+                    <span v-else class="text-gray-600">— Sense assignar —</span>
                   </td>
 
-                  <!-- <td class="px-4 py-3 text-gray-600">— Sense assignar —</td> -->
+                  <!-- <td class="px-4 py-3 text-gray-600"></td> -->
 
                   <td class="px-4 py-3">
                     <button
