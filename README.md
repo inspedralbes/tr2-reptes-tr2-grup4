@@ -18,8 +18,8 @@ L’objectiu és facilitar el seguiment de l’alumne en els canvis de centre ed
   [Figma](https://www.figma.com/proto/7iSGKXIMKCuwQQ02hKiT0H/TR2-grup4?node-id=0-1&t=r6mEtzoluocDokei-1)
 
 ## 🌐 URL de producció
-- No disponible
+- Specialz
+  [Specialz](https://betterpi.daw.inspedralbes.cat/)
 
 ## 📊 Estat del projecte 
-- Pantalla innicial
-- Login and Register
+- Finalitzat
